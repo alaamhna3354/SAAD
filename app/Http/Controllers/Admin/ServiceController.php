@@ -16,10 +16,6 @@ class ServiceController extends Controller
 {
     public function index()
     {
-        $url="https://api.pubg.com/shards/saad/players/5415356544";
-       $header= "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
-        $response = json_decode(curlContent($url));
-//        dd($response);
         $page_title = 'Services';
         $empty_message = 'No Result Found';
         $categories = Category::active()->orderBy('name')->get();
