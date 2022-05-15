@@ -247,9 +247,10 @@
 
                 //Calculate total price
                 $(document).on("keyup", "#link", function () {
-                    var link = $('#link').val()
+                    var link = $('#link').val();
                     
-                    modal.find('input[name=custom]').val("{{getPlayer($category->api,12)}}");
+                    // var pla = $('#link').val()
+                    modal.find('input[name=custom]').val(`{{getPlayer($category->api,12)}}`);
 
                 });
 
