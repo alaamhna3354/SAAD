@@ -120,6 +120,12 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('services/update/{id}', 'ServiceController@update')->name('services.update');
         Route::post('services/status/{id}', 'ServiceController@status')->name('services.status');
 
+        //Services
+        Route::get('serials', 'SerialController@index')->name('serials.index');
+        Route::post('serials/store', 'SerialController@store')->name('serials.store');
+        Route::post('serials/update/{id}', 'SerialController@update')->name('serials.update');
+        Route::post('serials/status/{id}', 'SerialController@status')->name('serials.status');
+
         //API service list
         Route::get('api/services', 'ServiceController@apiServices')->name('services.apiServices');
 
