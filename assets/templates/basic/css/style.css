@@ -5579,7 +5579,7 @@ svg {
   /*background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
   position: relative;
   height: 100vh;
-  padding-top: 100px;
+  padding-top: 70px;
 }
 
 
@@ -5593,7 +5593,7 @@ svg {
   text-align: right;
   background: linear-gradient(to right,#727272,#000000bb);
   height: auto;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   overflow: hidden;
   border-radius: 10px;
@@ -5665,6 +5665,7 @@ svg {
   padding: 10px 20px;
   border-radius: 5px;
 }
+
 .register-section .sign-card input::placeholder{
   color: #fff;
 }
@@ -5681,7 +5682,69 @@ svg {
   align-items: center;
   color: #fff;
 }
+.register-section .signup-card .right-form{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.register-section .signup-card .cont-50{
+  width: 45%;
+}
+.register-section .signup-card .cont-100{
+  width: 93%;
+}
+.register-section .signup-card .title{
+  width: 100%;
+}
+.register-section .signup-card .nice-select.disabled {
+  background-color: transparent;
+  border-radius: 5px;
+}
+.register-section .signup-card .nice-select .current {
+  color: #fff;
 
+}
+.register-section .signup-card .wid-100{
+width: 100%;
+}
+@media (min-width: 768px){
+  .register-section .signup-card .right-form .cont-100 input{
+    width: 50% !important;
+  }
+}
+@media (max-width:768px) {
+  .register-section .signup-card .right-form{
+  flex: 0 0 100%;
+  max-width: 100%;
+  }
+  .register-section .signup-card .right-form .cont-100 input{
+    width: 50% !important;
+  }
+  .register-section .signup-card  .left-wall{
+    display: none;
+  }
+  
+}
+@media (max-width:568px) {
+  .register-section {
+    
+    height: 185vh;
+  }
+  .register-section .signup-card .right-form{
+  flex: 0 0 100%;
+  max-width: 100%;
+  }
+  .register-section .signup-card .right-form .cont-50 {
+    width: 100% !important;
+  }
+  .register-section .signup-card .right-form .cont-100 input{
+    width: 50% !important;
+  }
+  .register-section .signup-card  .left-wall{
+    display: none;
+  }
+  
+}
 /* ************************************************ */
 .register-section .title{
   color: #fff;

@@ -1,87 +1,66 @@
 @extends($activeTemplate.'layouts.auth')
 @section('content')
     <!-- register-section start -->
-    <section class="register-section ptb-80">
-        <div class="register-element-one">
-            <img src="{{asset($activeTemplateTrue.'images/round.png')}}" alt="shape">
-        </div>
+    <section class="register-section ">
         <div class="container">
-           
-
-            <div class="account-wrapper">
-                <div class="login-area account-area change-form">
-                    <div class="row m-0">
-                        {{--<div class="col-lg-6 p-0">--}}
-                            {{--<div class="change-catagory-area">--}}
-                                {{--<h4 class="title">--}}
-                                    {{--@lang('Already have an account?')--}}
-                                {{--</h4>--}}
-                                {{--<a href="{{ route('user.login') }}"--}}
-                                   {{--class="cmn-btn-active account-control-button">@lang("Sign In Here")</a>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        <div class="col-lg-3 p-0"></div>
-                        <div class="col-lg-6 p-0">
-                            <div class="register-form-area common-form-style bg-one create-account">
-                                <h4 class="title">@lang('Create your account')</h4>
-
-                                <form class="create-account-form register-form" action="{{ route('user.register') }}"
+            <div class="">
+                <div class="">
+                    
+                            <div class="sign-card signup-card">
+                               
+                            <form class="create-account-form register-form" action="{{ route('user.register') }}"
                                       method="POST" onsubmit="return submitUserForm();">
                                     @csrf
-
-                                    <div class="row justify-content-center ml-b-20">
-                                        @if(session()->get('reference') != null)
-                                            <div class="col-lg-12 form-group">
+                                    @if(session()->get('reference') != null)
+                                            <div class="col-lg-6 form-group">
                                                 <label for="firstname"
                                                        class="col-md-4 col-form-label text-md-right">@lang('Reference By')</label>
                                                 <input type="text" name="referBy" id="referenceBy" class="form-control"
                                                        value="{{session()->get('reference')}}" readonly>
                                             </div>
                                         @endif
-
-                                        <div class="col-lg-12 form-group">
-                                            <input id="firstname" type="text" name="firstname"
+                                    <div class="row ">
+                                   
+                                    <div class="col-6 right-form">
+                                        <h4 class="title mt-4 mr-2 m-2">@lang('Create your account')</h4>
+                                        <div class=" cont-50 mr-2 m-2">
+                                        <input id="firstname" type="text" name="firstname"
                                                    value="{{ old('firstname') }}" placeholder="@lang('First Name')"
                                                    required>
                                         </div>
-                                        <div class="col-lg-12 form-group">
-                                            <input id="lastname" type="text" name="lastname"
+                                        <div class="cont-50 mr-2 m-2">
+                                        <input id="lastname" type="text" name="lastname"
                                                    value="{{ old('lastname') }}" placeholder="@lang('Last Name')"
                                                    required>
                                         </div>
-                                        <div class="col-lg-12 form-group">
-                                            <input id="username" type="text" name="username"
+                                        <div class="cont-50 mr-2 m-2">
+                                        <input id="username" type="text" name="username"
                                                    value="{{ old('username') }}" placeholder="@lang('Username')"
                                                    required>
                                         </div>
-
-                                        <div class="form-group col-lg-12">
-                                            <div class="country-code">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text p-0 border-0">
+                                         <!--   <div class="  mr-2 m-2">
+                                            <input type="text" id="country" name="country" value="Syria" hidden>
+                                        </div> -->
+                                        <div class="cont-50 mr-2 m-2">
+                                        <input id="email" type="email" placeholder="@lang('Email')" name="email" value="{{ old('email') }}"
+                                                   required>
+                                        </div>
+                                        <div class="cont-100  mr-2 m-2 d-flex align-items-center">
+                                      
+                                                    <div class="">
+                                                      
                                                             <input type="hidden" name="country_code" value="963">
                                                             <select disabled name="country">
                                                                 <option  value="963" data-country="Syrian Arab Republic" data-code="SY"> +963</option>
                                                                 {{--@include('partials.country_code')--}}
                                                             </select>
-                                                        </span>
+                                                      
                                                     </div>
                                                     <input type="text" name="mobile" placeholder="@lang('Your Phone Number')" class="w-auto flex-fill" value="{{ old('mobile') }}">
-                                                </div>
-                                            </div>
+                                                
                                         </div>
-
-                                        <div class="col-lg-12 form-group">
-                                            <input type="text" id="country" name="country" value="Syria" hidden>
-                                        </div>
-                                        <div class="col-lg-12 form-group">
-                                            <input id="email" type="email" placeholder="@lang('Email')" name="email" value="{{ old('email') }}"
-                                                   required>
-                                        </div>
-
-                                        <div class="form-group col-lg-12 hover-input-popup">
-                                            <input id="password" type="password" name="password" required  placeholder="@lang('Password')">
+                                        <div class="cont-50 mr-2 m-2">
+                                        <input id="password" type="password" name="password" required  placeholder="@lang('Password')">
                                             @if($general->secure_password)
                                                 <div class="input-popup">
                                                     <p class="error lower">@lang('1 small letter minimum')</p>
@@ -92,136 +71,41 @@
                                                 </div>
                                             @endif
                                         </div>
-
-                                        <div class="col-lg-12 form-group">
-                                            <input id="password-confirm" type="password" name="password_confirmation" placeholder="@lang('Confirm Password')" required autocomplete="new-password">
+                                        <div class="cont-50 mr-2 m-2">
+                                        <input id="password-confirm" type="password" name="password_confirmation" placeholder="@lang('Confirm Password')" required autocomplete="new-password">
                                         </div>
 
-                                        <div class="form-group col-lg-12">
-                                            @php echo loadReCaptcha() @endphp
+                                        <div class="mr-2 m-2">
+                                        @php echo loadReCaptcha() @endphp
                                         </div>
                                         @include($activeTemplate.'partials.custom-captcha')
+                                           
 
-                                        <div class="col-lg-12 form-group text-center">
-                                            <button type="submit" class="submit-btn">@lang('Signup Now')</button>
+                                        <div class="mr-2 m-2 wid-100">
+                                        <button type="submit">@lang('Signup Now')</button>
+                                        </div>
+                                        <div class="mr-2 m-2 wid-100">
+                                <h4 class="text-white text-anim">
+                                @lang('Already have an account?')
+                                </h4>
+                                <a href="{{ route('user.login') }}"
+                                 class="text-white text-anim">@lang("Sign In Here")
+                                </a>
+                            </div>
+                                        </div>
+                                        <div class="col-6 left-wall">
+                                        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" alt="">
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div class="service-item text-center">
-                            <h4 class="title">
-                                @lang('Already have an account?')
-                            </h4>
-
-                            <a href="{{ route('user.login') }}"
-                               class="cmn-btn-active account-control-button">@lang("Sign In Here")</a>
-                        </div>
-                        </div>
-                        <div class="col-lg-3 p-0"></div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- register-section end -->
 @endsection
-@push('style')
-    <style type="text/css">
-        .country-code .input-group-prepend .input-group-text {
-            background: #fff !important;
-        }
 
-        .country-code select {
-            border: none;
-        }
-
-        .country-code select:focus {
-            border: none;
-            outline: none;
-        }
-
-        .hover-input-popup {
-            position: relative;
-        }
-
-        .hover-input-popup:hover .input-popup {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .input-popup {
-            position: absolute;
-            bottom: 119%;
-            left: 50%;
-            width: 280px;
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-            -ms-border-radius: 5px;
-            -o-border-radius: 5px;
-            -webkit-transform: translateX(-50%);
-            -ms-transform: translateX(-50%);
-            transform: translateX(-50%);
-            opacity: 0;
-            visibility: hidden;
-            -webkit-transition: all 0.3s;
-            -o-transition: all 0.3s;
-            transition: all 0.3s;
-        }
-
-        .input-popup::after {
-            position: absolute;
-            content: '';
-            bottom: -19px;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 10px 10px 10px 10px;
-            border-style: solid;
-            border-color: transparent transparent #1a1a1a transparent;
-            -webkit-transform: rotate(180deg);
-            -ms-transform: rotate(180deg);
-            transform: rotate(180deg);
-        }
-
-        .input-popup p {
-            padding-left: 20px;
-            position: relative;
-        }
-
-        .input-popup p::before {
-            position: absolute;
-            content: '';
-            font-family: 'Line Awesome Free';
-            font-weight: 900;
-            left: 0;
-            top: 4px;
-            line-height: 1;
-            font-size: 18px;
-        }
-
-        .input-popup p.error {
-            text-decoration: line-through;
-        }
-
-        .input-popup p.error::before {
-            content: "\f057";
-            color: #ea5455;
-        }
-
-        .input-popup p.success::before {
-            content: "\f058";
-            color: #28c76f;
-        }
-
-        .input-group-text {
-            background-color: #37f5f9;
-            border: 1px solid #37f5f9;
-        }
-    </style>
-@endpush
 
 @push('script-lib')
     <script src="{{ asset('assets/global/js/secure_password.js') }}"></script>
