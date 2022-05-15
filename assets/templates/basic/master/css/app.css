@@ -7174,6 +7174,7 @@ a.icon-btn {
     font-size: 20px;
 }
 /* ************************ new styles ************************ */
+
 .order-items .card {
     height: 100%;
 }
@@ -7186,11 +7187,58 @@ a.icon-btn {
 }
 @media (max-width:768px) {
     .order-items{
-        flex: 0 0 33.333333%;
-        max-width: 33.333333%;
+        flex: 0 0 50%;
+        max-width: 50%;
         padding: 0 5px !important;
         min-height: 200px;
     }
-    
+}
+@media (max-width:568px) {
+    .price-acount{
+        margin-inline-start: auto;
+    }
+    .price-acount .navbar{
+        padding: 0 6px;
+    }
+}
+.navbar-wrapper,.sidebar__inner{
+    background: linear-gradient(to right,#f2f2f2,#cecccc);
+   
+}
+.page-wrapper{
+    background-image: url(../../../../images/page.jpg);
+    background-size: cover;  
+}
 
+.card-dep .card{
+    height: 346px;
+
+}
+@media (max-width:568px) {
+    .card-dep{
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 7px !important;
+       
+    }
+    .card-dep .card{
+        max-height: 324px;
+    }
+}
+@media (max-width:368px) {
+    .card-dep .card{
+        max-height: 265px;
+    }
+}
+.group-label{
+    border: 1px solid #ced4da;
+    border-radius: 0;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+.group-input{
+    border-radius: 0 !important;
+    border-right: none;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
 }

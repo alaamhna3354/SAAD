@@ -5578,216 +5578,123 @@ svg {
   background-image: url("../images/bg.jpg");
   /*background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
   position: relative;
+  height: 100vh;
+  padding-top: 100px;
 }
+
+
+.register-section .title + a{
+  color: #fff;
+  margin: 10px 0;
+}
+.register-section .sign-card{
+  position: relative;
+  padding: 0;
+  text-align: right;
+  background: linear-gradient(to right,#727272,#000000bb);
+  height: auto;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 10px;
+}
+@media (max-width:768px) {
+  .register-section .sign-card{
+    width: 100%;
+  }
+}
+
+.register-section .sign-card form{
+  display: grid;
+  height: 100%;
+}
+.register-section .sign-card .right-form{
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width:568px) {
+  .register-section .sign-card .right-form{
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .register-section .sign-card .left-wall{
+    display: none;
+  }
+  .register-section .sign-card *{
+    text-align: center !important;
+  }
+  .register-section .sign-card .rem{
+    justify-content: center;
+  }
+}
+
+/* .register-section .sign-card .left-wall{
+  background-image: url("../images/left-wall2.jpg");
+} */
+.register-section button{
+  background-image: url("../images/but.jpg");
+  color: #000;
+  padding: 10px 15px;
+  background-size: cover;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-weight: bold;
+  transition: .5s;
+}
+.register-section .sign-card .text-anim{
+  transition: .5s;
+  cursor: pointer;
+}
+.register-section .sign-card .text-anim:hover{
+  text-shadow: 1px 2px 10px #e1dede;
+}
+.register-section button:hover{
+  box-shadow: 1px 2px 10px #e1dede;
+}
+.register-section .sign-card .left-wall img{
+  width: 100%;
+  height: 100%;
+}
+.register-section .sign-card input{
+  background-color: transparent;
+  margin: 10px 0;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.register-section .sign-card input::placeholder{
+  color: #fff;
+}
+.register-section .checkbox-item{
+  width: 100px;
+  color: #fff;
+}
+.register-section .checkbox-item input{
+  width: auto;
+}
+.register-section .checkbox-item label{
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+  color: #fff;
+}
+
+/* ************************************************ */
 .register-section .title{
   color: #fff;
 }
 .register-section:hover .highlight-background--lean-left {
   left: 10%;
 }
-.register-section .register-element-one {
+/* .register-section .register-element-one {
   position: absolute;
   top: -2%;
   right: -2%;
   animation: rotate2 20s linear infinite;
-}
-.register-section .register-form-area .title {
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-.register-section .register-form-area .register-form {
-  position: relative;
-}
-.register-section .register-form-area .register-form input {
-  background-color: white;
-  color: #758b9f;
-  padding: 12px 20px;
-  border-radius: 5px;
-  font-size: 13px;
-  border: none;
-}
-.register-section .register-form-area .register-form input::placeholder {
-  color: #758b9f;
-}
-.register-section .register-form-area .register-form textarea {
-  background-color: white;
-  color: #758b9f;
-  padding: 12px 20px;
-  border-radius: 5px;
-  font-size: 13px;
-  border: none;
-  min-height: 200px;
-}
-.register-section .register-form-area .register-form textarea::placeholder {
-  color: #758b9f;
-}
-.register-section .register-form-area .register-form .nice-select {
-  background-color: white;
-  border-radius: 5px;
-  border: none;
-}
-.register-section .register-form-area .register-form .nice-select .current {
-  color: #758b9f;
-}
-.register-section .register-form-area .register-form .nice-select::after {
-  border-bottom: 2px solid #758b9f;
-  border-right: 2px solid #758b9f;
-}
-.register-section .register-form-area .register-form .nice-select .option:hover {
-  color: white;
-}
-.register-section .register-form-area .register-form .nice-select .option.selected:hover {
-  color: #758b9f;
-}
-.register-section .register-form-area .register-form .radio-wrapper {
-  background-color: #4d5bed;
-  border-radius: 10px;
-  padding: 15px 30px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-}
-.register-section .register-form-area .register-form .radio-item {
-  margin-right: 20px;
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:checked,
-.register-section .register-form-area .register-form .radio-item [type="radio"]:not(:checked) {
-  position: absolute;
-  left: -9999px;
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:checked + label,
-.register-section .register-form-area .register-form .radio-item [type="radio"]:not(:checked) + label {
-  position: relative;
-  padding-left: 28px;
-  cursor: pointer;
-  line-height: 20px;
-  display: inline-block;
-  color: white;
-  margin: 0;
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:checked + label:before,
-.register-section .register-form-area .register-form .radio-item [type="radio"]:not(:checked) + label:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border: 1px solid transparent;
-  border-radius: 100%;
-  background: #fff;
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:checked + label:after,
-.register-section .register-form-area .register-form .radio-item [type="radio"]:not(:checked) + label:after {
-  content: '';
-  width: 12px;
-  height: 12px;
-  background: #4d5bed;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  border-radius: 100%;
-  -webkit-transition: all 0.2s ease;
-  transition: all 0.2s ease;
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:not(:checked) + label:after {
-  opacity: 0;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-}
-.register-section .register-form-area .register-form .radio-item [type="radio"]:checked + label:after {
-  opacity: 1;
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-.register-section .register-form-area .register-form .checkbox-wrapper {
-  margin-top: 10px;
-}
-.register-section .register-form-area .register-form .checkbox-wrapper .checkbox-item {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-.register-section .register-form-area .register-form .checkbox-wrapper .checkbox-item input[type="checkbox"] {
-  width: 15px;
-  height: 15px;
-  -webkit-border-radius: 50%;
-  -moz-border-radius: 50%;
-  border-radius: 50%;
-  margin-right: 10px;
-  position: relative;
-  overflow: hidden;
-}
-.register-section .register-form-area .register-form .checkbox-wrapper .checkbox-item label {
-  margin: 0;
-  color: #031c6c;
-}
-.register-section .register-form-area .register-form .checkbox-wrapper .login-wrapper p {
-  color: #031c6c;
-}
-.register-section .register-form-area .register-form .checkbox-wrapper .login-wrapper p a {
-  color: #4d5bed;
-}
-.register-section .register-form-area .register-form .forgot-password a {
-  color: #4d5bed;
-}
-.register-section .register-form-area .register-form .submit-btn {
-  padding: 7px 25px;
-  color: white;
-  background-color: #4d5bed;
-  width: 100%;
-  border-radius: 5px;
-  margin-top: 10px;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.common-form-style {
-  padding: 40px;
-  text-align: right;
-  background-color: #a4a4a4;
-}
-.common-form-style .title {
-  margin-bottom: 10px !important;
-}
-.common-form-style p {
-  font-size: 14px;
-}
-
-.create-account-form {
-  margin-top: 15px;
-}
-
-.change-catagory-area {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  text-align: center;
-  position: relative;
-  padding: 60px 15px;
-  background-color: #4d5bed;
-  padding: 40px;
-  z-index: 2;
-  background-size: cover;
-  background-position: center;
-}
-.change-catagory-area .title {
-  color: white;
-}
-.change-catagory-area p {
-  color: white;
-}
-
-.account-area {
-  display: none;
-}
-.account-area.change-form {
-  display: block;
-}
+} */
 
 .dashboard-section {
   padding-top: 80px;
