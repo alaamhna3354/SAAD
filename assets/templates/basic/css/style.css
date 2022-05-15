@@ -5575,9 +5575,12 @@ svg {
 }
 
 .register-section {
-  background-image: url("../images/bg.jpeg");
+  background-image: url("../images/bg.jpg");
   /*background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
   position: relative;
+}
+.register-section .title{
+  color: #fff;
 }
 .register-section:hover .highlight-background--lean-left {
   left: 10%;
@@ -5743,7 +5746,7 @@ svg {
 .common-form-style {
   padding: 40px;
   text-align: right;
-  background-color: #edeff4;
+  background-color: #a4a4a4;
 }
 .common-form-style .title {
   margin-bottom: 10px !important;
