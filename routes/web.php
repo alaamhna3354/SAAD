@@ -387,4 +387,4 @@ Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name(
 
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
-Route::get('/api/player', 'ApiController@getPlayer')->name('player');
+Route::get('/api/player/{api}/{id}', 'ApiController@getPlayer')->name('player');

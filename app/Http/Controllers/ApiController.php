@@ -168,18 +168,21 @@ class ApiController extends Controller
         $notify[] = ['success', 'Generated new api key!'];
         return back()->withNotify($notify);
     }
-    public function getPlayer()
-    {
-        $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
-        $region = "pc-as"; // choose platform and region
-        $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
-        $headers = array(
-            'Authorization' => $apiKey,
-            'Accept' => 'application/vnd.api+json'
-        );
-        $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
-        $getPlayerContent = json_decode($getPlayer->body, true);
-        $name = $getPlayerContent['data'][0]['attributes']['name'];
-        return $name;
-    }
+//    public function getPlayer($api,$id)
+//    {
+////        $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
+////        $region = "pc-as"; // choose platform and region
+////        $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
+////        $headers = array(
+////            'Authorization' => $apiKey,
+////            'Accept' => 'application/vnd.api+json'
+////        );
+////        $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
+////        $getPlayerContent = json_decode($getPlayer->body, true);
+////        $name = $getPlayerContent['data'][0]['attributes']['name'];
+////        return $name;
+//        $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
+//        return $getPlayer->body();
+//    }
+
 }

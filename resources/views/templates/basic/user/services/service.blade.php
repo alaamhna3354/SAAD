@@ -109,33 +109,29 @@
                         <div class="modal-body">
 
                             <div class="form-row form-group">
+                                @if(isset($category->field_name))
                             <div class="col-sm-8 m-1 text-right">
                                 <label for="link"
-                                       class="font-weight-bold">{{$category->field_name ? $category->field_name : "الرقم"}}
+                                       class="font-weight-bold">{{$category->field_name}}
                                     <span
                                             class="text-danger">*</span></label>
                                 
                                     <input type="text" class="form-control has-error bold" id="link" name="link"
                                            required>
-                                </div>
+                            </div>
+                                @endif
                                 @if(isset($category->custom_additional_field_name))
                                     {{--<form action="{{url('user/address')}}" class="mt-5 check-out-form" method="post">--}}
+                                    @foreach(explode(',',$category->custom_additional_field_name) as $field)
                                     <div class="col-sm-8 m-1 text-right">
                                     <label for="link"
-                                           class="font-weight-bold">{{$category->custom_additional_field_name}} <span
+                                           class="font-weight-bold">{{$field}} <span
                                                 class="text-danger">*</span></label>
-    
-                                            <input type="text" class="form-control has-error bold" id="player" name="custom" 
+                                            <input type="text" class="form-control has-error bold"  name="custom[{{$field}}]"
                                                  required>
-                                        </div>
-                                        <div class="col-sm-8 m-1 text-right">
-                                        <label for="quantity"
-                                           class="font-weight-bold">@lang('Quantity') <span
-                                                class="text-danger">*</span></label>
+                                    </div>
+                                        @endforeach
 
-                                        <input type="number" class="form-control has-error bold" id="quantity"
-                                               name="quantity" required>
-                                        </div>
                                         <!-- <div class="col-sm-2">
                                             <a href="#" id="get_player_name" class="pull-right mr-2" >
                                                 <i class="fa fa-cart-plus"></i>
@@ -144,6 +140,14 @@
 
 
                                 @endif
+                            </div>
+                            <div class="form-row form-group">
+                                <label for="quantity" class="font-weight-bold">@lang('Quantity') <span
+                                            class="text-danger">*</span></label>
+                                <div class="col-sm-12">
+                                    <input type="number" class="form-control has-error bold" id="quantity"
+                                           name="quantity" required>
+                                </div>
                             </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
@@ -185,30 +189,6 @@
         </div>
     </div>
 
-    <!-- Page Content -->
-    {{--<div class="container">--}}
-    {{--<div class="row">--}}
-    {{--<!-- products -->--}}
-    {{--@forelse($categories as $category)--}}
-
-    {{--@continue(count($category->services) < 1)--}}
-
-    {{--<div class="col-xl-3 col-md-6 mb-4">--}}
-    {{--<div class="card border-0 shadow">--}}
-    {{--<a href="">--}}
-    {{--<img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top"--}}
-    {{--alt="...">--}}
-    {{--<div class="card-body text-center">--}}
-    {{--<h5 class="card-title mb-0">@lang($category->name)</h5>--}}
-    {{--<div class="card-text text-black-50">Web Developer</div>--}}
-    {{--</div>--}}
-    {{--</a>--}}
-    {{--</div>--}}
-    {{--</div>--}}
-    {{--@endforeach--}}
-    {{--</div>--}}
-    {{--<!-- /.row -->--}}
-    {{--</div>--}}
 @endsection
 
 @push('style')
@@ -248,9 +228,9 @@
                
                 $(document).on("keyup", "#link", function () {
                     var link = $('#link').val()
-                    var url="{{getPlayer($category->api,':link')}}";
-                    url = url.replace(':link', link);
-                    modal.find('input[name=custom]').val(url);
+                    {{--var url="{{route('player',[$category->api,':link'])}}";--}}
+                    {{--url = url.replace(':link', link);--}}
+                    // modal.find('input[name=custom]').val(1);
                 });
 
                 //Calculate total price

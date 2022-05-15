@@ -14,7 +14,7 @@
                                 <th scope="col">@lang('Category')</th>
                                 <th scope="col">@lang('Service')</th>
                                 <th scope="col">@lang('Quantity')</th>
-                                <th scope="col">@lang('Start Counter')</th>
+                                <th scope="col">@lang('Total')</th>
                                 <th scope="col">@lang('Remains')</th>
                                 <th scope="col">@lang('Status')</th>
                                 {{--<th scope="col">@lang('API Order')</th>--}}
@@ -31,7 +31,7 @@
                                     <td data-label="@lang('Category')">{{__($item->category->name)}}</td>
                                     <td data-label="@lang('Service')">{{ __($item->service->name) }}</td>
                                     <td data-label="@lang('Quantity')">{{ $item->quantity }}</td>
-                                    <td data-label="@lang('Start Counter')">{{ $item->start_counter }}</td>
+                                    <td data-label="@lang('Price')">{{ $item->price }}</td>
                                     <td data-label="@lang('Remains')">{{ $item->remain }}</td>
                                     <td data-label="@lang('Status')">
                                         @if($item->status === 0)
