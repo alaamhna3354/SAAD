@@ -15,7 +15,7 @@
         <div class="col-lg-12">
             {{--@forelse($categories as $category)--}}
             {{--@continue(count($category->services) < 1)--}}
-            <div class="card b-radius--10 mb-4">
+            <div class="card b-radius--10 mb-4" style="background: transparent;">
                 {{--<div class="card-header"><h3>@lang($category->name)</h3></div>--}}
                 <div class="card-body p-0">
                     @php
@@ -25,7 +25,7 @@
                         <div class="row">
 
                             @foreach ($services as $item)
-                                <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="col-3 mt-4 mb-4 order-items">
                                     <div class="card border-0 shadow">
                                         <a href="javascript:void(0)" class="orderBtn"
                                            data-original-title="@lang('Buy')" data-toggle="tooltip"
@@ -36,13 +36,13 @@
                                                  class="card-img-top" alt="...">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title mb-0">{{__($item->name)}}</h5>
-                                                <div class="card-text text-black-50">{{ $general->cur_sym . getAmount($item->price_per_k) }}</div>
+                                                <div class="card-text text-black-50 mb-2">{{ $general->cur_sym . getAmount($item->price_per_k) }}</div>
                                                 @if($item->details)
                                                     <a href="javascript:void(0)"
-                                                       class="icon-btn btn--info detailsBtn"
+                                                       class="icon-btn btn--info detailsBtn S m-2"
                                                        data-original-title="@lang('Details')" data-toggle="tooltip"
                                                        data-details="{{ $item->details }}">
-                                                        <i class="la la-info"></i>
+                                                        <i class="la la-info "></i>
                                                     </a>
                                                 @endif
                                                 <a href="javascript:void(0)" class="icon-btn orderBtn"
@@ -63,7 +63,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer" style="background: transparent;border:none">
                         {{ $services->withQueryString()->links('admin.partials.paginate') }}
                     </div>
                 </div><!-- card end -->
@@ -109,66 +109,65 @@
                         <div class="modal-body">
 
                             <div class="form-row form-group">
+                            <div class="col-sm-8 m-1 text-right">
                                 <label for="link"
                                        class="font-weight-bold">{{$category->field_name ? $category->field_name : "الرقم"}}
                                     <span
                                             class="text-danger">*</span></label>
-                                <div class="col-sm-12">
+                                
                                     <input type="text" class="form-control has-error bold" id="link" name="link"
                                            required>
                                 </div>
                                 @if(isset($category->custom_additional_field_name))
                                     {{--<form action="{{url('user/address')}}" class="mt-5 check-out-form" method="post">--}}
+                                    <div class="col-sm-8 m-1 text-right">
                                     <label for="link"
                                            class="font-weight-bold">{{$category->custom_additional_field_name}} <span
                                                 class="text-danger">*</span></label>
-                                    <div class="row">
-                                        <div class="col-sm-10">
-
+    
                                             <input type="text" class="form-control has-error bold" id="player" name="custom" 
                                                  required>
                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-8 m-1 text-right">
+                                        <label for="quantity"
+                                           class="font-weight-bold">@lang('Quantity') <span
+                                                class="text-danger">*</span></label>
+
+                                        <input type="number" class="form-control has-error bold" id="quantity"
+                                               name="quantity" required>
+                                        </div>
+                                        <!-- <div class="col-sm-2">
                                             <a href="#" id="get_player_name" class="pull-right mr-2" >
                                                 <i class="fa fa-cart-plus"></i>
                                             </a>
-                                        </div>
-                                    </div>
+                                        </div> -->
 
 
                                 @endif
                             </div>
-                                <div class="form-row form-group">
-                                    <label for="quantity" class="font-weight-bold">@lang('Quantity') <span
-                                                class="text-danger">*</span></label>
-                                    <div class="col-sm-12">
-                                        <input type="number" class="form-control has-error bold" id="quantity"
-                                               name="quantity" required>
-                                    </div>
-                                </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text">@lang('Min')</div>
+                                            <div class="input-group-prepend ">
+                                                <div class="input-group-text group-label">@lang('Min')</div>
                                             </div>
-                                            <input type="text" name="min" class="form-control" readonly>
+                                            <input type="text" name="min" class="form-control group-input" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <div class="input-group-text">@lang('Max')</div>
+                                                <div class="input-group-text group-label">@lang('Max')</div>
                                             </div>
-                                            <input type="text" name="max" class="form-control" readonly>
+                                            <input type="text" name="max" class="form-control group-input" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <div class="input-group-text">@lang('Price')</div>
+                                                <div class="input-group-text group-label">@lang('Price')</div>
                                             </div>
-                                            <input type="text" class="form-control total_price text--success"
+                                            <input type="text" class="form-control total_price text--success group-input"
                                                    name="price" readonly>
                                         </div>
                                     </div>

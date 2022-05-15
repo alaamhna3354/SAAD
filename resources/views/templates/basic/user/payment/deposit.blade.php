@@ -4,7 +4,7 @@
 @section('content')
     <div class="row">
             @foreach($gatewayCurrency as $data)
-                <div class="col-lg-3 col-md-3 mb-4">
+                <div class="col-md-3 col-sm-4  card-dep mb-4">
                     <div class="card card-deposit">
                         <h5 class="card-header text-center">{{__($data->name)}}
                         </h5>
