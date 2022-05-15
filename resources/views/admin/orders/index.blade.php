@@ -14,7 +14,7 @@
                                 <th scope="col">@lang('Category')</th>
                                 <th scope="col">@lang('Service')</th>
                                 <th scope="col">@lang('Quantity')</th>
-                                <th scope="col">@lang('Total')</th>
+                                <th scope="col">@lang('Price')</th>
                                 <th scope="col">@lang('Remains')</th>
                                 <th scope="col">@lang('Status')</th>
                                 {{--<th scope="col">@lang('API Order')</th>--}}

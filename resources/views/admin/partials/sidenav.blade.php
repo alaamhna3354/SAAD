@@ -334,6 +334,15 @@
                     </a>
                 </li>
 
+                <li class="sidebar-menu-item  {{menuActive('admin.serials.index')}}">
+                    <a href="{{route('admin.serials.index')}}" class="nav-link"
+                       data-default-url="{{ route('admin.serials.index') }}">
+                        <i class="menu-icon la la-ticket"></i>
+                        <span class="menu-title">@lang('اكواد وارقام البطاقات') </span>
+                    </a>
+                </li>
+
+
                 {{--////////////////////////////////////--}}
                 @if(getSettingState())
 
