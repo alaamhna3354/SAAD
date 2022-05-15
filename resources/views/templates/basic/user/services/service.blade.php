@@ -125,8 +125,8 @@
                                     <div class="row">
                                         <div class="col-sm-10">
 
-                                            <input type="text" class="form-control has-error bold" id="player" name="custom"
-                                                   required>
+                                            <input type="text" class="form-control has-error bold" id="player" name="custom" 
+                                                 required>
                                         </div>
                                         <div class="col-sm-2">
                                             <a href="#" id="get_player_name" class="pull-right mr-2" >
@@ -246,12 +246,12 @@
                 var max = $(this).data('max');
 
                 //Calculate total price
+               
                 $(document).on("keyup", "#link", function () {
-                    var link = $('#link').val();
-                    
-                    // var pla = $('#link').val()
-                    modal.find('input[name=custom]').val(`{{getPlayer($category->api,12)}}`);
-
+                    var link = $('#link').val()
+                    var url="{{getPlayer($category->api,':link')}}";
+                    url = url.replace(':link', link);
+                    modal.find('input[name=custom]').val(url);
                 });
 
                 //Calculate total price
