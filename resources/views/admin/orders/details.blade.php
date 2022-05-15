@@ -35,6 +35,16 @@
                                     <td data-label="@lang('Quantity')">@lang('Quantity')</td>
                                     <td class="text-left" data-label="@lang('Quantity')">{{ $order->quantity }}</td>
                                 </tr>
+                                @if(isset( $order->details))
+                                <tr>
+                                    <td data-label="@lang('Details')">@lang('Details')</td>
+                                    <td class="text-left" data-label="@lang('Details')">{{ $order->details }}</td>
+                                </tr>
+                                @endif
+                                <tr>
+                                    <td data-label="@lang('Price')">@lang('Price')</td>
+                                    <td class="text-left" data-label="@lang('Price')">{{ $order->price }}</td>
+                                </tr>
                                 <tr>
                                     <td data-label="@lang('Start Counter')">@lang('Start Counter')</td>
                                     <td data-label="@lang('Start Counter')" class="text-left">

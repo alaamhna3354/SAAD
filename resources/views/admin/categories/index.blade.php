@@ -78,23 +78,24 @@
                         <div class="avatar-edit">
                             <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
-                            <small class="mt-2 text-facebook">@lang('Supported files'): <b>jpeg, jpg.</b> @lang('Image will be resized into') {{imagePath()['category']['size']}}px </small>
+
                         </div>
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Field Name') </label>
+                            <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('Field Name')" value="@lang('Number')">
+                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('اتركه فارغاً اذا كان المنتج هو بطاقات غوغل بلاي او ماشابه')">
                             </div>
                         </div>
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('additional Field') <span
+                            <label class="font-weight-bold ">@lang('الحقول الإضافية : مثل اسم اللاعب -رقم الهاتف او كلمة المرور ') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('additional Field')">
+                                <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('لإضافة اكثر من حقل ضع فاصلة بين اسماء الحقول مثال: البريد,كلمة المرور')">
                             </div>
                         </div>
+
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Api Url') <span
+                            <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله ') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
@@ -132,20 +133,20 @@
                             </div>
                         </div>
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Field Name') </label>
+                            <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('Field Name')" value="{{__($item->field_name)}}">
                             </div>
                         </div>
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('additional Field') <span
+                            <label class="font-weight-bold ">@lang('الحقول الإضافية : مثل اسم اللاعب -رقم الهاتف او كلمة المرور ') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('additional Field')">
                             </div>
                         </div>
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Api Url') <span
+                            <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
@@ -161,7 +162,6 @@
                         <div class="avatar-edit">
                             <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
-                            <small class="mt-2 text-facebook">@lang('Supported files'): <b>jpeg, jpg.</b> @lang('Image will be resized into') {{imagePath()['category']['size']}}px </small>
                         </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>

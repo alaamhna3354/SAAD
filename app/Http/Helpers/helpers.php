@@ -829,7 +829,8 @@ function getPlayerName()
     return $name;
 }
 
-function getPlayer($api,$id)
-{
-return $id;
-}
+//function getPlayer($api,$id)
+//{
+//    $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
+//    return $getPlayer->body();
+//}

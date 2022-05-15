@@ -16,7 +16,7 @@ class OrderController extends Controller
         $service = Service::findOrFail($service_id);
 
         $request->validate([
-            'link' => 'required|string',
+//            'link' => 'required|string',
             'quantity' => 'required|integer|gte:'. $service->min . '|lte:' . $service->max,
         ]);
 
@@ -43,6 +43,8 @@ class OrderController extends Controller
         $order->price = $price;
         $order->remain = $request->quantity;
         $order->api_order = $service->api_service_id ? 1 : 0;
+        if(isset($request->custom))
+        $order->details=json_encode($request->custom, JSON_UNESCAPED_UNICODE);
         $order->save();
 
         //Create Transaction
