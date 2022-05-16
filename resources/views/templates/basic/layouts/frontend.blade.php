@@ -34,18 +34,14 @@
     <!-- main style css link -->
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/style.css')}}">
 
-
-
-
-
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'/css/bootstrap-fileinput.css')}}">
 
     <link rel="stylesheet"
           href="{{asset($activeTemplateTrue.'css/color.php?color='.$general->base_color.'&secondColor='.$general->secondary_color)}}">
 
     @stack('style-lib')
-
     @stack('style')
+
 </head>
 <body>
 
@@ -183,6 +179,7 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -196,6 +193,7 @@
         </div>
     </div>
 </div>
+
 <!-- footer-section end -->
 
 
