@@ -47,17 +47,17 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Preloader
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<div id="overlayer">
-    <div class="loader">
-        <div class="loader-inner"></div>
-    </div>
-</div>
-<a href="#" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
-<div class="figure highlight-background highlight-background--lean-left">
-<a class="register-element-one">
-    <img src="http://127.0.0.1:8000/assets/images/logoIcon/logo.png" height="34px" width="150px" alt="site-logo">
-</a>
-</div>
+{{--<div id="overlayer">--}}
+    {{--<div class="loader">--}}
+        {{--<div class="loader-inner"></div>--}}
+    {{--</div>--}}
+{{--</div>--}}
+{{--<a href="#" class="scrollToTop"><i class="fa fa-angle-up"></i></a>--}}
+{{--<div class="figure highlight-background highlight-background--lean-left">--}}
+{{--<a class="register-element-one">--}}
+    {{--<img src="http://127.0.0.1:8000/assets/images/logoIcon/logo.png" height="34px" width="150px" alt="site-logo">--}}
+{{--</a>--}}
+{{--</div>--}}
 @yield('content')
 
 <!-- footer-section end -->
