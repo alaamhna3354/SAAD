@@ -82,7 +82,7 @@ class OrderController extends Controller
                 'price' => $price,
                 'currency' => $gnl->cur_text,
                 'post_balance' => getAmount($user->balance),
-                'code' => $serviceCode
+                'code' => $serviceCode->code
             ]);
             $serviceCode->is_used = 1;
             $serviceCode->user=$user->id;
