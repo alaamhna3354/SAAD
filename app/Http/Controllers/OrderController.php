@@ -28,7 +28,7 @@ class OrderController extends Controller
             $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
             return back()->withNotify($notify);
         }
-        if ($service->category->type == 'CODE' || $service->category->type == 'OTHER') {
+        if ($service->category->type == 'CODE') {
             $serviceCode = $service->serials->where('is_used', 0)->first();
             if ($serviceCode == null) {
                 $notify[] = ['error', 'No Code Available ,Please Contact with Support To Order Code.'];
@@ -52,7 +52,7 @@ class OrderController extends Controller
         $order->api_order = $service->api_service_id ? 1 : 0;
         if(isset($request->custom))
         $order->details=json_encode($request->custom, JSON_UNESCAPED_UNICODE);
-        if ($service->category->type == 'CODE' || $service->category->type == 'OTHER') {
+        if ($service->category->type == 'CODE') {
                 $order->code = $serviceCode->code;
         }
         $order->save();
@@ -76,7 +76,7 @@ class OrderController extends Controller
 
         //Send email to user
         $gnl = GeneralSetting::first();
-        if ($service->category->type == 'CODE' || $service->category->type == 'OTHER') {
+        if ($service->category->type == 'CODE' ) {
             notify($user, 'COMPLETED_ORDER_code', [
                 'service_name' => $service->name,
                 'price' => $price,
