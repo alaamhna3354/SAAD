@@ -12,4 +12,8 @@ class Serial extends Model
     {
         return $this->belongsTo(Service::class)->withDefault();
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault();
+    }
 }

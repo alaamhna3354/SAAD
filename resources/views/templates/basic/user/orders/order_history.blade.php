@@ -14,7 +14,7 @@
                                     <th scope="col">@lang('Service')</th>
                                     <th scope="col">@lang('Link')</th>
                                     <th scope="col">@lang('Quantity')</th>
-                                    <th scope="col">@lang('Start Counter')</th>
+                                    <th scope="col">@lang('Code')</th>
                                     <th scope="col">@lang('Remains')</th>
                                     <th scope="col">@lang('Date')</th>
                                     <th scope="col">@lang('Status')</th>
@@ -28,7 +28,7 @@
                                         <td data-label="@lang('Service')" class="break_line">{{ __($item->service->name) }}</td>
                                         <td data-label="@lang('Link')"><a href="{{ empty(parse_url($item->link, PHP_URL_SCHEME)) ? 'https://' : null }}{{ $item->link }}" target="_blank">{{ $item->link }}</a></td>
                                         <td data-label="@lang('Quantity')">{{ $item->quantity }}</td>
-                                        <td data-label="@lang('Start Counter')">{{ $item->start_counter }}</td>
+                                        <td data-label="@lang('Start Counter')">{{ $item->code }}</td>
                                         <td data-label="@lang('Remains')">{{ $item->remain }}</td>
                                         <td data-label="@lang('Date')">{{ showDateTime($item->created_at) }}</td>
                                         <td data-label="@lang('Status')">

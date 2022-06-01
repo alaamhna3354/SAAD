@@ -80,6 +80,21 @@
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
 
                         </div>
+                        <div class="form-group">
+                            <label>@lang('Select Type')</label>
+                            <select class="form-control" id="type" name="type" onchange="showExtraField()">
+                                <option disabled value="" selected hidden>@lang('Select Type')</option>
+
+                                <option value="GAME">@lang('GAME')</option>
+                                <option value="CODE">@lang('CODE')</option>
+                                <option value="BALANCE">@lang('BALANCE')</option>
+                                <option value="OTHER">@lang('OTHER')</option>
+
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="error text-danger">@lang($errors->first('type')) </div>
+                            @endif
+                        </div>
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
                             <div class="col-sm-12">
@@ -131,6 +146,20 @@
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="name" value="{{__($item->name)}}" required>
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label>@lang('Select Type')</label>
+                            <select class="form-control" id="type" name="type" onchange="showExtraField()">
+                                <option value="{{old('type',$item->type)}}" selected
+                                        hidden>{{$item->type}}</option>
+                                <option value="GAME">@lang('GAME')</option>
+                                <option value="CODE">@lang('CODE')</option>
+                                <option value="BALANCE">@lang('BALANCE')</option>
+                                <option value="OTHER">@lang('OTHER')</option>
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="error text-danger">@lang($errors->first('type')) </div>
+                            @endif
                         </div>
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
