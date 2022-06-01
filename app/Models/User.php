@@ -101,4 +101,9 @@ class User extends Authenticatable
         return $this->where('sv', 1);
     }
 
+    public function serials()
+    {
+        return $this->hasMany(Serial::class);
+    }
+
 }

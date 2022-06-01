@@ -15,6 +15,8 @@
                                 <th scope="col">@lang('Service')</th>
                                 <th scope="col">@lang('Details')</th>
                                 <th scope="col">@lang('Status')</th>
+                                <th scope="col">@lang('Avalible')</th>
+                                <th scope="col">@lang('User')</th>
                                 <th scope="col">@lang('Actions')</th>
                             </tr>
                             </thead>
@@ -33,6 +35,16 @@
                                                     class="text--small badge font-weight-normal badge--danger">@lang('Inactive')</span>
                                         @endif
                                     </td>
+                                    <td data-label="@lang('Avalible')">
+                                        @if(@$item->is_used === 0)
+                                            <span
+                                                    class="text--small badge font-weight-normal badge--success">@lang('Avalible')</span>
+                                        @else
+                                            <span
+                                                    class="text--small badge font-weight-normal badge--danger">@lang('Used')</span>
+                                        @endif
+                                    </td>
+                                    <td data-label="@lang('User')">{{$item->user}}</td>
                                     <td data-label="@lang('Action')">
                                         <a href="javascript:void(0)" class="icon-btn ml-1 editBtn"
                                            data-original-title="@lang('Edit')" data-toggle="tooltip"
@@ -49,6 +61,7 @@
                                            data-url="{{ route('admin.services.status', $item->id) }}">
                                             <i class="la la-eye{{ $item->status ? '-slash' : null }}"></i>
                                         </a>
+
 
                                     </td>
                                 </tr>

@@ -20,15 +20,26 @@ class CategoryController extends Controller
     public function store()
     {
         \request()->validate([
-            'name' => 'required|string|max:70|unique:categories,name'
+            'name' => 'required|string|max:70|unique:categories,name',
+            'type' => 'required',
         ]);
-
+        $request = \request();
         $category = new Category();
         $category->name = \request()->name;
         $category->custom_additional_field_name=\request()->custom_additional_field_name;
         $category->field_name=\request()->field_name;
         $category->api=\request()->api;
-        $request = \request();
+        $category->type = $request['type'];
+        if ($request['type'] == "BALANCE" || $request['type'] == "OTHER"){
+            if ($request['special_field'] != ""){
+                $category->field_name = $request['special_field'];
+            }else{
+                $category->field_name = null;
+            }
+        }else{
+            $category->field_name = null;
+        }
+
         $image = $request->file('image');
             $path = imagePath()['category']['path'];
             $size = imagePath()['category']['size'];
@@ -64,7 +75,16 @@ class CategoryController extends Controller
         $path = 'assets/images/category/';
         $size = imagePath()['category']['size'];
         $filename = $request->image;
-//        dd($request->image);
+        if ($request['type'] == "BALANCE" || $request['type'] == "OTHER"){
+            if ($request['special_field'] != ""){
+                $category->field_name= $request['special_field'];
+            }else{
+                $category->field_name = null;
+            }
+        }else{
+            $category->field_name = null;
+        }
+        $category->type = $request['type'];
         if ($request->hasFile('image')) {
             try {
                 $filename = uploadImage($image, $path, $size, $filename);

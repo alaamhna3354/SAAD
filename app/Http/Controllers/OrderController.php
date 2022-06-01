@@ -13,8 +13,8 @@ class OrderController extends Controller
 {
     public function order(Request $request, $category_id, $service_id)
     {
-        $service = Service::findOrFail($service_id);
 
+        $service = Service::findOrFail($service_id);
         $request->validate([
 //            'link' => 'required|string',
             'quantity' => 'required|integer|gte:'. $service->min . '|lte:' . $service->max,
@@ -28,7 +28,13 @@ class OrderController extends Controller
             $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
             return back()->withNotify($notify);
         }
-
+        if ($service->category->type == 'CODE') {
+            $serviceCode = $service->serials->where('is_used', 0)->first();
+            if ($serviceCode == null) {
+                $notify[] = ['error', 'No Code Available ,Please Contact with Support To Order Code.'];
+                return back()->withNotify($notify);
+            }
+        }
         $user->balance -= $price;
         $user->save();
 
@@ -37,6 +43,7 @@ class OrderController extends Controller
         $order->user_id = $user->id;
         $order->category_id = $category_id;
         $order->service_id = $service_id;
+
         $order->api_service_id = $service->api_service_id ? $service->api_service_id : 0;
         $order->link = $request->link;
         $order->quantity = $request->quantity;
@@ -45,6 +52,9 @@ class OrderController extends Controller
         $order->api_order = $service->api_service_id ? 1 : 0;
         if(isset($request->custom))
         $order->details=json_encode($request->custom, JSON_UNESCAPED_UNICODE);
+        if ($service->category->type == 'CODE') {
+                $order->code = $serviceCode->code;
+        }
         $order->save();
 
         //Create Transaction
@@ -66,11 +76,24 @@ class OrderController extends Controller
 
         //Send email to user
         $gnl = GeneralSetting::first();
+        if ($service->category->type == 'CODE' ) {
+            notify($user, 'COMPLETED_ORDER_code', [
+                'service_name' => $service->name,
+                'price' => $price,
+                'currency' => $gnl->cur_text,
+                'post_balance' => getAmount($user->balance),
+                'code' => $serviceCode
+            ]);
+            $serviceCode->is_used = 1;
+            $serviceCode->user=$user->id;
+            $serviceCode->save();
+        }
+        else
         notify($user, 'PENDING_ORDER', [
             'service_name' => $service->name,
             'price' => $price,
             'currency' => $gnl->cur_text,
-            'post_balance' => getAmount($user->balance)
+            'post_balance' => getAmount($user->balance),
         ]);
 
         $notify[] = ['success', 'Successfully placed your order!'];
