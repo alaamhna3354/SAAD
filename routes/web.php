@@ -393,5 +393,6 @@ Route::get('extra/{id}/{slug}', 'SiteController@extraDetails')->name('extra.deta
 Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name('placeholderImage');
 
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
-Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+//Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
+Route::get('/', 'SiteController@index')->name('home');
 Route::get('/api/player/{api}/{id}', 'ApiController@getPlayer')->name('player');

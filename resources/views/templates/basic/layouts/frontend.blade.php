@@ -45,7 +45,7 @@
 </head>
 <body>
 
-@php echo loadFbComment() @endphp
+{{--@php echo loadFbComment() @endphp--}}
 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         Start Preloader
@@ -69,31 +69,13 @@
                         </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav main-menu ml-auto">
-                                <li><a href="{{route('home')}}">{{__('Home')}}</a></li>
-
-                                @foreach($pages as $k => $data)
-                                    <li><a href="{{route('pages',[$data->slug])}}">{{__($data->name)}}</a></li>
-                                @endforeach
-
-                                <li><a href="{{ route('contact') }}">@lang('Contact')</a></li>
-
-                                <li class="menu_has_children">
-                                    <a href="#0">@lang('Account')</a>
-                                    <ul class="sub-menu">
-                                        @auth
-                                            <li><a href="{{ route('user.home') }}">@lang('Dashboard')</a></li>
-                                            <li><a href="{{ route('user.logout') }}">@lang('Logout')</a></li>
-                                        @else
-                                            <li><a href="{{ route('user.login') }}">@lang('Login')</a></li>
-                                            <li><a href="{{ route('user.register') }}">@lang('Register')</a></li>
-                                        @endauth
-                                    </ul>
-                                </li>
-                                <select class="select w-auto ml-xl-3 langSel" style="background: transparent;color: white;height: 10px;border: 1px solid #e5e5e575;">
-                                    @foreach($language as $item)
-                                        <option value="{{$item->code}}" @if(session('lang') == $item->code) selected  @endif class="mr-0">{{ __($item->name) }}</option>
-                                    @endforeach
-                                </select>
+                                @auth
+                                    <li><a href="{{ route('user.home') }}">@lang('Dashboard')</a></li>
+                                    <li><a href="{{ route('user.logout') }}">@lang('Logout')</a></li>
+                                @else
+                                    <li><a href="{{ route('user.login') }}">@lang('Login')</a></li>
+                                    <li><a href="{{ route('user.register') }}">@lang('Register')</a></li>
+                                @endauth
                             </ul>
                         </div>
                     </nav>
@@ -107,15 +89,13 @@
 <a href="#" class="scrollToTop"><i class="fa fa-angle-up"></i></a>
 
 <!--breadcrumb area-->
-@if(request()->route()->getName() != 'home')
-    @include($activeTemplate.'partials.breadcrumb')
-@endif
+{{--@if(request()->route()->getName() != 'home')--}}
+    {{--@include($activeTemplate.'partials.breadcrumb')--}}
+{{--@endif--}}
 <!--/breadcrumb area-->
 
 
 @yield('content')
-
-
 
 @php
     $footer_content = getContent('footer.content', true);
@@ -123,72 +103,72 @@
     $address_content = getContent('address.content', true);
     $extra_pages = getContent('extra.element');
 @endphp
-<!-- footer-section start -->
-<footer class="footer-section ptb-80">
-    <div class="container">
-        <div class="footer-area mrt-100">
-            <div class="row ml-b-30">
-                <div class="col-lg-4 col-sm-8 mrb-30">
-                    <div class="footer-widget widget-menu">
-                        <div class="footer-logo">
-                            <h3 class="widget-title">@lang('About Us')</h3>
-                            <p>{{ __(@$footer_content->data_values->content) }}</p>
-                            <div class="social-area">
-                                <ul class="footer-social">
-                                    @forelse($footer_elements as $item)
-                                        <li><a href="{{ @$item->data_values->social_url }}">@php echo @$item->data_values->social_icon @endphp</a></li>
-                                    @empty
-                                    @endforelse
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-sm-6 mrb-30">
-                    <div class="footer-widget">
-                        <h3 class="widget-title">@lang('Quick Link')</h3>
-                        <ul>
-                            @foreach($pages as $k => $data)
-                                <li><a href="{{route('pages',[$data->slug])}}">{{__($data->name)}}</a></li>
-                            @endforeach
+{{--<!-- footer-section start -->--}}
+{{--<footer class="footer-section ptb-80">--}}
+    {{--<div class="container">--}}
+        {{--<div class="footer-area mrt-100">--}}
+            {{--<div class="row ml-b-30">--}}
+                {{--<div class="col-lg-4 col-sm-8 mrb-30">--}}
+                    {{--<div class="footer-widget widget-menu">--}}
+                        {{--<div class="footer-logo">--}}
+                            {{--<h3 class="widget-title">@lang('About Us')</h3>--}}
+                            {{--<p>{{ __(@$footer_content->data_values->content) }}</p>--}}
+                            {{--<div class="social-area">--}}
+                                {{--<ul class="footer-social">--}}
+                                    {{--@forelse($footer_elements as $item)--}}
+                                        {{--<li><a href="{{ @$item->data_values->social_url }}">@php echo @$item->data_values->social_icon @endphp</a></li>--}}
+                                    {{--@empty--}}
+                                    {{--@endforelse--}}
+                                {{--</ul>--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-lg-2 col-sm-6 mrb-30">--}}
+                    {{--<div class="footer-widget">--}}
+                        {{--<h3 class="widget-title">@lang('Quick Link')</h3>--}}
+                        {{--<ul>--}}
+                            {{--@foreach($pages as $k => $data)--}}
+                                {{--<li><a href="{{route('pages',[$data->slug])}}">{{__($data->name)}}</a></li>--}}
+                            {{--@endforeach--}}
 
-                            <li><a href="{{ route('contact') }}">@lang('Contact')</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 mrb-30">
-                    <div class="footer-widget">
-                        <h3 class="widget-title">@lang('Privacy and Terms')</h3>
-                        <ul>
-                            @forelse($extra_pages as $item)
-                                <li><a href="{{ route('extra.details', [$item->id, slug($item->data_values->title)]) }}">{{ __(@$item->data_values->title) }}</a></li>
-                            @empty
-                            @endforelse
+                            {{--<li><a href="{{ route('contact') }}">@lang('Contact')</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-lg-3 col-sm-6 mrb-30">--}}
+                    {{--<div class="footer-widget">--}}
+                        {{--<h3 class="widget-title">@lang('Privacy and Terms')</h3>--}}
+                        {{--<ul>--}}
+                            {{--@forelse($extra_pages as $item)--}}
+                                {{--<li><a href="{{ route('extra.details', [$item->id, slug($item->data_values->title)]) }}">{{ __(@$item->data_values->title) }}</a></li>--}}
+                            {{--@empty--}}
+                            {{--@endforelse--}}
 
-                            <li><a href="{{ route('api.documentation') }}">@lang('API Documentation')</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-sm-6 mrb-30">
-                    <div class="footer-widget widget-menu">
-                        <h3 class="widget-title">@lang('contact info')</h3>
-                        <ul class="footer-contact-list">
-                            <li>{{ __(@$address_content->data_values->address) }}</li>
-                            <li>@lang('Call Us Now') {{ __(@$address_content->data_values->phone) }}</li>
-                            <li>{{ __(@$address_content->data_values->email) }}</li>
-                        </ul>
-                    </div>
-                </div>
+                            {{--<li><a href="{{ route('api.documentation') }}">@lang('API Documentation')</a></li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<div class="col-lg-3 col-sm-6 mrb-30">--}}
+                    {{--<div class="footer-widget widget-menu">--}}
+                        {{--<h3 class="widget-title">@lang('contact info')</h3>--}}
+                        {{--<ul class="footer-contact-list">--}}
+                            {{--<li>{{ __(@$address_content->data_values->address) }}</li>--}}
+                            {{--<li>@lang('Call Us Now') {{ __(@$address_content->data_values->phone) }}</li>--}}
+                            {{--<li>{{ __(@$address_content->data_values->email) }}</li>--}}
+                        {{--</ul>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
 
-            </div>
-        </div>
-    </div>
-</footer>
+            {{--</div>--}}
+        {{--</div>--}}
+    {{--</div>--}}
+{{--</footer>--}}
 <div class="privacy-area privacy-area--style">
     <div class="container">
         <div class="copyright-area d-flex flex-wrap align-items-center justify-content-center">
             <div class="copyright">
-                <p>@lang('Copyright') © {{ date('Y') }} @lang('All Rights reserved')</p>
+                <p>@lang('Copyright') SYRIAN CARDS © {{ date('Y') }} @lang('All Rights reserved')</p>
             </div>
         </div>
     </div>

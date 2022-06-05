@@ -4151,8 +4151,8 @@ a:hover, a:active {
 --------------------------------------------------------------*/
 .banner-section {
   position: relative;
-  /*background-image: -webkit-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
-  /*background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
+  background-image: -webkit-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);
+  background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);
   z-index: 9;
   overflow: hidden;
   padding-top: 250px;
