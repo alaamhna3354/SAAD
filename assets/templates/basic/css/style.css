@@ -3448,7 +3448,7 @@ input[type="radio"]:checked + label:before {
   left: 0;
   width: 100%;
   z-index: 999;
-  background-color: transparent;
+  background-color: #24282fa3;
 }
 @media only screen and (max-width: 991px) {
   .header-section .header-top-area .container {
@@ -3487,8 +3487,8 @@ input[type="radio"]:checked + label:before {
   left: 0;
   width: 100%;
   z-index: 9999;
-  background-image: -webkit-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);
-  background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);
+  /* background-image: -webkit-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%); */
+  /* background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%); */
   box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.1);
 }
 .header-section.header-fixed .header-bottom-area {
@@ -3580,8 +3580,8 @@ input[type="radio"]:checked + label:before {
 
 .header-bottom-area {
   position: relative;
-  background: transparent;
-  padding-top: 20px;
+  background: #24282fa3;
+  padding: 5px 0;
 }
 .header-bottom-area .header-account {
   padding-left: 30px;
@@ -3658,7 +3658,7 @@ input[type="radio"]:checked + label:before {
 .header-bottom-area .navbar-collapse .main-menu li a {
   position: relative;
   padding: 20px 0 20px 0;
-  color: #031c6c;
+  color: #fff;
   font-weight: 600;
   align-items: center;
   display: inline-block;
@@ -3667,7 +3667,9 @@ input[type="radio"]:checked + label:before {
   text-transform: capitalize;
 }
 .header-bottom-area .navbar-collapse .main-menu li a:hover {
-  color: #4d5bed;
+  text-shadow: 0px 0px 5px #fff,
+               0px 3px 10px #fff,
+               0px 6px 15px #fff;
 }
 .header-bottom-area .navbar-collapse .main-menu li a.active {
   color: #4d5bed;
@@ -5575,7 +5577,7 @@ svg {
 }
 
 .register-section {
-  background-image: url("../images/bg.jpg");
+  
   /*background-image: -ms-linear-gradient(30deg, #f7f8fa 0%, #f0f1fa 100%);*/
   position: relative;
   height: 100vh;
@@ -6320,4 +6322,12 @@ blockquote .quote-content {
 
 .my-float{
   margin-top:16px;
+}
+
+/* *************************************** new style home page *************************************** */
+.carousel-control-next, .carousel-control-prev {
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
 }
