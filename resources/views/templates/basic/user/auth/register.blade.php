@@ -1,7 +1,7 @@
 @extends($activeTemplate.'layouts.auth')
 @section('content')
     <!-- register-section start -->
-    <section class="register-section ">
+    <section class="register-section" style="background-image: url('{{asset($activeTemplateTrue.'images/bg.jpg')}}')">
         <div class="container">
             <div class="">
                 <div class="">

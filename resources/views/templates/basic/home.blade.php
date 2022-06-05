@@ -5,7 +5,7 @@
         $hero_content = getContent('hero.content', true);
     @endphp
     <!-- banner-section start -->
-    <section class="banner-section" style="background-image: url('{{ getImage('assets/images/frontend/hero/' . @$hero_content->data_values->image, '633x539') }}');background-repeat: no-repeat; background-size: cover">
+    <!-- <section class="banner-section" style="background-image: url('{{ getImage('assets/images/frontend/hero/' . @$hero_content->data_values->image, '633x539') }}');background-repeat: no-repeat; background-size: cover">
         {{--<div class="banner-element">--}}
             {{--<img src="{{ getImage('assets/images/frontend/hero/' . @$hero_content->data_values->image, '633x539') }}" alt="banner">--}}
         {{--</div>--}}
@@ -44,9 +44,154 @@
                 {{--</div>--}}
             {{--</div>--}}
         {{--</div>--}}
-    </section>
+    </section> -->
     <!-- banner-section end -->
 
+<!-- *************************************** Start Home Page *************************************** -->
+    <!-- start slider -->
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item">
+        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" class="d-block w-100" alt="...">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-target="#carouselExampleControls" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-target="#carouselExampleControls" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </button>
+    </div>
+    <!-- end slider -->
+    <!-- start products -->
+    <div class="products-contain">
+    <div class="wrapper">
+
+<h2><strong>All Games<span>( 8 )</span></strong></h2>
+
+<div class="cards">
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/1.jpg" />
+
+        <figcaption>Dota 2</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" />
+
+        <figcaption>Stick Fight</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/3.jpg" />
+
+        <figcaption>Minion Masters</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+
+        <figcaption>KoseBoz!</figcaption>
+
+    </figure>
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/1.jpg" />
+
+        <figcaption>Dota 2</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/2.jpg" />
+
+        <figcaption>Stick Fight</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/3.jpg" />
+
+        <figcaption>Minion Masters</figcaption>
+
+    </figure>
+
+    <figure class="card">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/4.jpg" />
+
+        <figcaption>KoseBoz!</figcaption>
+
+    </figure>
+
+</div>
+
+<h2><strong>What's new?</strong></h2>
+
+<div class="news">
+
+    <figure class="article">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" />
+
+        <figcaption>
+
+            <h3>New Item</h3>
+
+            <p>
+
+                In today’s update, two heads are better than one, and three heads are better than that, as the all-new Flockheart’s Gamble Arcana item for Ogre Magi makes its grand debut.
+
+            </p>
+
+        </figcaption>
+
+    </figure>
+
+    <figure class="article">
+
+        <img src="https://mrreiha.keybase.pub/codepen/hover-fx/news2.png" />
+
+        <figcaption>
+
+            <h3>Update</h3>
+
+            <p>
+
+                Just in time for Lunar New Year and the Rat’s time in the cyclical place of honor, the Treasure of Unbound Majesty is now available.
+
+            </p>
+
+        </figcaption>
+
+    </figure>
+
+</div>
+
+</div>
+
+    </div>
+ 
+    <!-- end products -->
+<!-- *************************************** End Home Page *************************************** -->
     @if($sections->secs != null)
         @foreach(json_decode($sections->secs) as $sec)
             @include($activeTemplate.'sections.'.$sec)
