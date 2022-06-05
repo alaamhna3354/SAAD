@@ -78,18 +78,15 @@
                         <div class="avatar-edit">
                             <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
-
                         </div>
                         <div class="form-group">
                             <label>@lang('Select Type')</label>
                             <select class="form-control" id="type" name="type" onchange="showExtraField()">
                                 <option disabled value="" selected hidden>@lang('Select Type')</option>
-
                                 <option value="GAME">@lang('GAME')</option>
                                 <option value="CODE">@lang('CODE')</option>
                                 <option value="BALANCE">@lang('BALANCE')</option>
-                                <option value="OTHER">@lang('OTHER')</option>
-
+                                <option value="OTHER">@lang('5SIM')</option>
                             </select>
                             @if($errors->has('type'))
                                 <div class="error text-danger">@lang($errors->first('type')) </div>
@@ -109,11 +106,18 @@
                             </div>
                         </div>
 
-                        <div class="form-row form-group">
+                        <div class="form-row form-group" hidden>
                             <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله ') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
+                            </div>
+                        </div>
+                        <div class="form-row form-group" >
+                            <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
+                                        class="text-danger">*</span></label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')">
                             </div>
                         </div>
                     </div>
@@ -149,13 +153,13 @@
                         </div>
                         <div class="form-group">
                             <label>@lang('Select Type')</label>
-                            <select class="form-control" id="type" name="type" onchange="showExtraField()">
+                            <select class="form-control" id="type" name="type">
                                 <option value="{{old('type',$item->type)}}" selected
                                         hidden>{{$item->type}}</option>
                                 <option value="GAME">@lang('GAME')</option>
                                 <option value="CODE">@lang('CODE')</option>
                                 <option value="BALANCE">@lang('BALANCE')</option>
-                                <option value="OTHER">@lang('OTHER')</option>
+                                <option value="5SIM">@lang('5SIM')</option>
                             </select>
                             @if($errors->has('type'))
                                 <div class="error text-danger">@lang($errors->first('type')) </div>
@@ -174,11 +178,18 @@
                                 <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('additional Field')">
                             </div>
                         </div>
-                        <div class="form-row form-group">
+                        <div class="form-row form-group" hidden>
                             <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
+                            </div>
+                        </div>
+                        <div class="form-row form-group" >
+                            <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
+                                        class="text-danger">*</span></label>
+                            <div class="col-sm-12">
+                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')" value="{{$item->sort}}">
                             </div>
                         </div>
                         {{--<div class="form-row form-group">--}}

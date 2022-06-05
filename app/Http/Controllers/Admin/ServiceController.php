@@ -66,8 +66,7 @@ class ServiceController extends Controller
             'price_per_k' => 'required|numeric|gt:0',
             'min' => 'required|integer|gt:0|lt:'. $request->max,
             'max' => 'required|integer|gt:'. $request->min,
-            'details' => 'required|string',
-            'api_service_id' => 'nullable|integer|gt:0|unique:services,api_service_id,' . $id
+            'details' => 'required|string'
         ]);
 
         $service = Service::findOrFail($id);
@@ -99,7 +98,9 @@ class ServiceController extends Controller
         $service->min = $request->min;
         $service->max = $request->max;
         $service->details = $request->details;
-        $service->api_service_id = $request->api_service_id;
+        if($service->category->type=="5SIM")
+        $service->api_service_params = $request->country  .'/any/'. $request->product;
+
     }
 
     public function status($id)

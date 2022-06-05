@@ -374,6 +374,7 @@ Route::name('user.')->prefix('user')->group(function () {
             //Api
             Route::get('api', 'ApiController@api')->name('api');
             Route::post('generate-new-key', 'ApiController@generateNewKey')->name('generateNewKey');
+            Route::get('fivesim', 'ApiController@fivesim')->name('fivesim');
         });
     });
 });

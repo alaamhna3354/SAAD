@@ -245,7 +245,7 @@ class UserController extends Controller
     {
         $page_title = 'Services';
         $empty_message = "No result found";
-        $categories = Category::active()->orderBy('name')->get();
+        $categories = Category::active()->orderBy('sort')->get();
         return view(activeTemplate() . 'user.services.services', compact('page_title', 'categories', 'empty_message'));
     }
     //Services
