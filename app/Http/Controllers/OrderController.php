@@ -8,6 +8,8 @@ use App\Models\Order;
 use App\Models\Service;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\ApiController;
+use Mockery\Exception;
 
 class OrderController extends Controller
 {
@@ -43,8 +45,6 @@ class OrderController extends Controller
         $order->user_id = $user->id;
         $order->category_id = $category_id;
         $order->service_id = $service_id;
-
-        $order->api_service_id = $service->api_service_id ? $service->api_service_id : 0;
         $order->link = $request->link;
         $order->quantity = $request->quantity;
         $order->price = $price;
@@ -55,8 +55,19 @@ class OrderController extends Controller
         if ($service->category->type == 'CODE') {
                 $order->code = $serviceCode->code;
         }
-        $order->save();
+        elseif ($service->category->type == '5SIM')
+        {
+            for($i=0;$i<$request->quantity;$i++) {
+                $codes = (new ApiController)->fivesim($service->api_service_params);
 
+                foreach ($codes as $key => $value)
+                    if ($key == 'phone')
+                        $order->code = $order->code .'phone: '.  $value .'<br>' ;
+//                    elseif($key=='sms')
+//                        $order->code = $order->code .'  code : ' . $value[0]['code'] .'<br>';
+            }
+        }
+        $order->save();
         //Create Transaction
         $transaction = new Transaction();
         $transaction->user_id = $user->id;
@@ -84,9 +95,19 @@ class OrderController extends Controller
                 'post_balance' => getAmount($user->balance),
                 'code' => $serviceCode->code
             ]);
-            $serviceCode->is_used = 1;
-            $serviceCode->user=$user->id;
+                $serviceCode->is_used = 1;
+                $serviceCode->user = $user->id;
             $serviceCode->save();
+        }
+        elseif ($service->category->type == '5SIM'){
+            notify($user, 'COMPLETED_ORDER_code', [
+                'service_name' => $service->name,
+                'price' => $price,
+                'currency' => $gnl->cur_text,
+                'post_balance' => getAmount($user->balance),
+                'code' => $order->code
+            ]);
+
         }
         else
         notify($user, 'PENDING_ORDER', [
@@ -250,4 +271,5 @@ class OrderController extends Controller
         $orders = Order::where('user_id', auth()->id())->refunded()->with(['category', 'service'])->paginate(getPaginate());
         return view(activeTemplate() . 'user.orders.order_history', compact('page_title', 'orders', 'empty_message'));
     }
+
 }

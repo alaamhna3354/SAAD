@@ -92,11 +92,11 @@
                         <div class="form-group">
                             <label class="font-weight-bold ">@lang('Category') <span
                                     class="text-danger">*</span></label>
-                            <select class="form-control" name="category">
+                            <select class="form-control" name="category" id="category" onchange="showExtraField()">
                                 <option selected>@lang('Choose')...</option>
 
                                 @forelse($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" id="{{$category->type}}">{{ $category->name }}</option>
                                 @empty
                                 @endforelse
 
@@ -109,6 +109,25 @@
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="name" required>
                             </div>
+                        </div>
+                        <div class="form-group" id="extra" style="display: none;">
+                            <label>@lang('Select Country')</label>
+                            <select class="form-control" id="country" name="country">
+                                <option disabled value="" selected hidden>@lang('Select Country')</option>
+                                @foreach(get5SimCountries() as $key=> $country)
+                                <option value="{{$key}}">{{$country}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="error text-danger">@lang($errors->first('type')) </div>
+                            @endif
+                            <label>@lang('Select Product')</label>
+                            <select class="form-control" id="product" name="product">
+                                <option disabled value="" selected hidden>@lang('Select Product')</option>
+                                @foreach(get5SimProducts() as  $product)
+                                    <option value="{{$product}}">{{$product}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
                             <label class="font-weight-bold ">@lang('Price Per 1k') <span
@@ -172,11 +191,11 @@
                         <div class="form-group">
                             <label class="font-weight-bold ">@lang('Category') <span
                                     class="text-danger">*</span></label>
-                            <select class="form-control" name="category">
+                            <select class="form-control" name="category" id="category1" onchange="showExtraField1()">
                                 <option selected>@lang('Choose')...</option>
 
                                 @forelse($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" id="{{$category->type}}">{{ $category->name }}</option>
                                 @empty
                                 @endforelse
 
@@ -189,6 +208,25 @@
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="name" required>
                             </div>
+                        </div>
+                        <div class="form-group" id="extra1" style="display: none;">
+                            <label>@lang('Select Country')</label>
+                            <select class="form-control" id="country" name="country">
+                                <option disabled value="" selected hidden>@lang('Select Country')</option>
+                                @foreach(get5SimCountries() as $key=> $country)
+                                    <option value="{{$key}}">{{$country}}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <div class="error text-danger">@lang($errors->first('type')) </div>
+                            @endif
+                            <label>@lang('Select Product')</label>
+                            <select class="form-control" id="product" name="product">
+                                <option disabled value="" selected hidden>@lang('Select Product')</option>
+                                @foreach(get5SimProducts() as  $product)
+                                    <option value="{{$product}}">{{$product}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="avatar-edit">
                             <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
@@ -277,6 +315,37 @@
 
 @push('script')
     <script>
+        function showExtraField(){
+            var opti = document.getElementById('category').options;
+            opt=opti[opti.selectedIndex].id;
+            // opt=opt.options[opt.selectedIndex].id;
+
+            if (opt == "5SIM" ){
+                $('#extra').attr('style','display : block;');
+                $('#country').attr(require);
+            }
+            else {
+                    $('#extra').attr('style','display : none;')
+                }
+
+                console.log(opt)
+            }
+        function showExtraField1(){
+            var opti = document.getElementById('category1').options;
+            opt=opti[opti.selectedIndex].id;
+            // opt=opt.options[opt.selectedIndex].id;
+
+            if (opt == "5SIM" ){
+                $('#extra1').attr('style','display : block;');
+                $('#extra1').attr(require);
+            }
+            else {
+                $('#extra1').attr('style','display : none;')
+            }
+
+            console.log(opt)
+        }
+
         (function ($) {
             "use strict";
             $('.editBtn').on('click', function () {

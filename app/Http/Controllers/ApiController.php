@@ -39,13 +39,100 @@ class ApiController extends Controller
     }
 
     //List of services
+
+    public function api()
+    {
+        $page_title = 'API Documentation';
+        return view(activeTemplate() . 'user.api.api', compact('page_title'));
+    }
+
+    //Place new order
+
+    public function generateNewKey()
+    {
+        $user = auth()->user();
+        $user->api_key = sha1(time());
+        $user->save();
+
+        $notify[] = ['success', 'Generated new api key!'];
+        return back()->withNotify($notify);
+    }
+
+    //Order Status
+
+    public function fivesim($params)
+    {
+
+        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
+        $ch = curl_init();
+        $country = 'russia';
+        $operator= 'any';
+        $url='https://5sim.net/v1/user/buy/activation/'.$params;
+//        $url='https://5sim.net/v1/guest/products/'.$country.'/'.$operator;
+        curl_setopt($ch, CURLOPT_URL,  $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $token;
+        $headers[] = 'Accept: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+
+        $result=json_decode($result,True);
+
+//        $result=$this->finishOrder($result['id']);
+
+       return $result;
+    }
+
+    public function finishOrder($id)
+    {
+        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
+        $ch = curl_init();
+        $finishOrderUrl='https://5sim.net/v1/user/finish/' . $id;
+        curl_setopt($ch, CURLOPT_URL, $finishOrderUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $token;
+        $headers[] = 'Accept: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
+        $result=json_decode($result,True);
+        dd($result);
+        return $result;
+    }
+
+
+
+
+
+
+    /*
+     * Web routes
+     */
+
+    // API Documentation
+
     private function services($request)
     {
         $services = Service::active()->with('category')->get(['id', 'name', 'price_per_k as rate', 'min', 'max']);
         return response()->json($services);
     }
 
-    //Place new order
     private function add($request)
     {
         //Service Validation
@@ -123,8 +210,23 @@ class ApiController extends Controller
 
         return response()->json(['order' => $order->id]);
     }
+//    public function getPlayer($api,$id)
+//    {
+////        $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
+////        $region = "pc-as"; // choose platform and region
+////        $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
+////        $headers = array(
+////            'Authorization' => $apiKey,
+////            'Accept' => 'application/vnd.api+json'
+////        );
+////        $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
+////        $getPlayerContent = json_decode($getPlayer->body, true);
+////        $name = $getPlayerContent['data'][0]['attributes']['name'];
+////        return $name;
+//        $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
+//        return $getPlayer->body();
+//    }
 
-    //Order Status
     private function status($request)
     {
         //Validation
@@ -147,42 +249,4 @@ class ApiController extends Controller
 
         return response()->json($order);
     }
-
-    /*
-     * Web routes
-     */
-
-    // API Documentation
-    public function api()
-    {
-        $page_title = 'API Documentation';
-        return view(activeTemplate() . 'user.api.api', compact('page_title'));
-    }
-
-    public function generateNewKey()
-    {
-        $user = auth()->user();
-        $user->api_key = sha1(time());
-        $user->save();
-
-        $notify[] = ['success', 'Generated new api key!'];
-        return back()->withNotify($notify);
-    }
-//    public function getPlayer($api,$id)
-//    {
-////        $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
-////        $region = "pc-as"; // choose platform and region
-////        $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
-////        $headers = array(
-////            'Authorization' => $apiKey,
-////            'Accept' => 'application/vnd.api+json'
-////        );
-////        $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
-////        $getPlayerContent = json_decode($getPlayer->body, true);
-////        $name = $getPlayerContent['data'][0]['attributes']['name'];
-////        return $name;
-//        $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
-//        return $getPlayer->body();
-//    }
-
 }

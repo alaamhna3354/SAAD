@@ -14,7 +14,8 @@ use PHPMailer\PHPMailer\SMTP;
 use Carbon\Carbon;
 
 
-function sidebarVariation(){
+function sidebarVariation()
+{
 
     /// for sidebar
     $variation['sidebar'] = '';
@@ -31,7 +32,7 @@ function sidebarVariation(){
 
 function systemDetails()
 {
-    $system['name'] = 'smmlab';
+    $system['name'] = 'SyriaCards';
     $system['version'] = '1.0';
     return $system;
 }
@@ -90,14 +91,15 @@ function getNumber($length = 8)
     return $randomString;
 }
 
-function urlPath($routeName,$routeParam=null){
-    if($routeParam == null){
+function urlPath($routeName, $routeParam = null)
+{
+    if ($routeParam == null) {
         $url = route($routeName);
     } else {
-        $url = route($routeName,$routeParam);
+        $url = route($routeName, $routeParam);
     }
     $basePath = route('home');
-    $path = str_replace($basePath,'',$url);
+    $path = str_replace($basePath, '', $url);
     return $path;
 }
 
@@ -115,7 +117,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     $image = Image::make($file);
     if (!empty($size)) {
         $size = explode('x', strtolower($size));
-        $image->resize($size[0], $size[1],function($constraint){
+        $image->resize($size[0], $size[1], function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         });
@@ -125,7 +127,7 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     if (!empty($thumb)) {
 
         $thumb = explode('x', $thumb);
-        Image::make($file)->resize($thumb[0], $thumb[1],function($constraint){
+        Image::make($file)->resize($thumb[0], $thumb[1], function ($constraint) {
             $constraint->aspectRatio();
             $constraint->upsize();
         })->save($location . '/thumb_' . $filename);
@@ -133,7 +135,8 @@ function uploadImage($file, $location, $size = null, $old = null, $thumb = null)
     return $filename;
 }
 
-function uploadFile($file, $location, $size = null, $old = null){
+function uploadFile($file, $location, $size = null, $old = null)
+{
     $path = makeDirectory($location);
     if (!$path) throw new Exception('File could not been created.');
 
@@ -142,7 +145,7 @@ function uploadFile($file, $location, $size = null, $old = null){
     }
 
     $filename = uniqid() . time() . '.' . $file->getClientOriginalExtension();
-    $file->move($location,$filename);
+    $file->move($location, $filename);
     return $filename;
 }
 
@@ -205,13 +208,13 @@ function loadTawkto()
 
 function loadFbComment()
 {
-    $comment = Extension::where('act', 'fb-comment')->where('status',1)->first();
-    return  $comment ? $comment->generateScript() : '';
+    $comment = Extension::where('act', 'fb-comment')->where('status', 1)->first();
+    return $comment ? $comment->generateScript() : '';
 }
 
 function getCustomCaptcha($height = 46, $width = '300px', $bgcolor = '#003', $textcolor = '#abc')
 {
-    $textcolor = '#'.GeneralSetting::first()->base_color;
+    $textcolor = '#' . GeneralSetting::first()->base_color;
     $captcha = Extension::where('act', 'custom-captcha')->where('status', 1)->first();
     if (!$captcha) {
         return 0;
@@ -254,7 +257,7 @@ function getTrx($length = 12)
 
 function getAmount($amount, $length = 0)
 {
-    if(0 < $length){
+    if (0 < $length) {
         return round($amount + 0, $length);
     }
     return $amount + 0;
@@ -366,7 +369,8 @@ function getIpInfo()
 }
 
 //moveable
-function osBrowser(){
+function osBrowser()
+{
     $user_agent = $_SERVER['HTTP_USER_AGENT'];
     $os_platform = "Unknown OS Platform";
     $os_array = array(
@@ -444,11 +448,13 @@ function getSettings()
 
     return $general;
 }
+
 function getBalance()
 {
-   return $widget['balance'] = auth()->user()->balance;
+    return $widget['balance'] = auth()->user()->balance;
 
 }
+
 //moveable
 function getTemplates()
 {
@@ -477,14 +483,14 @@ function getPageSections($arr = false)
 }
 
 
-function getImage($image,$size = null)
+function getImage($image, $size = null)
 {
     $clean = '';
     $size = $size ? $size : 'undefined';
     if (file_exists($image) && is_file($image)) {
         return asset($image) . $clean;
-    }else{
-        return route('placeholderImage',$size);
+    } else {
+        return route('placeholderImage', $size);
     }
 }
 
@@ -540,13 +546,13 @@ function sendEmail($user, $type = null, $shortCodes = [])
     $config = $general->mail_config;
 
     if ($config->name == 'php') {
-        sendPhpMail($user->email, $user->username,$email_template->subj, $message);
+        sendPhpMail($user->email, $user->username, $email_template->subj, $message);
     } else if ($config->name == 'smtp') {
-        sendSmtpMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+        sendSmtpMail($config, $user->email, $user->username, $email_template->subj, $message, $general);
     } else if ($config->name == 'sendgrid') {
-        sendSendGridMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+        sendSendGridMail($config, $user->email, $user->username, $email_template->subj, $message, $general);
     } else if ($config->name == 'mailjet') {
-        sendMailjetMail($config, $user->email, $user->username, $email_template->subj, $message,$general);
+        sendMailjetMail($config, $user->email, $user->username, $email_template->subj, $message, $general);
     }
 }
 
@@ -562,23 +568,23 @@ function sendPhpMail($receiver_email, $receiver_name, $subject, $message)
 }
 
 
-function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $message,$gnl)
+function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $message, $gnl)
 {
     $mail = new PHPMailer(true);
 
     try {
         //Server settings
         $mail->isSMTP();
-        $mail->Host       = $config->host;
-        $mail->SMTPAuth   = true;
-        $mail->Username   = $config->username;
-        $mail->Password   = $config->password;
+        $mail->Host = $config->host;
+        $mail->SMTPAuth = true;
+        $mail->Username = $config->username;
+        $mail->Password = $config->password;
         if ($config->enc == 'ssl') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
-        }else{
+        } else {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         }
-        $mail->Port       = $config->port;
+        $mail->Port = $config->port;
         $mail->CharSet = 'UTF-8';
         //Recipients
         $mail->setFrom($gnl->email_from, $gnl->sitetitle);
@@ -587,7 +593,7 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
         // Content
         $mail->isHTML(true);
         $mail->Subject = $subject;
-        $mail->Body    = $message;
+        $mail->Body = $message;
         $mail->send();
     } catch (Exception $e) {
         throw new Exception($e);
@@ -595,7 +601,7 @@ function sendSmtpMail($config, $receiver_email, $receiver_name, $subject, $messa
 }
 
 
-function sendSendGridMail($config, $receiver_email, $receiver_name, $subject, $message,$gnl)
+function sendSendGridMail($config, $receiver_email, $receiver_name, $subject, $message, $gnl)
 {
     $sendgridMail = new \SendGrid\Mail\Mail();
     $sendgridMail->setFrom($gnl->email_from, $gnl->sitetitle);
@@ -611,7 +617,7 @@ function sendSendGridMail($config, $receiver_email, $receiver_name, $subject, $m
 }
 
 
-function sendMailjetMail($config, $receiver_email, $receiver_name, $subject, $message,$gnl)
+function sendMailjetMail($config, $receiver_email, $receiver_name, $subject, $message, $gnl)
 {
     $mj = new \Mailjet\Client($config->public_key, $config->secret_key, true, ['version' => 'v3.1']);
     $body = [
@@ -671,11 +677,11 @@ function imagePath()
         'size' => '800x800',
     ];
     $data['verify'] = [
-        'withdraw'=>[
-            'path'=>'assets/images/verify/withdraw'
+        'withdraw' => [
+            'path' => 'assets/images/verify/withdraw'
         ],
-        'deposit'=>[
-            'path'=>'assets/images/verify/deposit'
+        'deposit' => [
+            'path' => 'assets/images/verify/deposit'
         ]
     ];
     $data['image'] = [
@@ -708,22 +714,22 @@ function imagePath()
         'size' => '600x315'
     ];
     $data['profile'] = [
-        'user'=> [
-            'path'=>'assets/images/user/profile',
-            'size'=>'350x300'
+        'user' => [
+            'path' => 'assets/images/user/profile',
+            'size' => '350x300'
         ],
-        'admin'=> [
-            'path'=>'assets/admin/images/profile',
-            'size'=>'400x400'
+        'admin' => [
+            'path' => 'assets/admin/images/profile',
+            'size' => '400x400'
         ]
     ];
     $data['category'] = [
-            'path'=>'assets/images/category',
-            'size'=>'350x300'
+        'path' => 'assets/images/category',
+        'size' => '350x300'
     ];
     $data['service'] = [
-        'path'=>'assets/images/service',
-        'size'=>'350x300'
+        'path' => 'assets/images/service',
+        'size' => '350x300'
     ];
     return $data;
 }
@@ -760,7 +766,6 @@ function sendGeneralEmail($email, $subject, $message, $receiver_name = '')
     $config = $general->mail_config;
 
 
-
     if ($config->name == 'php') {
         sendPhpMail($email, $receiver_name, $general->email_from, $subject, $message);
     } else if ($config->name == 'smtp') {
@@ -772,7 +777,7 @@ function sendGeneralEmail($email, $subject, $message, $receiver_name = '')
     }
 }
 
-function getContent($data_keys, $singleQuery = false, $limit = null,$orderById = false)
+function getContent($data_keys, $singleQuery = false, $limit = null, $orderById = false)
 {
     if ($singleQuery) {
         $content = Frontend::where('data_keys', $data_keys)->latest()->first();
@@ -781,9 +786,9 @@ function getContent($data_keys, $singleQuery = false, $limit = null,$orderById =
         $article->when($limit != null, function ($q) use ($limit) {
             return $q->limit($limit);
         });
-        if($orderById){
+        if ($orderById) {
             $content = $article->where('data_keys', $data_keys)->orderBy('id')->get();
-        }else{
+        } else {
             $content = $article->where('data_keys', $data_keys)->latest()->get();
         }
     }
@@ -791,46 +796,371 @@ function getContent($data_keys, $singleQuery = false, $limit = null,$orderById =
 }
 
 
-function gatewayRedirectUrl($type = false){
+function gatewayRedirectUrl($type = false)
+{
     if ($type) {
         return 'user.history';
-    }else{
+    } else {
         return 'user.deposit';
     }
 }
 
-function paginateLinks($data, $design = 'admin.partials.paginate'){
+function paginateLinks($data, $design = 'admin.partials.paginate')
+{
     return $data->appends(request()->all())->links($design);
 }
 
 
-function GetSettingState(){
-    $state=false;
+function GetSettingState()
+{
+    $state = true;
     return $state;
 }
 
-function getPlayerName()
+//function getPlayerName()
+//{
+////    $client = new GuzzleHttp\Client();
+////    $playerName =Http::get('https://api.pubg.com/shards/saad/players?5415356544');
+//////        $client->get('https://api.pubg.com/shards/steam/players?5415356544','sdsd');
+////    dd($playerName);
+////    return $playerName;
+//    $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
+//    $region = "pc-as"; // choose platform and region
+//    $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
+//    $headers = array(
+//        'Authorization' => $apiKey,
+//        'Accept' => 'application/vnd.api+json'
+//    );
+//    $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
+//    $getPlayerContent = json_decode($getPlayer->body, true);
+//    $name = $getPlayerContent['data'][0]['attributes']['name'];
+//    return $name;
+//}
+
+
+function get5SimCountry()
 {
-//    $client = new GuzzleHttp\Client();
-//    $playerName =Http::get('https://api.pubg.com/shards/saad/players?5415356544');
-////        $client->get('https://api.pubg.com/shards/steam/players?5415356544','sdsd');
-//    dd($playerName);
-//    return $playerName;
-    $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
-    $region = "pc-as"; // choose platform and region
-    $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
-    $headers = array(
-        'Authorization' => $apiKey,
-        'Accept' => 'application/vnd.api+json'
-    );
-    $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
-    $getPlayerContent = json_decode($getPlayer->body, true);
-    $name = $getPlayerContent['data'][0]['attributes']['name'];
-    return $name;
+    $country = [
+
+    ];
+    return $country;
 }
 
-//function getPlayer($api,$id)
-//{
-//    $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
-//    return $getPlayer->body();
-//}
+function get5SimCountries()
+{
+    $countries = [
+        "afghanistan" => "Afghanistan",
+        "albania" => "Albania",
+        "algeria" => "Algeria",
+        "angola" => "Angola",
+        "anguilla" => "Anguilla",
+        "antiguaandbarbuda" => "Antigua and Barbuda",
+        "argentina" => "Argentina",
+        "aruba" => "Aruba",
+        "australia" => "Australia",
+        "austria" => "Austria",
+        "azerbaijan" => "Azerbaijan",
+        "bahamas" => "Bahamas",
+        "bahrain" => "Bahrain",
+        "bangladesh" => "Bangladesh",
+        "barbados" => "Barbados",
+        "belarus" => "Belarus",
+        "belgium" => "Belgium",
+        "belize" => "Belize",
+        "benin" => "Benin",
+        "bih" => "Bosnia and Herzegovina",
+        "bolivia" => "Bolivia",
+        "botswana" => "Botswana",
+        "brazil" => "Brazil",
+        "bulgaria" => "Bulgaria",
+        "burkinafaso" => "Burkina Faso",
+        "burundi" => "Burundi",
+        "cambodia" => "Cambodia",
+        "cameroon" => "Cameroon",
+        "canada" => "Canada",
+        "capeverde" => "Cape Verde",
+        "caymanislands" => "Cayman Islands",
+        "chad" => "Chad",
+        "chile" => "Chile",
+        "china" => "China",
+        "colombia" => "Colombia",
+        "comoros" => "Comoros",
+        "congo" => "Congo",
+        "costarica" => "Costa Rica",
+        "croatia" => "Croatia",
+        "cyprus" => "Cyprus",
+        "czech" => "Czechia",
+        "djibouti" => "Djibouti",
+        "dominica" => "Dominica",
+        "dominicana" => "Dominican Republic",
+        "easttimor" => "East Timor",
+        "ecuador" => "Ecuador",
+        "egypt" => "Egypt",
+        "england" => "England",
+        "equatorialguinea" => "Equatorial Guinea",
+        "eritrea" => "Eritrea",
+        "estonia" => "Estonia",
+        "ethiopia" => "Ethiopia",
+        "finland" => "Finland",
+        "france" => "France",
+        "frenchguiana" => "French Guiana",
+        "gabon" => "Gabon",
+        "gambia" => "Gambia",
+        "georgia" => "Georgia",
+        "germany" => "Germany",
+        "ghana" => "Ghana",
+        "greece" => "Greece",
+        "grenada" => "Grenada",
+        "guadeloupe" => "Guadeloupe",
+        "guatemala" => "Guatemala",
+        "guinea" => "Guinea",
+        "guineabissau" => "Guinea-Bissau",
+        "guyana" => "Guyana",
+        "haiti" => "Haiti",
+        "honduras" => "Honduras",
+        "hongkong" => "Hong Kong",
+        "hungary" => "Hungary",
+        "india" => "India",
+        "indonesia" => "Indonesia",
+        "ireland" => "Ireland",
+        "russia" => "Russia"
+
+    ];
+    return $countries;
+}
+
+function get5SimProducts()
+{
+    $products = [
+        "airtel",
+        "alfa",
+        "bigolive",
+        "cryptocom",
+        "delivery",
+        "facebook",
+        "fiqsy",
+        "fiverr",
+        "foodpanda",
+        "foody",
+        "forwarding",
+        "freecharge",
+        "galaxy",
+        "gamearena",
+        "gameflip",
+        "gamekit",
+        "gamer",
+        "gcash",
+        "get",
+        "getir",
+        "gett",
+        "gg",
+        "gittigidiyor",
+        "global24",
+        "globaltel",
+        "globus",
+        "glovo",
+        "google",
+        "grabtaxi",
+        "green",
+        "grindr",
+        "hamrahaval",
+        "happn",
+        "haraj",
+        "hepsiburadacom",
+        "hezzl",
+        "hily",
+        "hopi",
+        "hqtrivia",
+        "humblebundle",
+        "humta",
+        "huya",
+        "icard",
+        "icq",
+        "icrypex",
+        "ifood",
+        "immowelt",
+        "imo",
+        "inboxlv",
+        "indriver",
+        "ininal",
+        "instagram",
+        "iost",
+        "iqos",
+        "ivi",
+        "iyc",
+        "jd",
+        "jkf",
+        "justdating",
+        "justdial",
+        "kakaotalk",
+        "karusel",
+        "keybase",
+        "komandacard",
+        "kotak811",
+        "kucoinplay",
+        "kufarby",
+        "kvartplata",
+        "kwai",
+        "lazada",
+        "lbry",
+        "lenta",
+        "lianxin",
+        "line",
+        "linkedin",
+        "livescore",
+        "magnit",
+        "magnolia",
+        "mailru",
+        "mamba",
+        "mcdonalds",
+        "meetme",
+        "mega",
+        "mercado",
+        "michat",
+        "microsoft",
+        "miloan",
+        "miratorg",
+        "mobile01",
+        "momo",
+        "monese",
+        "monobank",
+        "mosru",
+        "mrgreen",
+        "mtscashback",
+        "myfishka",
+        "myglo",
+        "mylove",
+        "mymusictaste",
+        "mzadqatar",
+        "nana",
+        "naver",
+        "ncsoft",
+        "netflix",
+        "nhseven",
+        "nifty",
+        "nike",
+        "nimses",
+        "nrjmusicawards",
+        "nttgame",
+        "odnoklassniki",
+        "offerup",
+        "offgamers",
+        "okcupid",
+        "okey",
+        "okta",
+        "olacabs",
+        "olx",
+        "onlinerby",
+        "openpoint",
+        "oraclecloud",
+        "oriflame",
+        "other",
+        "ozon",
+        "paddypower",
+        "pairs",
+        "papara",
+        "paxful",
+        "payberry",
+        "paycell",
+        "paymaya",
+        "paypal",
+        "paysend",
+        "paytm",
+        "peoplecom",
+        "perekrestok",
+        "pgbonus",
+        "picpay",
+        "pof",
+        "pokec",
+        "pokermaster",
+        "potato",
+        "powerkredite",
+        "prajmeriz2020",
+        "premiumone",
+        "prom",
+        "proton",
+        "protonmail",
+        "protp",
+        "pubg",
+        "pureplatfrom",
+        "pyaterochka",
+        "pyromusic",
+        "q12trivia",
+        "qiwiwallet",
+        "quipp",
+        "rakuten",
+        "rambler",
+        "rediffmail",
+        "reuse",
+        "ripkord",
+        "rosakhutor",
+        "rsa",
+        "rutube",
+        "samokat",
+        "seosprint",
+        "sheerid",
+        "shopee",
+        "signal",
+        "sikayetvar",
+        "skout",
+        "snapchat",
+        "snappfood",
+        "sneakersnstuff",
+        "socios",
+        "sportmaster",
+        "spothit",
+        "ssoidnet",
+        "steam",
+        "surveytime",
+        "swvl",
+        "taksheel",
+        "tango",
+        "tantan",
+        "taobao",
+        "telegram",
+        "tencentqq",
+        "ticketmaster",
+        "tiktok",
+        "tinder",
+        "tosla",
+        "totalcoin",
+        "touchance",
+        "trendyol",
+        "truecaller",
+        "twitch",
+        "twitter",
+        "uber",
+        "ukrnet",
+        "uploaded",
+        "vernyi",
+        "vernyj",
+        "viber",
+        "vitajekspress",
+        "vkontakte",
+        "voopee",
+        "wechat",
+        "weibo",
+        "weku",
+        "weststein",
+        "whatsapp",
+        "wildberries",
+        "wingmoney",
+        "winston",
+        "wish",
+        "wmaraci",
+        "wolt",
+        "yaay",
+        "yahoo",
+        "yalla",
+        "yandex",
+        "yemeksepeti",
+        "youdo",
+        "youla",
+        "youstar",
+        "zalo",
+        "zoho",
+        "zomato",
+    ];
+
+    return $products;
+}

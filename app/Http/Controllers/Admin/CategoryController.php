@@ -19,6 +19,7 @@ class CategoryController extends Controller
 
     public function store()
     {
+
         \request()->validate([
             'name' => 'required|string|max:70|unique:categories,name',
             'type' => 'required',
@@ -30,6 +31,7 @@ class CategoryController extends Controller
         $category->field_name=\request()->field_name;
         $category->api=\request()->api;
         $category->type = $request['type'];
+        $request->sort ? $category->sort=$request->sort :' ';
         if ($request['type'] == "BALANCE" || $request['type'] == "OTHER"){
             if ($request['special_field'] != ""){
                 $category->field_name = $request['special_field'];
@@ -71,6 +73,7 @@ class CategoryController extends Controller
         $category->custom_additional_field_name=\request()->custom_additional_field_name;
         $category->api=\request()->api;
         $category->field_name=\request()->field_name;
+        $request->sort ? $category->sort=$request->sort :' ';
         $image = $request->file('image');
         $path = 'assets/images/category/';
         $size = imagePath()['category']['size'];
@@ -117,7 +120,6 @@ class CategoryController extends Controller
 
     public function status($id)
     {
-        dd($id);
         $cat = Category::findOrFail($id);
         $cat->status = ($cat->status ? 0 : 1);
         $cat->save();
