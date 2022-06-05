@@ -28,13 +28,15 @@ class SerialController extends Controller
             'service' => 'required|integer',
             'code' => 'required|string|max:191',
         ]);
+        $codes = explode("\r\n", $request['code']);
 
-        $serial = new Serial();
-        $serial->service_id = $request->service;
-        $serial->code = $request->code;
-        $serial->details = $request->details;
-        $serial->save();
-
+        foreach ($codes as $code) {
+            $serial = new Serial();
+            $serial->service_id = $request->service;
+            $serial->code = $code;
+            $serial->details = $request->details;
+            $serial->save();
+        }
         $notify[] = ['success', 'Serial added!'];
         return back()->withNotify($notify);
 

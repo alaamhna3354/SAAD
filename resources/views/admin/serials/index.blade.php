@@ -112,10 +112,12 @@
                         </div>
 
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Code') <span
+                            <label class="font-weight-bold ">@lang('Codes') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="code" required>
+                                <p class="label label-default">@lang('Each Code On New Line')</p>
+                                <textarea class="form-control has-error bold"  id="code" name="code"  placeholder="e.g. 4775839022" required>
+                                </textarea>
                             </div>
                         </div>
                         <div class="form-group">
