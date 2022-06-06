@@ -1746,8 +1746,8 @@ body:not(.buddypress) .article-content table th {
   left: 0;
   top: 0;
   border-radius: 50%;
-  background-color: #4d5bed;
-  opacity: 0.15;
+  background-color: #f48f2d;
+  opacity: 0.9;
   z-index: -10;
 }
 
@@ -3667,9 +3667,8 @@ input[type="radio"]:checked + label:before {
   text-transform: capitalize;
 }
 .header-bottom-area .navbar-collapse .main-menu li a:hover {
-  text-shadow: 0px 0px 5px #fff,
-               0px 3px 10px #fff,
-               0px 6px 15px #fff;
+  color: #f48f2d !important;
+
 }
 .header-bottom-area .navbar-collapse .main-menu li a.active {
   color: #4d5bed;
@@ -6262,8 +6261,8 @@ blockquote .quote-content {
   padding-top: 15px;
   padding-bottom: 10px;
   position: relative;
-  background-color: #0c2050;
-  border-top: 1px solid rgba(77, 91, 237, 0.2);
+  background-color: #1a1919;
+  border-top: 1px solid rgba(183, 183, 183, 0.2);
 }
 .privacy-area p {
   color: white;
@@ -6325,6 +6324,17 @@ blockquote .quote-content {
 }
 
 /* *************************************** new style home page *************************************** */
+.carousel-item{
+  height: 640px;
+}
+.carousel-item img{
+  height: 100%;
+}
+@media (max-width:568px) {
+  .carousel-item{
+    height: 375px;
+  }
+}
 .carousel-control-next, .carousel-control-prev {
   top: 50%;
   width: 40px;
