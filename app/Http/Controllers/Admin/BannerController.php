@@ -16,10 +16,10 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $page_title = 'Categories';
+        $page_title = 'Banners';
         $empty_message = 'No Result Found';
         $banner = Banner::all();
-        return view ('admin.banner.index',compact('banner','page_title'));
+        return view ('admin.banner.index',compact('banner','page_title','empty_message'));
     }
 
     /**
@@ -43,15 +43,23 @@ class BannerController extends Controller
     {
         $banner = new Banner();
         $banner->title  = $request->title;
-        $banner->link  = $request->link;
+        $banner->status  = 1;
         $banner->desc   = $request->desc;
 
-        $cover = $request->file('cover');
-        if($cover){
-        $cover_path = $cover->store('images/banner', 'public');
-        $banner->cover = $cover_path;
+        $image = $request->file('cover');
+        $path = imagePath()['banner']['path'];
+        $size = imagePath()['banner']['size'];
+        $filename = $request->image;
+        if ($request->hasFile('cover')) {
+            try {
+                $filename = uploadImage($image, $path, $size, $filename);
+//                    dd($filename);
+            } catch (\Exception $exp) {
+                $notify[] = ['errors', 'Image could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+            $banner->cover=$filename;
         }
-
         if ($banner->save()) {
             return redirect()->route('admin.banner')->with('success', 'Data added successfully');
            } else {
@@ -95,18 +103,20 @@ class BannerController extends Controller
     {
         $banner = Banner::findOrFail($id);
         $banner->title  = $request->title;
-        $banner->link  = $request->link;
         $banner->desc   = $request->desc;
-
-        $new_cover = $request->file('cover');
-        if($new_cover){
-        if($banner->cover && file_exists(storage_path('app/public/' . $banner->cover))){
-            \Storage::delete('public/'. $banner->cover);
-        }
-
-        $new_cover_path = $new_cover->store('images/banner', 'public');
-
-        $banner->cover = $new_cover_path;
+        $image = $request->file('cover');
+        $path = 'assets/images/banner/';
+        $size = imagePath()['banner']['size'];
+        $filename = $request->cover;
+        if ($request->hasFile('cover')) {
+            try {
+                $filename = uploadImage($image, $path, $size, $filename);
+//                    dd($filename);
+            } catch (\Exception $exp) {
+                $notify[] = ['errors', 'Image could not be uploaded.'];
+                return back()->withNotify($notify);
+            }
+        $banner->cover = $filename;
     }   
     // dd($banner);
         if ($banner->update()) {
@@ -134,5 +144,14 @@ class BannerController extends Controller
         }
         
         return redirect()->route('admin.banner')->with('success', 'Data deleted successfully');
+    }
+    public function status($id)
+    {
+        $banner = Banner::findOrFail($id);
+        $banner->status = ($banner->status ? 0 : 1);
+        $banner->save();
+
+        $notify[] = ['success', 'Status updated!'];
+        return back()->withNotify($notify);
     }
 }

@@ -23,7 +23,7 @@
 
 
     <div class="navbar__left price-acount">
-        <span class="navbar">@lang('exchange rate') : 1 {{ $general->cur_sym}}=3500 ل.س </span>
+        <span class="navbar">@lang('exchange rate') : 1 {{ $general->cur_sym}}= {{$general->exchange_rate}} ل.س </span>
     </div>
 
     <div class="navbar__right">

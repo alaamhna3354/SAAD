@@ -135,7 +135,7 @@ class GeneralSettingController extends Controller
     public function exchange_rate(Request $request)
     {
         $general = GeneralSetting::first();
-        $general->exchange_rate = $request->exchange_rate;
+        $general->exchange_rate = $request->rate;
         $general->save();
 
         $notify[] = ['success', 'exchange rate settings updated.'];
