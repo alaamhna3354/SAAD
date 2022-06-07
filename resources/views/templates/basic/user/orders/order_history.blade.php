@@ -15,7 +15,7 @@
                                     <th scope="col">@lang('Link')</th>
                                     <th scope="col">@lang('Quantity')</th>
                                     <th scope="col">@lang('Code')</th>
-                                    <th scope="col">@lang('Remains')</th>
+                                    <th scope="col">@lang('verify')</th>
                                     <th scope="col">@lang('Date')</th>
                                     <th scope="col">@lang('Status')</th>
                                 </tr>
@@ -28,8 +28,16 @@
                                         <td data-label="@lang('Service')" class="break_line">{{ __($item->service->name) }}</td>
                                         <td data-label="@lang('Link')"><a href="{{ empty(parse_url($item->link, PHP_URL_SCHEME)) ? 'https://' : null }}{{ $item->link }}" target="_blank">{{ $item->link }}</a></td>
                                         <td data-label="@lang('Quantity')">{{ $item->quantity }}</td>
-                                        <td data-label="@lang('Start Counter')">{{ $item->code }}</td>
-                                        <td data-label="@lang('Remains')">{{ $item->remain }}</td>
+                                        <td data-label="@lang('Code')">{{ $item->code }}</td>
+                                        <td data-label="@lang('verify')" id="verfiy">
+                                            <span id="{{$item->id}}">
+                                            @if($item->verify )
+                                                {{ $item->verify }}
+                                            @elseif($item->category->type=='5SIM')
+                                                <i class="fa fa-refresh" onclick="checksms({{ $item->id }})" ></i>
+                                                @endif
+                                            </span >
+                                        </td>
                                         <td data-label="@lang('Date')">{{ showDateTime($item->created_at) }}</td>
                                         <td data-label="@lang('Status')">
                                             @if($item->status === 0)
@@ -76,3 +84,25 @@
         }
     </style>
 @endpush
+<script>
+    function checksms($id) {
+        var url = "{{ route('user.checksms', ':id') }}";
+        url = url.replace(':id', $id);
+        {{--document.location.href=url;--}}
+        $.ajax({
+            type: 'GET',
+            url:  url,
+            // url : url.replace(':id', $id),
+            // data: "id=" + $id , //laravel checks for the CSRF token in post requests
+
+            success: function (data) {
+               if(data!='0')
+               {
+                   $('#'+$id).text(data)
+               }
+               else {alert('تأكد انك طلبت الرمز او اعد المحاولة بعد قليل')}
+            }
+        });
+
+    }
+</script>

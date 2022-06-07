@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\Category;
 use App\Models\Frontend;
 use App\Models\Language;
 use App\Models\Page;
@@ -21,17 +22,18 @@ class SiteController extends Controller
     }
 
     public function index(){
-        $count = Page::where('tempname',$this->activeTemplate)->where('slug','home')->count();
-        if($count == 0){
-            $page = new Page();
-            $page->tempname = $this->activeTemplate;
-            $page->name = 'HOME';
-            $page->slug = 'home';
-            $page->save();
-        }
+//        $count = Page::where('tempname',$this->activeTemplate)->where('slug','home')->count();
+//        if($count == 0){
+//            $page = new Page();
+//            $page->tempname = $this->activeTemplate;
+//            $page->name = 'HOME';
+//            $page->slug = 'home';
+//            $page->save();
+//        }
 
         $data['page_title'] = 'Home';
         $data['sections'] = Page::where('tempname',$this->activeTemplate)->where('slug','home')->firstOrFail();
+        $data['categories']=Category::active()->orderBy('sort')->get();
         return view($this->activeTemplate . 'home', $data);
     }
 

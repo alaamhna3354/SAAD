@@ -23,12 +23,12 @@ class ApiController extends Controller
 
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages());
         }
 
         //Checking api key exist
-        if (!User::where('api_key', $request->key)->exists()){
+        if (!User::where('api_key', $request->key)->exists()) {
             return response()->json(['error' => 'Invalid api key']);
         }
 
@@ -66,10 +66,10 @@ class ApiController extends Controller
         $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
         $ch = curl_init();
         $country = 'russia';
-        $operator= 'any';
-        $url='https://5sim.net/v1/user/buy/activation/'.$params;
+        $operator = 'any';
+        $url = 'https://5sim.net/v1/user/buy/activation/' . $params;
 //        $url='https://5sim.net/v1/guest/products/'.$country.'/'.$operator;
-        curl_setopt($ch, CURLOPT_URL,  $url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
@@ -84,18 +84,72 @@ class ApiController extends Controller
         }
         curl_close($ch);
 
-        $result=json_decode($result,True);
+        $result = json_decode($result, True);
 
 //        $result=$this->finishOrder($result['id']);
 
-       return $result;
+        return $result;
     }
 
-    public function finishOrder($id)
+    public function checkSMS($orderID)
+    {
+        $order=Order::find($orderID);
+        $id=$order->order_id_api;
+        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://5sim.net/v1/user/check/' . $id);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+
+        $headers = array();
+        $headers[] = 'Authorization: Bearer ' . $token;
+        $headers[] = 'Accept: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+//        $result='{
+//  "id": 11631253,
+//  "created_at": "2018-10-13T08:13:38.809469028Z",
+//  "phone": "+79000381454",
+//  "product": "vkontakte",
+//  "price": 21,
+//  "status": "RECEIVED",
+//  "expires": "2018-10-13T08:28:38.809469028Z",
+//  "sms": [
+//      {
+//        "id":3027531,
+//        "created_at":"2018-10-13T08:20:38.809469028Z",
+//        "date":"2018-10-13T08:19:38Z",
+//        "sender":"VKcom",
+//        "text":"VK: 09363 - use this code to reclaim your suspended profile.",
+//        "code":"09363"
+//      }
+//  ],
+//  "forwarding": false,
+//  "forwarding_number": "",
+//  "country":"russia"
+//}';
+        curl_close($ch);
+        $result = json_decode($result, True);
+        if (isset($result['sms'][0])) {
+            $code = $result['sms'][0]['code'];
+            if (isset($code)) {
+             return   $this->finishOrder($id, $orderID);
+            }
+        }
+        else return '0';
+
+    }
+
+    public function finishOrder($id,$orderid)
     {
         $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
         $ch = curl_init();
-        $finishOrderUrl='https://5sim.net/v1/user/finish/' . $id;
+        $finishOrderUrl = 'https://5sim.net/v1/user/finish/' . $id;
         curl_setopt($ch, CURLOPT_URL, $finishOrderUrl);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -110,10 +164,32 @@ class ApiController extends Controller
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
-        curl_close($ch);
-        $result=json_decode($result,True);
-        dd($result);
-        return $result;
+//        curl_close($ch);
+//        $result='{
+//  "id": 11631253,
+//  "created_at": "2018-10-13T08:13:38.809469028Z",
+//  "phone": "+79000381454",
+//  "product": "vkontakte",
+//  "price": 21,
+//  "status": "FINISHED",
+//  "expires": "2018-10-13T08:28:38.809469028Z",
+//  "sms": [
+//      {
+//        "id":3027531,
+//        "created_at":"2018-10-13T08:20:38.809469028Z",
+//        "date":"2018-10-13T08:19:38Z",
+//        "sender":"VKcom",
+//        "text":"VK: 09363 - use this code to reclaim your suspended profile.",
+//        "code":"09363"
+//      }
+//  ],
+//  "forwarding": false,
+//  "forwarding_number": "",
+//  "country":"russia"
+//}';
+        $result = json_decode($result, True);
+       $res= (new OrderController())->finish5SImOrder($orderid,$result);
+        return $res;
     }
 
 
@@ -140,24 +216,24 @@ class ApiController extends Controller
             'service' => 'required|integer|gt:0'
         ];
         $validator = Validator::make($request->all(), $service_rules);
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages());
         }
 
         //Service
         $service = Service::find($request->service);
-        if (!$service){
+        if (!$service) {
             return response()->json(['error' => 'Invalid Service Id']);
         }
 
         //Validation
         $rules = [
             'link' => 'required|string',
-            'quantity' => 'required|integer|gte:'. $service->min . '|lte:' . $service->max,
+            'quantity' => 'required|integer|gte:' . $service->min . '|lte:' . $service->max,
         ];
 
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages());
         }
 
@@ -165,7 +241,7 @@ class ApiController extends Controller
 
         //Subtract user balance
         $user = User::where('api_key', $request->key)->firstOrFail();
-        if ($user->balance < $price){
+        if ($user->balance < $price) {
             return response()->json(['error' => 'Insufficient balance']);
         }
         $user->balance -= $price;
@@ -234,14 +310,14 @@ class ApiController extends Controller
             'order' => 'required|integer'
         ];
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->getMessages());
         }
 
         //Service
         $order = Order::where('id', $request->order)->select(['status', 'start_counter', 'remain'])->first();
 
-        if (!$order){
+        if (!$order) {
             return response()->json(['error' => 'Invalid Order Id']);
         }
 
