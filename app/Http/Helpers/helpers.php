@@ -731,6 +731,10 @@ function imagePath()
         'path' => 'assets/images/service',
         'size' => '350x300'
     ];
+    $data['banner'] = [
+        'path' => 'assets/images/banner',
+        'size' => '1530x640'
+    ];
     return $data;
 }
 
@@ -813,7 +817,7 @@ function paginateLinks($data, $design = 'admin.partials.paginate')
 
 function GetSettingState()
 {
-    $state = true;
+    $state = false;
     return $state;
 }
 
@@ -923,7 +927,102 @@ function get5SimCountries()
         "india" => "India",
         "indonesia" => "Indonesia",
         "ireland" => "Ireland",
-        "russia" => "Russia"
+        "italy" => "Italy",
+"ivorycoast" => "Ivory Coast",
+"jamaica" => "Jamaica",
+"japan" => "Japan",
+"jordan" => "Jordan",
+"kazakhstan" => "Kazakhstan",
+"kenya" => "Kenya",
+"kuwait" => "Kuwait",
+"kyrgyzstan" => "Kyrgyzstan",
+"laos" => "Laos",
+"latvia" => "Latvia",
+"lesotho" => "Lesotho",
+"liberia" => "Liberia",
+"lithuania" => "Lithuania",
+"luxembourg" => "Luxembourg",
+"macau" => "Macau",
+"madagascar" => "Madagascar",
+"malawi" => "Malawi",
+"malaysia" => "Malaysia",
+"maldives" => "Maldives",
+"mauritania" => "Mauritania",
+"mauritius" => "Mauritius",
+"mexico" => "Mexico",
+"moldova" => "Moldova",
+"mongolia" => "Mongolia",
+"montenegro" => "Montenegro",
+"montserrat" => "Montserrat",
+"morocco" => "Morocco",
+"mozambique" => "Mozambique",
+"myanmar" => "Myanmar",
+"namibia" => "Namibia",
+"nepal" => "Nepal",
+"netherlands" => "Netherlands",
+"newcaledonia" => "New Caledonia",
+"newzealand" => "New Zealand",
+"nicaragua" => "Nicaragua",
+"niger" => "Niger",
+"nigeria" => "Nigeria",
+"northmacedonia" => "North Macedonia",
+"norway" => "Norway",
+"oman" => "Oman",
+"pakistan" => "Pakistan",
+"panama" => "Panama",
+"papuanewguinea" => "Papua New Guinea",
+"paraguay" => "Paraguay",
+"peru" => "Peru",
+"philippines" => "Philippines",
+"poland" => "Poland",
+"portugal" => "Portugal",
+"puertorico" => "Puertorico",
+"reunion" => "Reunion",
+"romania" => "Romania",
+"russia" => "Russia",
+"rwanda" => "Rwanda",
+"saintkittsandnevis" =>"Saint Kitts and Nevis",
+"saintlucia" => "Saint Lucia",
+"saintvincentandgrenadines" => "Saint Vincent and the Grenadines",
+"salvador" => "Salvador",
+"samoa" => "Samoa",
+"saotomeandprincipe" => "Sao Tome and Principe",
+"audiarabia" => "Saudi Arabia",
+"senegal" => "Senegal",
+"serbia" => "Serbia",
+"seychelles" => "Republic of Seychelles",
+"sierraleone" => "Sierra Leone",
+"singapore" => "Singapore",
+"slovakia" => "Slovakia",
+"slovenia" => "Slovenia",
+"solomonislands" => "Solomon Islands",
+"southafrica" => "South Africa",
+"spain" => "Spain",
+"srilanka" => "Sri Lanka",
+"suriname" => "Suriname",
+"swaziland" => "Swaziland",
+"sweden" => "Sweden",
+"switzerland" => "Switzerland",
+"taiwan" => "Taiwan",
+"tajikistan" => "Tajikistan",
+"tanzania" => "Tanzania",
+"tit" => "Trinidad and Tobago",
+"togo" => "Togo",
+"tonga" => "Tonga",
+"tunisia" => "Tunisia",
+"turkey" => "Turkey",
+"turkmenistan" => "Turkmenistan",
+"turksandcaicos" => "Turks and Caicos Island",
+"uganda" => "Uganda",
+"ukraine" => "Ukraine",
+"uruguay" => "Uruguay",
+"usa" => "USA",
+"uzbekistan" => "Uzbekistan",
+"venezuela" => "Venezuela",
+"vietnam" => "Vietnam",
+"virginislands" => "British Virgin Islands",
+"zambia" => "Zambia",
+"zimbabwe" => "Zimbabwe"
 
     ];
     return $countries;

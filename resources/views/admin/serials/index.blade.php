@@ -110,7 +110,7 @@
 
                             </select>
                         </div>
-
+                        
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('Codes') <span
                                         class="text-danger">*</span></label>
@@ -155,7 +155,6 @@
                                         class="text-danger">*</span></label>
                             <select class="form-control" name="service">
                                 <option selected>@lang('Choose')...</option>
-
                                 @forelse($services as $service)
                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
                                 @empty
@@ -176,9 +175,7 @@
                             <textarea class="form-control" name="details"></textarea>
                         </div>
                         <div class="form-group api_service_id">
-
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>

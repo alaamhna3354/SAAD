@@ -358,12 +358,12 @@
                 var max = $(this).data('max');
                 var details = $(this).data('details');
                 var api_service_id = $(this).data('api_service_id');
-
                 $('.api_service_id').empty();
                 if(api_service_id){
                     $('.api_service_id').html(`<label class="font-weight-bold">@lang('Service Id (If order process through API)')</label>
                             <input type="text" name="api_service_id" value="${api_service_id}" class="form-control">`);
                 }
+
 
                 modal.find('form').attr('action', url);
                 modal.find('input[name=name]').val(name);
@@ -373,6 +373,7 @@
                 modal.find('input[name=max]').val(max);
                 modal.find('textarea[name=details]').val(details);
                 modal.modal('show');
+                showExtraField1();
             });
 
             $('.statusBtn').on('click', function () {

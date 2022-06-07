@@ -500,8 +500,28 @@
                     </a>
                 </li>
 
+                <li class="sidebar-menu-item">
+                    <a class="nav-link " onclick="showRate()">
+                        <i class="menu-icon la la-list"></i>
+                        <span class="menu-title">@lang('Exchange Rate')</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="col-sm-12" id="rate" style="display: none" >
+                        <form name="add-blog-post-form" id="add-blog-post-form" method="post" action="{{route('admin.setting.exchange_rate')}}">
+                            @csrf
+                        <input type="text" class="form-control has-error bold " name="rate" required placeholder="@lang('Enter Rate')"
+                               value="{{$general->exchange_rate}}">
+                        <button  class="btn btn--dark" type="submit"  >@lang('Update')</button>
+                        </form>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
 </div>
-<!-- sidebar end -->
+    <script>
+        function showRate() {
+            document.getElementById("rate").style.display = "block";
+        }
+    </script>

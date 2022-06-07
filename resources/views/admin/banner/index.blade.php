@@ -15,10 +15,10 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse ($categories as $item)
+                            @forelse ($banner as $item)
                                 <tr>
                                     <td data-label="@lang('Name')">{{__($item->name)}}</td>
-                                    <td data-label="@lang('Image')"><img src="{{ getImage(imagePath()['category']['path'].'/'. $item->image,imagePath()['category']['size'])}}"></td>
+                                    <td data-label="@lang('Image')"><img src="{{ getImage(imagePath()['banner']['path'].'/'. $item->cover,imagePath()['banner']['size'])}}"></td>
                                     <td data-label="@lang('Status')">
                                         @if($item->status === 1)
                                             <span
@@ -34,7 +34,7 @@
                                            data-url="{{ route('admin.banner.update', $item->id)}}" data-name="{{ $item->name }}">
                                             <i class="la la-edit"></i>
                                         </a>
-                                        <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Status')" data-toggle="tooltip" data-url="{{ route('admin.categories.status', $item->id) }}">
+                                        <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Status')" data-toggle="tooltip" data-url="{{ route('admin.banner.status', $item->id) }}">
                                             <i class="la la-eye{{ $item->status ? '-slash' : null }}"></i>
                                         </a>
 
@@ -61,63 +61,29 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel"><i
-                            class="fa fa-share-square"></i> @lang('Add New Category')</h4>
+                            class="fa fa-share-square"></i> @lang('Add New Banner')</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">×</span></button>
                 </div>
-                <form class="form-horizontal" method="post" action="{{ route('admin.categories.store')}}" enctype="multipart/form-data">
+                <form class="form-horizontal" method="post" action="{{ route('admin.banner.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Name') <span
+                            <label class="font-weight-bold ">@lang('title') <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="name" required placeholder="@lang('Enter category name')">
+                                <input type="text" class="form-control has-error bold " id="code" name="title" required placeholder="@lang('Enter Banner title')">
                             </div>
                         </div>
                         <div class="avatar-edit">
-                            <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
+                            <input type="file" class="profilePicUpload" name="cover"  accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
                         </div>
-                        <div class="form-group">
-                            <label>@lang('Select Type')</label>
-                            <select class="form-control" id="type" name="type" onchange="showExtraField()">
-                                <option disabled value="" selected hidden>@lang('Select Type')</option>
-                                <option value="GAME">@lang('GAME')</option>
-                                <option value="CODE">@lang('CODE')</option>
-                                <option value="BALANCE">@lang('BALANCE')</option>
-                                <option value="OTHER">@lang('5SIM')</option>
-                            </select>
-                            @if($errors->has('type'))
-                                <div class="error text-danger">@lang($errors->first('type')) </div>
-                            @endif
-                        </div>
-                        <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('اتركه فارغاً اذا كان المنتج هو بطاقات غوغل بلاي او ماشابه')">
-                            </div>
-                        </div>
-                        <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('الحقول الإضافية : مثل اسم اللاعب -رقم الهاتف او كلمة المرور ') <span
-                                        class="text-danger">*</span></label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('لإضافة اكثر من حقل ضع فاصلة بين اسماء الحقول مثال: البريد,كلمة المرور')">
-                            </div>
-                        </div>
-
                         <div class="form-row form-group" hidden>
-                            <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله ') <span
+                            <label class="font-weight-bold ">@lang('desc') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
-                            </div>
-                        </div>
-                        <div class="form-row form-group" >
-                            <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
-                                        class="text-danger">*</span></label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')">
+                                <input type="text" class="form-control has-error bold " id="code" name="desc"  placeholder="@lang('desc')">
                             </div>
                         </div>
                     </div>
@@ -145,51 +111,17 @@
                     @csrf
                     <div class="modal-body">
                         <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('Name') <span
+                            <label class="font-weight-bold ">@lang('title') <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="name" value="{{__($item->name)}}" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>@lang('Select Type')</label>
-                            <select class="form-control" id="type" name="type">
-                                <option value="{{old('type',$item->type)}}" selected
-                                        hidden>{{$item->type}}</option>
-                                <option value="GAME">@lang('GAME')</option>
-                                <option value="CODE">@lang('CODE')</option>
-                                <option value="BALANCE">@lang('BALANCE')</option>
-                                <option value="5SIM">@lang('5SIM')</option>
-                            </select>
-                            @if($errors->has('type'))
-                                <div class="error text-danger">@lang($errors->first('type')) </div>
-                            @endif
-                        </div>
-                        <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('Field Name')" value="{{__($item->field_name)}}">
-                            </div>
-                        </div>
-                        <div class="form-row form-group">
-                            <label class="font-weight-bold ">@lang('الحقول الإضافية : مثل اسم اللاعب -رقم الهاتف او كلمة المرور ') <span
-                                        class="text-danger">*</span></label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="custom_additional_field_name"  placeholder="@lang('additional Field')">
+                                <input type="text" class="form-control has-error bold " id="code" name="title" value="{{$item->title}}" required>
                             </div>
                         </div>
                         <div class="form-row form-group" hidden>
-                            <label class="font-weight-bold ">@lang('Api Url هذا الحقل للمطور يرجى عدم تعديله') <span
+                            <label class="font-weight-bold ">@lang('desc') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="api"  placeholder="@lang('api')">
-                            </div>
-                        </div>
-                        <div class="form-row form-group" >
-                            <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
-                                        class="text-danger">*</span></label>
-                            <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')" value="{{$item->sort}}">
+                                <input type="text" class="form-control has-error bold " id="code" name="desc"  placeholder="@lang('desc')">
                             </div>
                         </div>
                         {{--<div class="form-row form-group">--}}
@@ -200,7 +132,7 @@
                             {{--</div>--}}
                         {{--</div>--}}
                         <div class="avatar-edit">
-                            <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
+                            <input type="file" class="profilePicUpload" name="cover" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
                         </div>
                     <div class="modal-footer">

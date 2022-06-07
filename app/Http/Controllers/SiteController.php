@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Frontend;
 use App\Models\Language;
@@ -34,6 +35,7 @@ class SiteController extends Controller
         $data['page_title'] = 'Home';
         $data['sections'] = Page::where('tempname',$this->activeTemplate)->where('slug','home')->firstOrFail();
         $data['categories']=Category::active()->orderBy('sort')->get();
+        $data['banner']=Banner::where('status',1)->orderBy('id')->get();
         return view($this->activeTemplate . 'home', $data);
     }
 

@@ -154,7 +154,9 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('banner/create', 'BannerController@store')->name('banner.store');
         Route::get('banner/edit/{id}', 'BannerController@edit')->name('banner.edit');
         Route::post('banner/edit/{id}', 'BannerController@update')->name('banner.update');
-        Route::delete('banner/destroy/{id}','BannerController@destroy')->name('banner.destroy');
+        Route::delete('banner/status/{id}','BannerController@status')->name('banner.status');
+
+
 
 
         // Deposit Gateway
@@ -238,6 +240,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         // General Setting
         Route::get('general-setting', 'GeneralSettingController@index')->name('setting.index');
         Route::post('general-setting', 'GeneralSettingController@update')->name('setting.update');
+        Route::post('exchange_rate', 'GeneralSettingController@exchange_rate')->name('setting.exchange_rate');
 
         // Logo-Icon
         Route::get('setting/logo-icon', 'GeneralSettingController@logoIcon')->name('setting.logo_icon');
