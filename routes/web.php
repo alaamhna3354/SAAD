@@ -148,7 +148,13 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('subscriber/send-email', 'SubscriberController@sendEmail')->name('subscriber.sendEmail');
 
 
-
+// Manage Banner
+        Route::get('banner',  'BannerController@index')->name('banner');
+        Route::get('banner/create', 'BannerController@create')->name('banner.create');
+        Route::post('banner/create', 'BannerController@store')->name('banner.store');
+        Route::get('banner/edit/{id}', 'BannerController@edit')->name('banner.edit');
+        Route::post('banner/edit/{id}', 'BannerController@update')->name('banner.update');
+        Route::delete('banner/destroy/{id}','BannerController@destroy')->name('banner.destroy');
 
 
         // Deposit Gateway
@@ -319,6 +325,7 @@ Route::name('user.')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     Route::post('password/verify-code', 'Auth\ForgotPasswordController@verifyCode')->name('password.verify-code');
+
 });
 
 Route::name('user.')->prefix('user')->group(function () {
@@ -375,6 +382,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('api', 'ApiController@api')->name('api');
             Route::post('generate-new-key', 'ApiController@generateNewKey')->name('generateNewKey');
             Route::get('fivesim', 'ApiController@fivesim')->name('fivesim');
+            Route::get('checksms/{id}', 'ApiController@checkSMS')->name('checksms');
         });
     });
 });
@@ -396,3 +404,4 @@ Route::get('/{slug}', 'SiteController@pages')->name('pages');
 //Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::get('/', 'SiteController@index')->name('home');
 Route::get('/api/player/{api}/{id}', 'ApiController@getPlayer')->name('player');
+

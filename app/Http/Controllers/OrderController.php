@@ -19,14 +19,15 @@ class OrderController extends Controller
         $service = Service::findOrFail($service_id);
         $request->validate([
 //            'link' => 'required|string',
-            'quantity' => 'required|integer|gte:'. $service->min . '|lte:' . $service->max,
+            'quantity' => 'required|integer|gte:' . $service->min . '|lte:' . $service->max,
         ]);
-
-        $price = getAmount(($service->price_per_k) * $request->quantity);
-
+        if ($service->category->type == 'CODE' || $service->category->type == '5SIM')
+            $price = getAmount($service->price_per_k);
+        else
+            $price = getAmount(($service->price_per_k) * $request->quantity);
         //Subtract user balance
         $user = auth()->user();
-        if ($user->balance < $price){
+        if ($user->balance < $price) {
             $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
             return back()->withNotify($notify);
         }
@@ -37,7 +38,8 @@ class OrderController extends Controller
                 return back()->withNotify($notify);
             }
         }
-        $user->balance -= $price;
+        if ($service->category->type != '5SIM')
+            $user->balance -= $price;
         $user->save();
 
         //Make order
@@ -50,33 +52,34 @@ class OrderController extends Controller
         $order->price = $price;
         $order->remain = $request->quantity;
         $order->api_order = $service->api_service_id ? 1 : 0;
-        if(isset($request->custom))
-        $order->details=json_encode($request->custom, JSON_UNESCAPED_UNICODE);
+        if (isset($request->custom))
+            $order->details = json_encode($request->custom, JSON_UNESCAPED_UNICODE);
         if ($service->category->type == 'CODE') {
-                $order->code = $serviceCode->code;
-        }
-        elseif ($service->category->type == '5SIM')
-        {
-            for($i=0;$i<$request->quantity;$i++) {
-                $codes = (new ApiController)->fivesim($service->api_service_params);
-
-                foreach ($codes as $key => $value)
-                    if ($key == 'phone')
-                        $order->code = $order->code .'phone: '.  $value .'<br>' ;
+            $order->code = $serviceCode->code;
+        } elseif ($service->category->type == '5SIM') {
+            $codes = (new ApiController)->fivesim($service->api_service_params);
+            var_dump($codes);
+//            foreach ($codes as $key => $value)
+//                if ($key == 'phone')
+                    $order->code = $codes['phone'];
+//                if($key='id')
+                $order->order_id_api=$codes['id'];
 //                    elseif($key=='sms')
 //                        $order->code = $order->code .'  code : ' . $value[0]['code'] .'<br>';
-            }
+            $order->status = 5;
         }
         $order->save();
-        //Create Transaction
-        $transaction = new Transaction();
-        $transaction->user_id = $user->id;
-        $transaction->amount = $price;
-        $transaction->post_balance = getAmount($user->balance);
-        $transaction->trx_type = '-';
-        $transaction->details = 'Order for ' . $service->name;
-        $transaction->trx = getTrx();
-        $transaction->save();
+        if ($service->category->type != '5SIM') {
+            //Create Transaction
+            $transaction = new Transaction();
+            $transaction->user_id = $user->id;
+            $transaction->amount = $price;
+            $transaction->post_balance = getAmount($user->balance);
+            $transaction->trx_type = '-';
+            $transaction->details = 'Order for ' . $service->name;
+            $transaction->trx = getTrx();
+            $transaction->save();
+        }
 
         //Create admin notification
         $adminNotification = new AdminNotification();
@@ -87,7 +90,7 @@ class OrderController extends Controller
 
         //Send email to user
         $gnl = GeneralSetting::first();
-        if ($service->category->type == 'CODE' ) {
+        if ($service->category->type == 'CODE') {
             notify($user, 'COMPLETED_ORDER_code', [
                 'service_name' => $service->name,
                 'price' => $price,
@@ -95,11 +98,10 @@ class OrderController extends Controller
                 'post_balance' => getAmount($user->balance),
                 'code' => $serviceCode->code
             ]);
-                $serviceCode->is_used = 1;
-                $serviceCode->user = $user->id;
+            $serviceCode->is_used = 1;
+            $serviceCode->user = $user->id;
             $serviceCode->save();
-        }
-        elseif ($service->category->type == '5SIM'){
+        } elseif ($service->category->type == '5SIM') {
             notify($user, 'COMPLETED_ORDER_code', [
                 'service_name' => $service->name,
                 'price' => $price,
@@ -108,14 +110,13 @@ class OrderController extends Controller
                 'code' => $order->code
             ]);
 
-        }
-        else
-        notify($user, 'PENDING_ORDER', [
-            'service_name' => $service->name,
-            'price' => $price,
-            'currency' => $gnl->cur_text,
-            'post_balance' => getAmount($user->balance),
-        ]);
+        } else
+            notify($user, 'PENDING_ORDER', [
+                'service_name' => $service->name,
+                'price' => $price,
+                'currency' => $gnl->cur_text,
+                'post_balance' => getAmount($user->balance),
+            ]);
 
         $notify[] = ['success', 'Successfully placed your order!'];
         return back()->withNotify($notify);
@@ -129,7 +130,7 @@ class OrderController extends Controller
 
     public function massOrderStore(Request $request)
     {
-        if (substr_count($request->mass_order, '|') !== 4){
+        if (substr_count($request->mass_order, '|') !== 4) {
             $notify[] = ['error', 'Service structures are not correct. Please retype!'];
             return back()->withNotify($notify)->withInput();
         }
@@ -140,7 +141,7 @@ class OrderController extends Controller
             $service_array = explode('|', $item);
 
             // Validation
-            if (count($service_array) !== 3){
+            if (count($service_array) !== 3) {
                 $notify[] = ['error', 'Service structures are not correct. Please retype!'];
                 return back()->withNotify($notify)->withInput();
             }
@@ -148,23 +149,23 @@ class OrderController extends Controller
             //Find service by service ID
             $service = Service::find($service_array[0]);
 
-            if (!$service){
+            if (!$service) {
                 $notify[] = ['error', 'Service ID not found!'];
                 return back()->withNotify($notify)->withInput();
             }
 
-            if (filter_var($service_array[2], FILTER_VALIDATE_INT) === false){
+            if (filter_var($service_array[2], FILTER_VALIDATE_INT) === false) {
                 $notify[] = ['error', 'Quantity should be an integer value!'];
                 return back()->withNotify($notify)->withInput();
             }
 
-            if ($service_array[2] < $service->min){
-                $notify[] = ['error', 'Quantity should be greater than or equal to '.$service->min];
+            if ($service_array[2] < $service->min) {
+                $notify[] = ['error', 'Quantity should be greater than or equal to ' . $service->min];
                 return back()->withNotify($notify)->withInput();
             }
 
-            if ($service_array[2] > $service->max){
-                $notify[] = ['error', 'Quantity should be less than or equal to '.$service->max];
+            if ($service_array[2] > $service->max) {
+                $notify[] = ['error', 'Quantity should be less than or equal to ' . $service->max];
                 return back()->withNotify($notify)->withInput();
             }
             // End validation
@@ -173,7 +174,7 @@ class OrderController extends Controller
 
             //Subtract user balance
             $user = auth()->user();
-            if ($user->balance < $price){
+            if ($user->balance < $price) {
                 $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
                 return back()->withNotify($notify);
             }
@@ -270,6 +271,35 @@ class OrderController extends Controller
         $empty_message = "No result found";
         $orders = Order::where('user_id', auth()->id())->refunded()->with(['category', 'service'])->paginate(getPaginate());
         return view(activeTemplate() . 'user.orders.order_history', compact('page_title', 'orders', 'empty_message'));
+    }
+
+    public function finish5SImOrder($id,$result)
+    {
+        $order=Order::find($id);
+        $user = auth()->user();
+        if ($user->balance < $order->price) {
+            $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
+            return back()->withNotify($notify);
+        }
+        $user->balance -= $order->price;
+        $user->save();
+        $order->status=2;
+        $order->verify=$result['sms'][0]['code'];
+        $order->save();
+
+        //Create Transaction
+        $transaction = new Transaction();
+        $transaction->user_id = $user->id;
+        $transaction->amount = $order->price;
+        $transaction->post_balance = getAmount($user->balance);
+        $transaction->trx_type = '-';
+        $transaction->details = 'Order for ' . $order->service->name;
+        $transaction->trx = getTrx();
+        $transaction->save();
+        return $result['sms'][0]['code'];
+//        $notify[] = ['success', 'Successfully placed your order!'];
+//        return back()->withNotify($notify);
+
     }
 
 }

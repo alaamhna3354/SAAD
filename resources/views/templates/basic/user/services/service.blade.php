@@ -144,10 +144,15 @@
                             <div class="form-row form-group">
                                 <label for="quantity" class="font-weight-bold">@lang('Quantity') <span
                                             class="text-danger">*</span></label>
-                                <div class="col-sm-12">
-                                    <input type="number" class="form-control has-error bold" id="quantity"
-                                           name="quantity" required>
-                                </div>
+                                    <div class="col-sm-12">
+                                        <input type="number" class="form-control has-error bold" id="quantity"
+                                               name="quantity" required
+                                               @if($category->type == '5SIM' || $category->type=='CODE')
+                                               readonly
+                                               @endif
+                                               >
+                                    </div>
+
                             </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-4">
@@ -171,8 +176,8 @@
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text group-label">@lang('Price')</div>
                                             </div>
-                                            <input type="text" class="form-control total_price text--success group-input"
-                                                   name="price" readonly>
+                                            <input type="text" id="price" class="form-control total_price text--success group-input"
+                                                   name="price"  readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -223,15 +228,16 @@
                 var price_per_k = $(this).data('price_per_k');
                 var min = $(this).data('min');
                 var max = $(this).data('max');
-
+                modal.find('input[name=quantity]').val(1);
+                modal.find('input[name=price]').val("{{ $general->cur_sym }}" + price_per_k.toFixed(3));
                 //Calculate total price
                
-                $(document).on("keyup", "#link", function () {
-                    var link = $('#link').val()
+                {{--$(document).on("keyup", "#link", function () {--}}
+                    {{--var link = $('#link').val()--}}
                     {{--var url="{{route('player',[$category->api,':link'])}}";--}}
                     {{--url = url.replace(':link', link);--}}
-                    // modal.find('input[name=custom]').val(1);
-                });
+                    {{--// modal.find('input[name=custom]').val(1);--}}
+                {{--});--}}
 
                 //Calculate total price
                 $(document).on("keyup", "#quantity", function () {

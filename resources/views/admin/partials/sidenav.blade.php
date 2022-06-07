@@ -493,6 +493,12 @@
                 </li>
                 {{-- <li class="sidebar__menu-header">@lang('CONTENT MANAGER')</li> --}}
                     @endif
+                <li class="sidebar-menu-item">
+                    <a href="{{route('admin.banner')}}" class="nav-link ">
+                        <i class="menu-icon la la-list"></i>
+                        <span class="menu-title">@lang('Manage Banners')</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
