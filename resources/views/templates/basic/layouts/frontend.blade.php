@@ -33,7 +33,6 @@
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/jquery.animatedheadline.css')}}">
     <!-- main style css link -->
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/style.css')}}">
-    <link rel="stylesheet" href="{{asset($activeTemplateTrue.'css/style.scss')}}">
     <link rel="stylesheet" href="{{asset($activeTemplateTrue.'/css/bootstrap-fileinput.css')}}">
 
     <link rel="stylesheet"
