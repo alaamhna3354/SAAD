@@ -31,7 +31,8 @@
                                            data-original-title="@lang('Buy')" data-toggle="tooltip"
                                            data-url="{{ route('user.order', [$category->id, $item->id])}}"
                                            data-price_per_k="{{ getAmount($item->price_per_k) }}"
-                                           data-min="{{ $item->min }}" data-max="{{ $item->max }}">
+                                           data-min="{{ $item->min }}" data-max="{{ $item->max }}"
+                                           data-category="{{$category->id}}">
                                             <img src="{{$item->image ? getImage(imagePath()['service']['path'].'/'. $item->image,imagePath()['service']['size']) : getImage(imagePath()['category']['path'].'/'. $category->image,imagePath()['category']['size'])}}"
                                                  class="card-img-top" alt="...">
                                             <div class="card-body text-center">
@@ -109,18 +110,29 @@
                         <div class="modal-body">
 
                             <div class="form-row form-group">
-                                @if(isset($category->field_name))
+                                @if($category->type=="GAME")
+                                    <div class=" col-12 col-sm-5 mb-2" >
+                                        <label for="player_number">@lang('رقم اللاعب')</label>
+                                        <input type="number" name="link" id="player_number" placeholder="" required>
+                                    </div>
+                                    <div class="col-10 col-sm-5 mb-2">
+                                        <label for="player_name">@lang('اسم اللاعب')</label>
+                                        <input type="text" name="player_name" id="player_name">
+                                    </div>
+                                    <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
+                                        <i class="fas fa-sync-alt " onclick="getName({{$category->id}})"></i>
+                                    </div>
+                                @else(isset($category->field_name))
                             <div class="col-sm-8 m-1 text-right">
                                 <label for="link"
                                        class="font-weight-bold">{{$category->field_name}}
                                     <span
                                             class="text-danger">*</span></label>
-                                
                                     <input type="text" class="form-control has-error bold" id="link" name="link"
                                            required>
                             </div>
                                 @endif
-                                @if(isset($category->custom_additional_field_name))
+                                @if(isset($category->custom_additional_field_name) && $category->type!="GAME")
                                     {{--<form action="{{url('user/address')}}" class="mt-5 check-out-form" method="post">--}}
                                     @foreach(explode(',',$category->custom_additional_field_name) as $field)
                                     <div class="col-sm-8 m-1 text-right">
@@ -194,6 +206,7 @@
         </div>
     </div>
 
+
 @endsection
 
 @push('style')
@@ -206,11 +219,24 @@
 
 @push('script')
     <script>
-        {{--function test() {--}}
-            {{--var link = $('#link').val()--}}
-            {{--document.getElementById('player').value ='{{getPlayerName()}}';--}}
+        function getName(id) {
+            var player_number = $('#player_number').val();
+            if(player_number == ""){
+                $('.vald-player-number').removeClass('hidden');
+            }
+            else{
+                $.ajax({
+                    url:'/user/player/'+id+'/'+player_number,
+                    type:"GET",
+                    success:function(response){
+                        console.log(response)
+                        $('#player_name').val(response.name);
+                    },
+                })
+            }
+        };
 
-        {{--}--}}
+
         (function ($) {
             "use strict";
 

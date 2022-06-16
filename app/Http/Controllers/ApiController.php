@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminNotification;
+use App\Models\Category;
 use App\Models\GeneralSetting;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Requests;
 
@@ -79,8 +81,9 @@ class ApiController extends Controller
         $headers[] = 'Accept: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $result = curl_exec($ch);
-        if (curl_errno($ch)) {
-            echo 'Error:' . curl_error($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpcode!=200) {
+            return 0;
         }
         curl_close($ch);
 
@@ -111,28 +114,6 @@ class ApiController extends Controller
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
-//        $result='{
-//  "id": 11631253,
-//  "created_at": "2018-10-13T08:13:38.809469028Z",
-//  "phone": "+79000381454",
-//  "product": "vkontakte",
-//  "price": 21,
-//  "status": "RECEIVED",
-//  "expires": "2018-10-13T08:28:38.809469028Z",
-//  "sms": [
-//      {
-//        "id":3027531,
-//        "created_at":"2018-10-13T08:20:38.809469028Z",
-//        "date":"2018-10-13T08:19:38Z",
-//        "sender":"VKcom",
-//        "text":"VK: 09363 - use this code to reclaim your suspended profile.",
-//        "code":"09363"
-//      }
-//  ],
-//  "forwarding": false,
-//  "forwarding_number": "",
-//  "country":"russia"
-//}';
         curl_close($ch);
         $result = json_decode($result, True);
         if (isset($result['sms'][0])) {
@@ -164,29 +145,7 @@ class ApiController extends Controller
         if (curl_errno($ch)) {
             echo 'Error:' . curl_error($ch);
         }
-//        curl_close($ch);
-//        $result='{
-//  "id": 11631253,
-//  "created_at": "2018-10-13T08:13:38.809469028Z",
-//  "phone": "+79000381454",
-//  "product": "vkontakte",
-//  "price": 21,
-//  "status": "FINISHED",
-//  "expires": "2018-10-13T08:28:38.809469028Z",
-//  "sms": [
-//      {
-//        "id":3027531,
-//        "created_at":"2018-10-13T08:20:38.809469028Z",
-//        "date":"2018-10-13T08:19:38Z",
-//        "sender":"VKcom",
-//        "text":"VK: 09363 - use this code to reclaim your suspended profile.",
-//        "code":"09363"
-//      }
-//  ],
-//  "forwarding": false,
-//  "forwarding_number": "",
-//  "country":"russia"
-//}';
+
         $result = json_decode($result, True);
        $res= (new OrderController())->finish5SImOrder($orderid,$result);
         return $res;
@@ -286,22 +245,7 @@ class ApiController extends Controller
 
         return response()->json(['order' => $order->id]);
     }
-//    public function getPlayer($api,$id)
-//    {
-////        $apiKey="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI4NWYwNGNkMC05OThkLTAxM2EtNGNmZC0xNzdkOTFhMjYxNGEiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNjQ5NDM4MTc2LCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6Ii1iZWUxMTBkYS1kNjQyLTRiOTgtOTliNi0wNDY0Mjg3ZTRlODkifQ.JiPITHPdJHbp2pchkOY2hgdqv6Y6tgjRPGYYO8ievZs";
-////        $region = "pc-as"; // choose platform and region
-////        $players = "account.69a0587badc340f09a97771109eff2a8"; // choose a player (ign)
-////        $headers = array(
-////            'Authorization' => $apiKey,
-////            'Accept' => 'application/vnd.api+json'
-////        );
-////        $getPlayer = Requests::get('https://api.playbattlegrounds.com/shards/'.$region.'/players?filter[playerIds]='.$players.'', $headers);
-////        $getPlayerContent = json_decode($getPlayer->body, true);
-////        $name = $getPlayerContent['data'][0]['attributes']['name'];
-////        return $name;
-//        $getPlayer = Http::post('https://as7abcard.com/pubg-files/pubg.php?action=getPlayerName&game=pubg&playerID=5262427733', ["ct"=>"ql18TgDgBmsvEu5aAJkypBwDgyHyjV8iJYJSmq1E4Kf9DS20PBpkjx3kDwrkPLc9v7o2NJ0LnrkVQNCwC0FQ+4/VaGKGdk60NOtd7ExY8zI=","iv"=>"0f4e33d8213109fa64a412cb07b2659d","s"=>"c5f09a65b90f316a"]);
-//        return $getPlayer->body();
-//    }
+
 
     private function status($request)
     {
@@ -324,5 +268,16 @@ class ApiController extends Controller
         $order['status'] = ($order->status == 0 ? 'pending' : ($order->status == 1 ? 'processing' : ($order->status == 2 ? 'completed' : ($order->status == 3 ? 'cancelled' : 'refunded'))));
 
         return response()->json($order);
+    }
+
+    public function getPlayer($api,$id)
+    {
+        $category=Category::find($api);
+        $url="http://sim90.com/api/getPlayerName/".$category->slug."/".$id;
+        $token='76|HZ04dcna7KKEjEChTE9Ydhzuk1xzGTJhbo2vkLnK';
+        $getPlayer = Http::withToken($token)->get($url);
+        return   $result = json_decode($getPlayer, True);
+
+        //        [freefire,pubg,likee,bego,ahlanChat,pubgLite,yalla]
     }
 }

@@ -10,32 +10,22 @@
                             <tr>
                                 <th scope="col">@lang('Name')</th>
                                 <th scope="col">@lang('Image')</th>
-                                <th scope="col">@lang('Status')</th>
                                 <th scope="col">@lang('Actions')</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse ($banner as $item)
                                 <tr>
-                                    <td data-label="@lang('Name')">{{__($item->name)}}</td>
+                                    <td data-label="@lang('Name')">{{__($item->title)}}</td>
                                     <td data-label="@lang('Image')"><img src="{{ getImage(imagePath()['banner']['path'].'/'. $item->cover,imagePath()['banner']['size'])}}"></td>
-                                    <td data-label="@lang('Status')">
-                                        @if($item->status === 1)
-                                            <span
-                                                class="text--small badge font-weight-normal badge--success">@lang('Active')</span>
-                                        @else
-                                            <span
-                                                class="text--small badge font-weight-normal badge--danger">@lang('Inactive')</span>
-                                        @endif
-                                    </td>
                                     <td data-label="@lang('Action')">
                                         <a href="javascript:void(0)" class="icon-btn ml-1 editBtn"
                                            data-original-title="@lang('Edit')" data-toggle="tooltip"
-                                           data-url="{{ route('admin.banner.update', $item->id)}}" data-name="{{ $item->name }}">
+                                           data-url="{{ route('admin.banner.update', $item->id)}}" data-name="{{ $item->title }}">
                                             <i class="la la-edit"></i>
                                         </a>
-                                        <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Status')" data-toggle="tooltip" data-url="{{ route('admin.banner.status', $item->id) }}">
-                                            <i class="la la-eye{{ $item->status ? '-slash' : null }}"></i>
+                                        <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Delete')" data-toggle="tooltip" data-url="{{ route('admin.banner.destroy', $item->id) }}">
+                                            <i class="la la-trash"></i>
                                         </a>
 
                                     </td>
@@ -114,7 +104,7 @@
                             <label class="font-weight-bold ">@lang('title') <span
                                     class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="title" value="{{$item->title}}" required>
+                                <input type="text" class="form-control has-error bold " id="code" name="title" value="{{@$item->title}}" required>
                             </div>
                         </div>
                         <div class="form-row form-group" hidden>
@@ -151,14 +141,14 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">@lang('Update Status')</h4>
+                    <h4 class="modal-title" id="myModalLabel">@lang('Delete')</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <form method="post" action="">
                     @csrf
                     <input type="hidden" name="delete_id" id="delete_id" class="delete_id" value="0">
                     <div class="modal-body">
-                        <p class="text-muted">@lang('Are you sure to change the status?')</p>
+                        <p class="text-muted">@lang('Are you sure to Delete?')</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('No')</button>
