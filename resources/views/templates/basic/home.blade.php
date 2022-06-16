@@ -51,8 +51,8 @@
     <!-- start slider -->
     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-            @foreach($banner as $banner)
-            <div class="carousel-item active">
+            @foreach($banner as $key => $banner)
+            <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                 <img src="{{ getImage(imagePath()['banner']['path'].'/'. $banner->cover,imagePath()['banner']['size'])}}" class="d-block w-100" alt="...">
             </div>
                 @endforeach

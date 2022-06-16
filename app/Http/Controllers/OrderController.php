@@ -58,15 +58,19 @@ class OrderController extends Controller
             $order->code = $serviceCode->code;
         } elseif ($service->category->type == '5SIM') {
             $codes = (new ApiController)->fivesim($service->api_service_params);
-            var_dump($codes);
+            if ($codes == 0)
+                return back()->with('error', trans("حاول لاحقا او تواصل مع مدير الموقع"))->withInput();
+            else {
+//            var_dump($codes);
 //            foreach ($codes as $key => $value)
 //                if ($key == 'phone')
-                    $order->code = $codes['phone'];
+                $order->code = $codes['phone'];
 //                if($key='id')
-                $order->order_id_api=$codes['id'];
+                $order->order_id_api = $codes['id'];
 //                    elseif($key=='sms')
 //                        $order->code = $order->code .'  code : ' . $value[0]['code'] .'<br>';
-            $order->status = 5;
+                $order->status = 5;
+            }
         }
         $order->save();
         if ($service->category->type != '5SIM') {

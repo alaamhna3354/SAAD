@@ -154,7 +154,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('banner/create', 'BannerController@store')->name('banner.store');
         Route::get('banner/edit/{id}', 'BannerController@edit')->name('banner.edit');
         Route::post('banner/edit/{id}', 'BannerController@update')->name('banner.update');
-        Route::delete('banner/status/{id}','BannerController@status')->name('banner.status');
+        Route::post('banner/destroy/{id}','BannerController@destroy')->name('banner.destroy');
 
 
 
@@ -352,7 +352,6 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('twofactor/enable', 'UserController@create2fa')->name('twofactor.enable');
             Route::post('twofactor/disable', 'UserController@disable2fa')->name('twofactor.disable');
 
-
             // Deposit
             Route::any('/deposit', 'Gateway\PaymentController@deposit')->name('deposit');
             Route::post('deposit/insert', 'Gateway\PaymentController@depositInsert')->name('deposit.insert');
@@ -386,6 +385,7 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::post('generate-new-key', 'ApiController@generateNewKey')->name('generateNewKey');
             Route::get('fivesim', 'ApiController@fivesim')->name('fivesim');
             Route::get('checksms/{id}', 'ApiController@checkSMS')->name('checksms');
+            Route::get('player/{api}/{id}', 'ApiController@getPlayer')->name('player');
         });
     });
 });
@@ -406,5 +406,5 @@ Route::get('placeholder-image/{size}', 'SiteController@placeholderImage')->name(
 Route::get('/{slug}', 'SiteController@pages')->name('pages');
 //Route::get('/', 'Auth\LoginController@showLoginForm')->name('home');
 Route::get('/', 'SiteController@index')->name('home');
-Route::get('/api/player/{api}/{id}', 'ApiController@getPlayer')->name('player');
+
 

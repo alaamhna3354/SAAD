@@ -31,7 +31,9 @@
                                     <td data-label="@lang('Action')">
                                         <a href="javascript:void(0)" class="icon-btn ml-1 editBtn"
                                            data-original-title="@lang('Edit')" data-toggle="tooltip"
-                                           data-url="{{ route('admin.categories.update', $item->id)}}" data-name="{{ $item->name }}">
+                                           data-url="{{ route('admin.categories.update', $item->id)}}" data-name="{{ $item->name }}"
+                                        data-sort="{{$item->sort}}" data-type="{{$item->type}}"
+                                        data-field="{{$item->field_name}}" data-special="{{$item->additional_field}}">
                                             <i class="la la-edit"></i>
                                         </a>
                                         <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Status')" data-toggle="tooltip" data-url="{{ route('admin.categories.status', $item->id) }}">
@@ -86,7 +88,7 @@
                                 <option value="GAME">@lang('GAME')</option>
                                 <option value="CODE">@lang('CODE')</option>
                                 <option value="BALANCE">@lang('BALANCE')</option>
-                                <option value="OTHER">@lang('5SIM')</option>
+                                <option value="5SIM">@lang('5SIM')</option>
                             </select>
                             @if($errors->has('type'))
                                 <div class="error text-danger">@lang($errors->first('type')) </div>
@@ -117,7 +119,7 @@
                             <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')">
+                                <input type="number" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')">
                             </div>
                         </div>
                     </div>
@@ -189,7 +191,7 @@
                             <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="sort" name="sort"  placeholder="@lang('')" value="{{$item->sort}}">
+                                <input type="number" class="form-control has-error bold " id="sort" name="sort" value="{{$item->sort}}">
                             </div>
                         </div>
                         {{--<div class="form-row form-group">--}}
@@ -252,9 +254,17 @@
                 var modal = $('#editModal');
                 var url = $(this).data('url');
                 var name = $(this).data('name');
-
+                var sort= $(this).data('sort');
+                var field= $(this).data('field');
+                var special= $(this).data('special');
+                var type= $(this).data('type');
+console.log(type);
                 modal.find('form').attr('action', url);
                 modal.find('input[name=name]').val(name);
+                modal.find(('input[name=sort]')).val(sort);
+                modal.find(('input[name=field_name]')).val(field);
+                modal.find(('input[name=custom_additional_field_name]')).val(special);
+                modal.find(('select[name=type]')).val(type);
                 modal.modal('show');
             });
 

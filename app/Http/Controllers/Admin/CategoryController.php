@@ -26,21 +26,24 @@ class CategoryController extends Controller
         ]);
         $request = \request();
         $category = new Category();
-        $category->name = \request()->name;
-        $category->custom_additional_field_name=\request()->custom_additional_field_name;
-        $category->field_name=\request()->field_name;
-        $category->api=\request()->api;
+        $category->name = $request->name;
+        $category->custom_additional_field_name=$request->custom_additional_field_name;
+        $category->field_name=$request->field_name;
+        $category->api=$request->api;
         $category->type = $request['type'];
         $request->sort ? $category->sort=$request->sort :' ';
         if ($request['type'] == "BALANCE" || $request['type'] == "OTHER"){
             if ($request['special_field'] != ""){
                 $category->field_name = $request['special_field'];
             }else{
-                $category->field_name = null;
+                $category->field_name = \request()->field_name;;
             }
-        }else{
-            $category->field_name = null;
         }
+        if ($request['type']=="GAME")
+        {
+            $category->field_name = 'رقم اللاعب';
+        }
+
 
         $image = $request->file('image');
             $path = imagePath()['category']['path'];
@@ -67,13 +70,12 @@ class CategoryController extends Controller
         \request()->validate([
             'name' => 'required|string|max:70|unique:categories,name,' . $id
         ]);
-
         $category = Category::findOrFail($id);
         $category->name = \request()->name;
         $category->custom_additional_field_name=\request()->custom_additional_field_name;
         $category->api=\request()->api;
         $category->field_name=\request()->field_name;
-        $request->sort ? $category->sort=$request->sort :' ';
+        $category->sort=$request->sort ;
         $image = $request->file('image');
         $path = 'assets/images/category/';
         $size = imagePath()['category']['size'];
@@ -82,10 +84,11 @@ class CategoryController extends Controller
             if ($request['special_field'] != ""){
                 $category->field_name= $request['special_field'];
             }else{
-                $category->field_name = null;
+                $category->field_name = \request()->field_name;;
             }
-        }else{
-            $category->field_name = null;
+        }
+        if ($request['type']=="GAME") {
+            $category->field_name = 'رقم اللاعب';
         }
         $category->type = $request['type'];
         if ($request->hasFile('image')) {

@@ -47,15 +47,15 @@
                                         </div>
                                         <div class="cont-100  mr-2 m-2 d-flex align-items-center">
                                       
-                                                    <div class="">
-                                                      
-                                                            <input type="hidden" name="country_code" value="963">
-                                                            <select disabled name="country">
-                                                                <option  value="963" data-country="Syrian Arab Republic" data-code="SY"> +963</option>
+                                                    {{--<div class="">--}}
+                                                      {{----}}
+                                                            {{--<input type="hidden" name="country_code" value="963">--}}
+                                                            {{--<select  name="country">--}}
+                                                                {{--<option  value="963" data-country="Syrian Arab Republic" data-code="SY"> +963</option>--}}
                                                                 {{--@include('partials.country_code')--}}
-                                                            </select>
-                                                      
-                                                    </div>
+                                                            {{--</select>--}}
+                                                      {{----}}
+                                                    {{--</div>--}}
                                                     <input type="text" name="mobile" placeholder="@lang('Your Phone Number')" class="w-auto flex-fill" value="{{ old('mobile') }}">
                                                 
                                         </div>
