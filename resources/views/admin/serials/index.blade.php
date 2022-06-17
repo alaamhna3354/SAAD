@@ -104,7 +104,9 @@
                                 <option selected>@lang('Choose')...</option>
 
                                 @forelse($services as $service)
+                                    @if($service->category->type=='CODE')
                                     <option value="{{ $service->id }}">{{ $service->name }}</option>
+                                    @endif
                                 @empty
                                 @endforelse
 
