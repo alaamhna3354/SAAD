@@ -113,7 +113,7 @@
                                 @if($category->type=="GAME")
                                     <div class=" col-12 col-sm-5 mb-2" >
                                         <label for="player_number">@lang('رقم اللاعب')</label>
-                                        <input type="number" name="link" id="player_number" placeholder="" required>
+                                        <input type="text" name="link" id="player_number" placeholder="" required>
                                     </div>
                                     <div class="col-10 col-sm-5 mb-2">
                                         <label for="player_name">@lang('اسم اللاعب')</label>
@@ -122,7 +122,7 @@
                                     <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
                                         <i class="fas fa-sync-alt " onclick="getName({{$category->id}})"></i>
                                     </div>
-                                @else(isset($category->field_name))
+                                @elseif(isset($category->field_name))
                             <div class="col-sm-8 m-1 text-right">
                                 <label for="link"
                                        class="font-weight-bold">{{$category->field_name}}
@@ -167,6 +167,7 @@
 
                             </div>
                                 <div class="form-row">
+                                    @if($category->type != '5SIM' && $category->type!='CODE')
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend ">
@@ -183,6 +184,7 @@
                                             <input type="text" name="max" class="form-control group-input" readonly>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="form-group col-md-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">

@@ -56,6 +56,7 @@ class OrderController extends Controller
             $order->details = json_encode($request->custom, JSON_UNESCAPED_UNICODE);
         if ($service->category->type == 'CODE') {
             $order->code = $serviceCode->code;
+            $order->status = 2;
         } elseif ($service->category->type == '5SIM') {
             $codes = (new ApiController)->fivesim($service->api_service_params);
             if ($codes == 0)

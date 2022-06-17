@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Serial;
 use App\Models\Service;
 use App\Models\User;
@@ -17,9 +18,10 @@ class SerialController extends Controller
     {
         $page_title = 'Serials';
         $empty_message = 'No Result Found';
+       $categories = Category::active()->orderBy('name')->get();
         $services = Service::active()->orderBy('name')->get();
         $serials = Serial::with('service')->latest()->paginate(getPaginate());
-        return view('admin.serials.index', compact('page_title', 'services', 'empty_message', 'serials'));
+        return view('admin.serials.index', compact('page_title', 'services', 'empty_message', 'serials','categories'));
     }
 
     public function store(Request $request)
