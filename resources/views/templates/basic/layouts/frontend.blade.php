@@ -163,7 +163,90 @@
         {{--</div>--}}
     {{--</div>--}}
 {{--</footer>--}}
-<div class="privacy-area privacy-area--style">
+<section class="w3l-footers-20">
+<div class="footers20">
+		<div class="container">
+			<div class="footers20-content">
+				<div class="row grid-col-4 grids-content">
+					<div class="column col-lg-3 col-md-6 col-sm-6">
+						<h3><a class="footer-logo" style="color:#fff"
+                        href="index.html"><span class="fa fa-gamepad" aria-hidden="true"></span>Sema.Store</a></h3>
+						<p class="contact-para3 para">Adipisicing elit.exercit ationem accu samus lauda ntium porro sunt
+							repudt ationem accusamus exercit ationem accus amus lauda ntium porro elit exerc sunt repud.
+						</p>
+					</div>
+					<div class="column col-lg-3 col-md-6 col-sm-6">
+						<h4>@lang('Latest News')</h4>
+						<div class="img-text">
+							<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive "></a>
+							<div class="post-details"> <a href="">
+									<p class="contact-mail para"> Black Hunt</p>
+								</a>
+								<p class="para">june 28</p>
+
+							</div>
+						</div>
+						<div class="img-text mt-3">
+							<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive "></a>
+							<div class="post-details"> <a href="">
+									<p class="contact-mail para">Blood Moon</p>
+								</a>
+								<p class="para">june 28</p>
+
+							</div>
+						</div>
+					</div>
+					<div class="column col-lg-3 col-md-6 col-sm-6">
+						<h4>@lang('Categories')</h4>
+						<div class="img-instagram">
+							<div class="img-inst">
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"> </a>
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2"></a>
+							</div>
+							<div class="img-inst">
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"></a>
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2"> </a>
+							</div>
+							<div class="img-inst">
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"></a>
+								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2 "></a>
+							</div>
+						</div>
+					</div>
+					<div class="column col-lg-3 col-md-6 col-sm-6">
+						<h4>@lang('Newsletter')</h4>
+						<p class="contact-para3 para">
+                            @lang('Adipisicing elit exerc tationem accusamus exercit ationem accus
+							amus lauda ntium porro elit exerc sunt repud.')
+                        </p>
+						<form action="#" method="post" class="rightside-form">
+							<input type="email" name="email" placeholder="Subscribe" required="">
+							<button class="btn button-icon" type="submit"><span class="fa fa-paper-plane-o" aria-hidden="true"></span></button>
+						</form>
+					</div>
+				</div>
+				<div class="row grid-col-3 grids-content1 bottom-border">
+					<div class="columns text-md-left links-grid col-md-3 ">
+						<ul class="links">
+							<li><a href="#links">@lang('Privacy policy')</a></li>
+						</ul>
+					</div>
+					<div class="columns text-center copyright-grid col-md-6 ">
+                    <p>@lang('Copyright') SYRIAN CARDS © {{ date('Y') }} @lang('All Rights reserved')</p>
+					</div>
+					<div class="columns text-md-right social-grid col-md-3 ">
+						<ul class="social">
+							<li><a href="#url"><span class="fab fa-facebook" aria-hidden="true"></span></a></li>
+							<li><a href="#url"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>
+							<li><a href="#url"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    </section>
+<!-- <div class="privacy-area privacy-area--style">
     <div class="container">
         <div class="copyright-area d-flex flex-wrap align-items-center justify-content-center">
             <div class="copyright">
@@ -171,7 +254,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- footer-section end -->
 

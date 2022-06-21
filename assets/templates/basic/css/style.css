@@ -6332,7 +6332,8 @@ blockquote .quote-content {
 }
 @media (max-width:568px) {
   .carousel-item{
-    height: 375px;
+    height: 300px;
+    margin-top: 70px;
   }
 }
 .carousel-control-next, .carousel-control-prev {
@@ -6534,3 +6535,176 @@ body {
 	opacity: 1;
 	transform: none;
 }
+/* *************** footer ********************** */
+.w3l-footers-20 .footers20 {
+  padding: 60px 0;
+  position: relative;
+  background: #1a1a1a; }
+
+.w3l-footers-20 .img-text {
+  display: grid;
+  grid-template-columns: 76px 1fr;
+  grid-gap: 15PX;
+  align-items: center; }
+
+.w3l-footers-20 .img-inst a img:hover {
+  opacity: .6; }
+
+.w3l-footers-20 h2 a.footer-logo {
+  font-size: 35px;
+  color: var(--header-title-color);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 45px;
+  display: inline-block;
+  margin-bottom: 30px; }
+
+.w3l-footers-20 .grids-content h4 {
+  font-size: 20px;
+  line-height: 35px;
+  color: var(--header-title-color);
+  margin-bottom: 30px;
+  text-transform: uppercase; }
+
+.w3l-footers-20 .img-instagram {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px; }
+
+.w3l-footers-20 .post-details a p {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  color: var(--logo-color);
+  transition: 0.3s ease; }
+
+.w3l-footers-20 .grids-content a p:hover {
+  color: #f28e2d; }
+
+.w3l-footers-20 .rightside-form {
+  display: flex;
+  border-bottom: 1px solid   #969696;
+  margin-top: 27px; }
+
+.w3l-footers-20 form.rightside-form input {
+  background: transparent;
+  border: none;
+  padding: 5px 0px;
+  font-size: 16px;
+  line-height: 30px;
+  color: #777777;
+  width: 100%; }
+
+.w3l-footers-20 button span {
+  font-size: 15px;
+  line-height: 25px;
+  color: var(--header-title-color); }
+
+.w3l-footers-20 button span:hover {
+  color: #f28e2d; }
+
+.w3l-footers-20 ::-webkit-input-placeholder {
+  /* Edge */
+  color: var(--header-title-color); }
+
+.w3l-footers-20 :-ms-input-placeholder {
+  /* Internet Explorer */
+  color: var(--header-title-color); }
+
+.w3l-footers-20 ::-moz-placeholder {
+  color: var(--header-title-color); }
+
+.w3l-footers-20 ::-ms-input-placeholder {
+  color: var(--header-title-color); }
+
+.w3l-footers-20 ::placeholder {
+  color: var(--header-title-color); }
+
+.w3l-footers-20 ul.links li a {
+  font-size: 17px;
+  line-height: 25px;
+  text-align: center;
+  color: #8289ab; }
+
+.w3l-footers-20 ul.links li,
+.w3l-footers-20 ul.social li {
+  display: inline-block; }
+
+.w3l-footers-20 .bottom-border {
+  border-top: 1px solid rgba(130, 152, 171, 0.35);
+  margin-top: 80px;
+  padding-top: 40px; }
+
+.w3l-footers-20 .columns p,
+.w3l-footers-20 .columns ul li a,
+.w3l-footers-20 .copy-footer-29 p {
+  font-size: 16px;
+  line-height: 25px;
+  color: #999; }
+
+.w3l-footers-20 .columns p a {
+  color: #fff; }
+
+.w3l-footers-20 .footer-logo span {
+  margin-right: 9px;
+  color: #f28e2d; }
+
+.w3l-footers-20 .columns p a:hover,
+.w3l-footers-20 .columns ul li a:hover {
+  color: #f28e2d; }
+
+.w3l-footers-20 p.contact-para3 {
+  color: #797979; }
+
+@media (max-width: 1080px) {
+  .w3l-footers-20 .column {
+    padding: 0 20px; } }
+
+@media (max-width: 1024px) {
+  .w3l-footers-20 .columns p,
+  .w3l-footers-20 .columns ul li a,
+  .w3l-footers-20 .columns li select {
+    font-size: 14px; }
+  .w3l-footers-20 .bottom-border {
+    margin-top: 60px; } }
+
+@media (max-width: 991px) {
+  .w3l-footers-20 .column:nth-child(3),
+  .w3l-footers-20 .column:nth-child(4) {
+    margin-top: 25px; } }
+
+@media (max-width: 800px) {
+  .w3l-footers-20 .bottom-border {
+    margin-top: 40px; } }
+
+@media (max-width: 767px) {
+  .w3l-footers-20 .links-grid {
+    order: 2; }
+  .w3l-footers-20 .columns {
+    text-align: center; }
+  .w3l-footers-20 .social-grid {
+    margin: 10px 0px; }
+  .w3l-footers-20 .bottom-border {
+    padding-top: 20px; } }
+
+@media (max-width: 568px) {
+  .w3l-footers-20 .footers20 {
+    padding: 40px 0; }
+  .w3l-footers-20 .column,
+  .w3l-footers-20 .column:last-child {
+    border-right: none; }
+  .w3l-footers-20 .column:nth-child(2) {
+    margin-top: 25px; }
+  .w3l-footers-20 .grids-content h4 {
+    margin-bottom: 10px; }
+  .w3l-footers-20 h2 a.footer-logo {
+    font-size: 30px;
+    line-height: 40px; } }
+
+@media (max-width: 480px) {
+  .w3l-footers-20 .columns p,
+  .w3l-footers-20 .columns ul li a,
+  .w3l-footers-20 .columns li select {
+    font-size: 16px; } 
+  }
