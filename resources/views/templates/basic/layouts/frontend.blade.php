@@ -168,15 +168,19 @@
 		<div class="container">
 			<div class="footers20-content">
 				<div class="row grid-col-4 grids-content">
-					<div class="column col-lg-3 col-md-6 col-sm-6">
-						<h3><a class="footer-logo" style="color:#fff"
+					<div class="column col-lg-6 col-sm-12 col-12">
+						<h3 class="s-c"><a class="footer-logo" style="color:#fff"
                         href="index.html"><span class="fa fa-gamepad" aria-hidden="true"></span>Sema.Store</a></h3>
-						<p class="contact-para3 para">Adipisicing elit.exercit ationem accu samus lauda ntium porro sunt
+						<div class="d-flex">
+                            <img style="height: 75px;margin: auto;margin-inline-end: 10px;margin-inline-start: -10px;"
+                            src="{{ getImage(imagePath()['logoIcon']['path'] .'/logo.png') }}" alt="">
+                        <p class="contact-para3 para">Adipisicing elit.exercit ationem accu samus lauda ntium porro sunt
 							repudt ationem accusamus exercit ationem accus amus lauda ntium porro elit exerc sunt repud.
 						</p>
+                        </div>
 					</div>
-					<div class="column col-lg-3 col-md-6 col-sm-6">
-						<h4>@lang('Latest News')</h4>
+					<div class="column col-lg-3 col-md-6 col-sm-6 col-12 s-c">
+						<h4>@lang('جديدنا')</h4>
 						<div class="img-text">
 							<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive "></a>
 							<div class="post-details"> <a href="">
@@ -196,46 +200,21 @@
 							</div>
 						</div>
 					</div>
-					<div class="column col-lg-3 col-md-6 col-sm-6">
-						<h4>@lang('Categories')</h4>
-						<div class="img-instagram">
-							<div class="img-inst">
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"> </a>
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2"></a>
-							</div>
-							<div class="img-inst">
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"></a>
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2"> </a>
-							</div>
-							<div class="img-inst">
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive pb-1"></a>
-								<a href=""><img src="https://mrreiha.keybase.pub/codepen/hover-fx/news1.jpg" alt="product" class="img-responsive mt-2 "></a>
-							</div>
-						</div>
-					</div>
-					<div class="column col-lg-3 col-md-6 col-sm-6">
-						<h4>@lang('Newsletter')</h4>
-						<p class="contact-para3 para">
-                            @lang('Adipisicing elit exerc tationem accusamus exercit ationem accus
-							amus lauda ntium porro elit exerc sunt repud.')
-                        </p>
-						<form action="#" method="post" class="rightside-form">
-							<input type="email" name="email" placeholder="Subscribe" required="">
-							<button class="btn button-icon" type="submit"><span class="fa fa-paper-plane-o" aria-hidden="true"></span></button>
-						</form>
-					</div>
+					<div class="column col-lg-3 col-md-6 col-sm-6 col-12 s-c">
+						<h4>@lang('روابط')</h4>
+						<ul class="lin">
+                            <li><i class="fas fa-credit-card"></i><a href="">@lang('طلباتي')</a></li>
+                            <li><i class="fab fa-product-hunt"></i><a href="">@lang('الباقات')</a></li>
+                            <li><i class="fas fa-user"></i><a href="">@lang('المللف الشخصي')</a></li>
+                        </ul>
+					</div>	
 				</div>
 				<div class="row grid-col-3 grids-content1 bottom-border">
-					<div class="columns text-md-left links-grid col-md-3 ">
-						<ul class="links">
-							<li><a href="#links">@lang('Privacy policy')</a></li>
-						</ul>
-					</div>
 					<div class="columns text-center copyright-grid col-md-6 ">
                     <p>@lang('Copyright') SYRIAN CARDS © {{ date('Y') }} @lang('All Rights reserved')</p>
 					</div>
-					<div class="columns text-md-right social-grid col-md-3 ">
-						<ul class="social">
+					<div class="columns text-md-right social-grid col-md-6 ">
+						<ul class="social text-center">
 							<li><a href="#url"><span class="fab fa-facebook" aria-hidden="true"></span></a></li>
 							<li><a href="#url"><span class="fab fa-instagram" aria-hidden="true"></span></a></li>
 							<li><a href="#url"><span class="fab fa-twitter" aria-hidden="true"></span></a></li>
