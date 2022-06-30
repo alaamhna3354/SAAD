@@ -1,3 +1,4 @@
+<option value="963" data-country="Syrian Arab Republic" data-code="SY">@lang('') @lang("+963")</option>
 <option value="93" data-country="Afghanistan" data-code="AF">@lang('AF') @lang("+93")</option>
 <option value="358" data-country="Åland Islands" data-code="AX">@lang('AX') @lang("+358")</option>
 <option value="355" data-country="Albania" data-code="AL">@lang('AL') @lang("+355")</option>
@@ -215,7 +216,6 @@
 <option value="268" data-country="Swaziland" data-code="SZ">@lang('') @lang("+268")</option>
 <option value="46" data-country="Sweden" data-code="SE">@lang('') @lang("+46")</option>
 <option value="41" data-country="Switzerland" data-code="CH">@lang('') @lang("+41")</option>
-<option value="963" data-country="Syrian Arab Republic" data-code="SY">@lang('') @lang("+963")</option>
 <option value="886" data-country="Taiwan" data-code="TW">@lang('') @lang("+886")</option>
 <option value="992" data-country="Tajikistan" data-code="TJ">@lang('') @lang("+992")</option>
 <option value="255" data-country="Tanzania, United Republic of Tanzania" data-code="TZ">@lang('') @lang("+255")</option>

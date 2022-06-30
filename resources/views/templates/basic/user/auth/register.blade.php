@@ -47,15 +47,13 @@
                                         </div>
                                         <div class="cont-100  mr-2 m-2 d-flex align-items-center">
                                       
-                                                    {{--<div class="">--}}
-                                                      {{----}}
-                                                            {{--<input type="hidden" name="country_code" value="963">--}}
-                                                            {{--<select  name="country">--}}
+                                                    <div class="">
+                                                            <input type="hidden" name="country_code" value="963">
+                                                            <select  name="country">
                                                                 {{--<option  value="963" data-country="Syrian Arab Republic" data-code="SY"> +963</option>--}}
-                                                                {{--@include('partials.country_code')--}}
-                                                            {{--</select>--}}
-                                                      {{----}}
-                                                    {{--</div>--}}
+                                                                @include('partials.country_code')
+                                                            </select>
+                                                    </div>
                                                     <input type="text" name="mobile" placeholder="@lang('Your Phone Number')" class="w-auto flex-fill" value="{{ old('mobile') }}">
                                                 
                                         </div>
@@ -94,7 +92,7 @@
                             </div>
                                         </div>
                                         <div class="col-6 left-wall">
-                                        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" alt="">
+                                        <img src="{{asset($activeTemplateTrue.'images/logincard.png')}}" alt="">
                                         </div>
                                     </div>
                                 </form>

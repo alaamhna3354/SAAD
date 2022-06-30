@@ -22,18 +22,18 @@
                                     <td data-label="@lang('Status')">
                                         @if($item->status === 1)
                                             <span
-                                                class="text--small badge font-weight-normal badge--success">@lang('Active')</span>
+                                                    class="text--small badge font-weight-normal badge--success">@lang('Active')</span>
                                         @else
                                             <span
-                                                class="text--small badge font-weight-normal badge--danger">@lang('Inactive')</span>
+                                                    class="text--small badge font-weight-normal badge--danger">@lang('Inactive')</span>
                                         @endif
                                     </td>
                                     <td data-label="@lang('Action')">
                                         <a href="javascript:void(0)" class="icon-btn ml-1 editBtn"
                                            data-original-title="@lang('Edit')" data-toggle="tooltip"
                                            data-url="{{ route('admin.categories.update', $item->id)}}" data-name="{{ $item->name }}"
-                                        data-sort="{{$item->sort}}" data-type="{{$item->type}}"
-                                        data-field="{{$item->field_name}}" data-special="{{$item->additional_field}}">
+                                           data-sort="{{$item->sort}}" data-type="{{$item->type}}"
+                                           data-field="{{$item->field_name}}" data-special="{{$item->additional_field}}">
                                             <i class="la la-edit"></i>
                                         </a>
                                         <a href="javascript:void(0)" class="icon-btn btn--{{ $item->status ? 'danger' : 'success' }} ml-1 statusBtn" data-original-title="@lang('Status')" data-toggle="tooltip" data-url="{{ route('admin.categories.status', $item->id) }}">
@@ -63,16 +63,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel"><i
-                            class="fa fa-share-square"></i> @lang('Add New Category')</h4>
+                                class="fa fa-share-square"></i> @lang('Add New Category')</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
+                                aria-hidden="true">×</span></button>
                 </div>
                 <form class="form-horizontal" method="post" action="{{ route('admin.categories.store')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('Name') <span
-                                    class="text-danger">*</span></label>
+                                        class="text-danger">*</span></label>
                             <div class="col-sm-12">
                                 <input type="text" class="form-control has-error bold " id="code" name="name" required placeholder="@lang('Enter category name')">
                             </div>
@@ -139,25 +139,25 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel"><i
-                            class="fa fa-fw fa-share-square"></i>@lang('Edit')</h4>
+                                class="fa fa-fw fa-share-square"></i>@lang('Edit')</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">×</span></button>
+                                aria-hidden="true">×</span></button>
                 </div>
                 <form method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('Name') <span
-                                    class="text-danger">*</span></label>
+                                        class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="code" name="name" value="{{__($item->name)}}" required>
+                                <input type="text" class="form-control has-error bold " id="code" name="name" value="{{$item->name ?? ''}}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>@lang('Select Type')</label>
                             <select class="form-control" id="type" name="type">
-                                <option value="{{old('type',$item->type)}}" selected
-                                        hidden>{{$item->type}}</option>
+                                <option value="{{$item->type ?? ''}}" selected
+                                        hidden>{{$item->type ?? ''}}</option>
                                 <option value="GAME">@lang('GAME')</option>
                                 <option value="CODE">@lang('CODE')</option>
                                 <option value="BALANCE">@lang('BALANCE')</option>
@@ -170,7 +170,7 @@
                         <div class="form-row form-group">
                             <label class="font-weight-bold ">@lang('الحقل المميز : اسم اللاعب او رقم الهاتف او .....') </label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('Field Name')" value="{{__($item->field_name)}}">
+                                <input type="text" class="form-control has-error bold " id="field" name="field_name"  placeholder="@lang('Field Name')" value="{{$item->field_name ?? ''}}">
                             </div>
                         </div>
                         <div class="form-row form-group">
@@ -191,25 +191,25 @@
                             <label class="font-weight-bold ">@lang('ترتيب المنتج') <span
                                         class="text-danger">*</span></label>
                             <div class="col-sm-12">
-                                <input type="number" class="form-control has-error bold " id="sort" name="sort" value="{{$item->sort}}">
+                                <input type="number" class="form-control has-error bold " id="sort" name="sort" value="{{$item->sort ?? ''}}">
                             </div>
                         </div>
                         {{--<div class="form-row form-group">--}}
-                            {{--<label class="font-weight-bold ">@lang('Image') <span--}}
-                                        {{--class="text-danger">*</span></label>--}}
-                            {{--<div class="col-sm-12">--}}
-                                {{--<input type="file" id="image" name="image">--}}
-                            {{--</div>--}}
+                        {{--<label class="font-weight-bold ">@lang('Image') <span--}}
+                        {{--class="text-danger">*</span></label>--}}
+                        {{--<div class="col-sm-12">--}}
+                        {{--<input type="file" id="image" name="image">--}}
+                        {{--</div>--}}
                         {{--</div>--}}
                         <div class="avatar-edit">
                             <input type="file" class="profilePicUpload" name="image" id="profilePicUpload1" accept=".png, .jpg, .jpeg">
                             <label for="profilePicUpload1" class="bg--success">@lang('Upload Image')</label>
                         </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                        <button type="submit" class="btn btn--primary" id="btn-save"
-                                value="add">@lang('Update')</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                            <button type="submit" class="btn btn--primary" id="btn-save"
+                                    value="add">@lang('Update')</button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -243,7 +243,7 @@
 
 @push('breadcrumb-plugins')
     <a class="btn btn-sm btn--primary box--shadow1 text-white text--small" data-toggle="modal" data-target="#myModal"><i
-            class="fa fa-fw fa-plus"></i>@lang('Add New')</a>
+                class="fa fa-fw fa-plus"></i>@lang('Add New')</a>
 @endpush
 
 @push('script')
@@ -258,7 +258,7 @@
                 var field= $(this).data('field');
                 var special= $(this).data('special');
                 var type= $(this).data('type');
-console.log(type);
+                console.log(type);
                 modal.find('form').attr('action', url);
                 modal.find('input[name=name]').val(name);
                 modal.find(('input[name=sort]')).val(sort);
