@@ -48,7 +48,7 @@
                             </div>
                                         </div>
                                         <div class="col-6 left-wall">
-                                        <img src="{{asset($activeTemplateTrue.'images/left-wall2.jpg')}}" alt="">
+                                        <img src="{{asset($activeTemplateTrue.'images/loginbg.png')}}" alt="">
                                         </div>
                                     </div>
                                 </form>

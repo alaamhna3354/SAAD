@@ -174,8 +174,13 @@
 						<div class="d-flex">
                             <img style="height: 75px;margin: auto;margin-inline-end: 10px;margin-inline-start: -10px;"
                             src="{{ getImage(imagePath()['logoIcon']['path'] .'/logo.png') }}" alt="">
-                        <p class="contact-para3 para">Adipisicing elit.exercit ationem accu samus lauda ntium porro sunt
-							repudt ationem accusamus exercit ationem accus amus lauda ntium porro elit exerc sunt repud.
+                        <br class="contact-para3 para">
+                            الموقع الاول لشحن بطاقات الألعاب اونلاين<br>
+                            ايميل : Info@semastore.net</br>
+                            واتساب : +352681117797
+                        </br>
+                            العنوان : syria-sarmada
+
 						</p>
                         </div>
 					</div>
@@ -211,7 +216,7 @@
 				</div>
 				<div class="row grid-col-3 grids-content1 bottom-border">
 					<div class="columns text-center copyright-grid col-md-6 ">
-                    <p>@lang('Copyright') SYRIAN CARDS © {{ date('Y') }} @lang('All Rights reserved')</p>
+                    <p>@lang('Copyright') SEMA-STORE © {{ date('Y') }} @lang('All Rights reserved')</p>
 					</div>
 					<div class="columns text-md-right social-grid col-md-6 ">
 						<ul class="social text-center">
