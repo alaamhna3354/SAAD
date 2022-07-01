@@ -171,17 +171,18 @@
 					<div class="column col-lg-6 col-sm-12 col-12">
 						<h3 class="s-c"><a class="footer-logo" style="color:#fff"
                         href="index.html"><span class="fa fa-gamepad" aria-hidden="true"></span>Sema.Store</a></h3>
-						<div class="d-flex">
-                            <img style="height: 75px;margin: auto;margin-inline-end: 10px;margin-inline-start: -10px;"
+						<div class="row">
+                           <div class="col-sm-3 col-12 text-center">
+                           <img  style="height: 75px;margin: auto;margin-inline-end: 10px;margin-inline-start: -10px;"
                             src="{{ getImage(imagePath()['logoIcon']['path'] .'/logo.png') }}" alt="">
-                        <br class="contact-para3 para">
-                            الموقع الاول لشحن بطاقات الألعاب اونلاين<br>
-                            ايميل : Info@semastore.net</br>
-                            واتساب : +352681117797
-                        </br>
-                            العنوان : syria-sarmada
-
-						</p>
+                           </div>
+                        <ul class="col-sm-9 col-12 text-center text-sm-right">
+                            <li class="d-flex align-items-center"><i class="fas fa-fist-raised ml-2 mr-2"></i><h4 class="mb-0">الموقع الاول لشحن بطاقات الألعاب اونلاين</h4></li>
+                            <li class="d-flex align-items-center"><i class="fas fa-envelope-open ml-2 mr-2"></i><h4 class="mb-0">ايميل :Info@semastore.net </h4></li>
+                            <li class="d-flex align-items-center"><i class="fab fa-whatsapp ml-2 mr-2"></i><h4 class="mb-0">واتساب :<a href="https://wa.me/+352681117797" target="_blank">+352681117797</a></h4></li>
+                            <li class="d-flex align-items-center"><i class="far fa-address-book ml-2 mr-2"></i><h4 class="mb-0">العنوان : syria-sarmada</h4></li>
+                        </ul>
+                           
                         </div>
 					</div>
 					<div class="column col-lg-3 col-md-6 col-sm-6 col-12 s-c">

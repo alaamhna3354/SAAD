@@ -111,17 +111,26 @@
 
                             <div class="form-row form-group">
                                 @if($category->type=="GAME")
-                                    <div class=" col-12 col-sm-5 mb-2" >
-                                        <label for="player_number">@lang('رقم اللاعب')</label>
-                                        <input type="text" name="link" id="player_number" placeholder="" required>
+                                    <div class=" col-12 col-sm-6 mb-2 text-right" >
+                                    <div class="input-group">
+                                            <div class="input-group-prepend ">
+                                                <label class="input-group-text group-label" for="player_number">@lang('رقم اللاعب')</label>
+                                            </div>
+                                            <input type="text" name="link" class="form-control group-input" id="player_number" required>
                                     </div>
-                                    <div class="col-10 col-sm-5 mb-2">
-                                        <label for="player_name">@lang('اسم اللاعب')</label>
-                                        <input type="text" name="player_name" id="player_name">
                                     </div>
-                                    <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
+                                    <div class="col-12 col-sm-6 mb-2 text-right">
+                                    <div class="input-group">
+                                            <div class="input-group-prepend ">
+                                                <label class="input-group-text group-label" for="player_name">@lang('اسم اللاعب')</label>
+                                            </div>
+                                            <input type="text" name="player_name" class="form-control group-input" id="player_name" required>
+                                        <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
                                         <i class="fas fa-sync-alt " onclick="getName({{$category->id}})"></i>
+                                        </div>
                                     </div>
+                                    </div>
+                                   
                                 @elseif(isset($category->field_name))
                             <div class="col-sm-8 m-1 text-right">
                                 <label for="link"
@@ -153,22 +162,21 @@
 
                                 @endif
                             </div>
-                            <div class="form-row form-group">
-                                <label for="quantity" class="font-weight-bold">@lang('Quantity') <span
-                                            class="text-danger">*</span></label>
-                                    <div class="col-sm-12">
-                                        <input type="number" class="form-control has-error bold" id="quantity"
-                                               name="quantity" required
-                                               @if($category->type == '5SIM' || $category->type=='CODE')
+                          
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend ">
+                                                <div class="input-group-text group-label">@lang('Quantity')</div>
+                                            </div>
+                                            <input type="number" name="quantity" class="form-control group-input" required @if($category->type == '5SIM' || $category->type=='CODE')
                                                readonly
                                                @endif
                                                >
+                                        </div>
                                     </div>
-
-                            </div>
-                                <div class="form-row">
                                     @if($category->type != '5SIM' && $category->type!='CODE')
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <div class="input-group">
                                             <div class="input-group-prepend ">
                                                 <div class="input-group-text group-label">@lang('Min')</div>
@@ -176,7 +184,7 @@
                                             <input type="text" name="min" class="form-control group-input" readonly>
                                         </div>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text group-label">@lang('Max')</div>
@@ -185,7 +193,7 @@
                                         </div>
                                     </div>
                                     @endif
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <div class="input-group-text group-label">@lang('Price')</div>
