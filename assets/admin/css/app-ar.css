@@ -4397,7 +4397,7 @@ th.w-85 {
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    min-height: 130px;
+    min-height: 175px;
     justify-content: flex-end;
     overflow: hidden;
     transition: all 0.3s;

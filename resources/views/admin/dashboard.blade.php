@@ -38,7 +38,7 @@
     {{--@endif--}}
 
     <div class="row mb-none-30">
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3  col-sm-6 mb-30">
             <div class="dashboard-w1 bg--primary b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-users"></i>
@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div><!-- dashboard-w1 end -->
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3  col-sm-6 mb-30">
             <div class="dashboard-w1 bg--cyan b-radius--10 box-shadow">
                 <div class="icon">
                     <i class="fa fa-users"></i>
@@ -72,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3 col-sm-6 mb-30">
             <div class="dashboard-w1 bg--orange b-radius--10 box-shadow ">
                 <div class="icon">
                     <i class="la la-envelope"></i>
@@ -90,7 +90,7 @@
                 </div>
             </div>
         </div><!-- dashboard-w1 end -->
-        <div class="col-xl-3 col-lg-4 col-sm-6 mb-30">
+        <div class="col-xl-3  col-sm-6 mb-30">
             <div class="dashboard-w1 bg--pink b-radius--10 box-shadow ">
                 <div class="icon">
                     <i class="fa fa-shopping-cart"></i>
