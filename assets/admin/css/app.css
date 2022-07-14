@@ -1,5 +1,10 @@
 /* default margin css start */
-
+html{
+    scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+    width: 0;
+}
 .my-5 {
     margin: 5px 0;
 }
