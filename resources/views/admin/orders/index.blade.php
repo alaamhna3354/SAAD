@@ -46,9 +46,12 @@
                                         @elseif($item->status === 3)
                                             <span
                                                 class="text--small badge font-weight-normal badge--danger">@lang('Cancelled')</span>
-                                        @else
+                                        @elseif($item->status === 4)
                                             <span
-                                                class="text--small badge font-weight-normal badge--dark">@lang('Refunded')</span>
+                                                    class="text--small badge font-weight-normal badge--danger">@lang('Refunded')</span>
+                                        @elseif($item->status===5)
+                                            <span
+                                                class="text--small badge font-weight-normal badge--dark">@lang('Waiting Code')</span>
                                         @endif
                                     </td>
                                     {{--<td data-label="@lang('API Order')">--}}
