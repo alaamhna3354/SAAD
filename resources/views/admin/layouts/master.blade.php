@@ -1,4 +1,5 @@
 <!-- meta tags and other links -->
+<!-- meta tags and other links -->
 <!DOCTYPE html>
 @if (App::isLocale('ar'))
     <html lang="ar" dir="RTL">

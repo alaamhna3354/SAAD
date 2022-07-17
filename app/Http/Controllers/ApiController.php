@@ -273,11 +273,21 @@ class ApiController extends Controller
     public function getPlayer($api,$id)
     {
         $category=Category::find($api);
-        $url="http://sim90.com/api/getPlayerName/".$category->slug."/".$id;
-        $token='76|HZ04dcna7KKEjEChTE9Ydhzuk1xzGTJhbo2vkLnK';
-        $getPlayer = Http::withToken($token)->get($url);
+//       $url="http://sim90.com/api/getPlayerName/".$category->slug."/".$playerid;
+        $url="http://www.m7-system.com:8080/match?key=S9otzjzFd5166qdY1QvabDBQttlF71JkFcs13lwg8VY&id=".$id."&product=".$category->slug;
+//       $token='76|HZ04dcna7KKEjEChTE9Ydhzuk1xzGTJhbo2vkLnK';
+//        $getPlayer = Http::withToken($token)->get($url);
+        $getPlayer=Http::get($url);
         return   $result = json_decode($getPlayer, True);
 
-        //        [freefire,pubg,likee,bego,ahlanChat,pubgLite,yalla]
+
+
+//        $category=Category::find($api);
+//        $url="http://sim90.com/api/getPlayerName/".$category->slug."/".$id;
+//        $token='76|HZ04dcna7KKEjEChTE9Ydhzuk1xzGTJhbo2vkLnK';
+//        $getPlayer = Http::withToken($token)->get($url);
+//        return   $result = json_decode($getPlayer, True);
+//
+//        //        [freefire,pubg,likee,bego,ahlanChat,pubgLite,yalla]
     }
 }

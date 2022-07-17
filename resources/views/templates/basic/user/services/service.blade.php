@@ -169,7 +169,7 @@
                                             <div class="input-group-prepend ">
                                                 <div class="input-group-text group-label">@lang('Quantity')</div>
                                             </div>
-                                            <input type="number" name="quantity" class="form-control group-input" required @if($category->type == '5SIM' || $category->type=='CODE')
+                                            <input type="number" id="quantity" name="quantity" class="form-control group-input" required @if($category->type == '5SIM' || $category->type=='CODE')
                                                readonly
                                                @endif
                                                >
@@ -240,7 +240,7 @@
                     type:"GET",
                     success:function(response){
                         console.log(response)
-                        $('#player_name').val(response.name);
+                        $('#player_name').val(response.username);
                     },
                 })
             }
@@ -266,6 +266,7 @@
                 var max = $(this).data('max');
                 modal.find('input[name=quantity]').val(1);
                 modal.find('input[name=price]').val("{{ $general->cur_sym }}" + price_per_k.toFixed(3));
+                console.log( modal.find('input[name=quantity]').val(1))
                 //Calculate total price
                
                 {{--$(document).on("keyup", "#link", function () {--}}

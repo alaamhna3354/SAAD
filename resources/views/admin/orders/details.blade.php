@@ -98,6 +98,7 @@
                                                 <option value="2" {{ $order->status === 2 ? 'selected' : null }}>@lang('Completed')</option>
                                                 <option value="3" {{ $order->status === 3 ? 'selected' : null }}>@lang('Cancelled')</option>
                                                 <option value="4" {{ $order->status === 4 ? 'selected' : null }}>@lang('Refunded')</option>
+                                                <option value="5" {{ $order->status === 5 ? 'selected' : null }}>@lang('Waiting Code')</option>
                                             </select>
                                         @elseif($order->status === 2)
                                             <span
