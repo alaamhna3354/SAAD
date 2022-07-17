@@ -499,7 +499,12 @@
                         <span class="menu-title">@lang('Manage Banners')</span>
                     </a>
                 </li>
-
+                <li class="sidebar-menu-item">
+                    <a href="https://semastore.net/admin/frontend/frontend-sections/about_3" class="nav-link ">
+                        <i class="menu-icon la la-list"></i>
+                        <span class="menu-title">@lang('Manage Home Section')</span>
+                    </a>
+                </li>
                 <li class="sidebar-menu-item">
                     <a class="nav-link " onclick="showRate()">
                         <i class="menu-icon la la-list"></i>
