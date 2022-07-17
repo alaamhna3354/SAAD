@@ -7242,3 +7242,41 @@ a.icon-btn {
     border-top-left-radius: 5px !important;
     border-bottom-left-radius: 5px !important;
 }
+/* ************* new style order ************* */
+
+#orderModal input{
+    border:1px solid #34495e;
+}
+#orderModal input:focus{
+    background-color: transparent;
+}
+#orderModal .input-group-prepend{
+    border-left: 1px solid #34495e;
+}
+#orderModal .group-label{
+    min-width: 105px;
+    justify-content: center;
+    font-weight: bold;
+}
+#orderModal i{
+    color: #34495e;
+}
+#orderModal .fa-sync-alt{
+    transition: .3s;
+    cursor: pointer;
+}
+#orderModal .fa-sync-alt:hover{
+    scale: 1.5;
+}
+#orderModal .modal-header .close {
+    margin: -1rem -1rem -1rem 0;
+    transition: .3s;
+  }
+  #orderModal .modal-header .close:hover{
+    scale: 1.5;
+}
+#orderModal .refresh{
+    position: absolute;
+    left: -15px;
+    top: 10px;
+}
