@@ -6,19 +6,19 @@
                 {{--<div class="card-header">--}}
                     {{--<a href="{{ route('admin.services.apiServices') }}" class="btn btn-outline--primary float-sm-right">@lang('API Services')</a>--}}
                 {{--</div>--}}
-                <div class="col-md-4 col-xl-3">
-                    <div class="form-group">
-                        <select name="category" id="categorylist" class="form-control statusfield" onchange="categoryFilter()">
-                            <option value="-1" selected >@lang('المنتج')</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->name}}" >@lang($category->name)</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                {{--<div class="col-md-4 col-xl-3">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<select name="category" id="categorylist" class="form-control statusfield" onchange="categoryFilter()">--}}
+                            {{--<option value="-1" selected >@lang('المنتج')</option>--}}
+                            {{--@foreach($categories as $category)--}}
+                                {{--<option value="{{$category->name}}" >@lang($category->name)</option>--}}
+                            {{--@endforeach--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="card-body p-0">
                     <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light tabstyle--two" id="servicelist">
+                        <table class="table table--light tabstyle--two " id="servicelist">
                             <thead>
                             <tr>
                                 <th scope="col">@lang('Name')</th>
@@ -311,8 +311,21 @@
 @endsection
 
 @push('breadcrumb-plugins')
-    <a class="btn btn-sm btn--primary box--shadow1 text-white text--small" data-toggle="modal" data-target="#myModal"><i
-            class="fa fa-fw fa-plus"></i>@lang('Add New')</a>
+    <form action="{{ route('admin.services.search') }}" method="GET" class="form-inline float-sm-right bg--white">
+        <div class="input-group has_append">
+            {{--<input type="text" name="search" class="form-control" placeholder="@lang('Username or Order ID')" value="{{ $search ?? '' }}" required>--}}
+            <select class="form-control" name="search">
+                <option value="" selected>@lang('Choose')...</option>
+                @forelse($categories as $category)
+                    <option value="{{ $category->id }}" id="{{$category->type}}">{{ $category->name }}</option>
+                @empty
+                @endforelse
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
 @endpush
 
 @push('style')
@@ -394,22 +407,25 @@
                 modal.modal('show');
             });
         })(jQuery);
-        function categoryFilter() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("categorylist");
-            filter = input.value;
-            table = document.getElementById("servicelist");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML == filter || filter==-1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
+
+        // function categoryFilter() {
+        //     var input, filter, table, tr, td, i;
+        //     input = document.getElementById("categorylist");
+        //     filter = input.value;
+        //     table = document.getElementById("servicelist");
+        //     tr = table.getElementsByTagName("tr");
+        //     for (i = 0; i < tr.length; i++) {
+        //         td = tr[i].getElementsByTagName("td")[1];
+        //         if (td) {
+        //             if (td.innerHTML == filter || filter==-1) {
+        //                 tr[i].style.display = "";
+        //             } else {
+        //                 tr[i].style.display = "none";
+        //             }
+        //         }
+        //     }
+        // }
+
     </script>
+
 @endpush

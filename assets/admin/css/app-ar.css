@@ -3928,7 +3928,7 @@ table.table--light.style--two tbody td {
     }
 
     .table-responsive--lg tbody tr:nth-child(odd) {
-        background-color: #7367f005;
+        background-color: #a0a0a09e;
     }
 
     .table-responsive--lg tr th, .table-responsive--lg tr td {
@@ -3968,7 +3968,7 @@ table.table--light.style--two tbody td {
     }
 
     .table-responsive--md tbody tr:nth-child(odd) {
-        background-color: #7367f005;
+        background-color: #a0a0a09e;
     }
 
     .table-responsive--md tr th, .table-responsive--md tr td {
@@ -4008,7 +4008,7 @@ table.table--light.style--two tbody td {
     }
 
     .table-responsive--sm tbody tr:nth-child(odd) {
-        background-color: #7367f005;
+        background-color: #a0a0a09e;
     }
 
     .table-responsive--sm tr th, .table-responsive--sm tr td {

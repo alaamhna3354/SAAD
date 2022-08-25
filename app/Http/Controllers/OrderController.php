@@ -122,7 +122,11 @@ class OrderController extends Controller
                 'currency' => $gnl->cur_text,
                 'post_balance' => getAmount($user->balance),
             ]);
-
+        adminnotify($user,'NEW_ORDER' ,[
+        'service_name' => $service->name,
+                'username' => $user->username,
+            'category_name'=>$service->category->name,
+            ]);
         $notify[] = ['success', 'Successfully placed your order!'];
         return back()->withNotify($notify);
     }

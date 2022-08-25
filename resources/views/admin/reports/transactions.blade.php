@@ -32,6 +32,7 @@
                                     <td data-label="@lang('Post Balance')">{{ getAmount($trx->post_balance) }} {{__($general->cur_text)}}</td>
                                     <td data-label="@lang('Detail')">{{ __($trx->details) }}</td>
                                 </tr>
+                                <div></div>
                             @empty
                                 <tr>
                                     <td class="text-muted text-center" colspan="100%">{{ __($empty_message) }}</td>
