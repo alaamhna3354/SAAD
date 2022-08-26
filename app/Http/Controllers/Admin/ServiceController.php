@@ -11,6 +11,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use phpDocumentor\Reflection\Types\Null_;
 
 class ServiceController extends Controller
 {
@@ -100,7 +101,7 @@ class ServiceController extends Controller
         $service->details = $request->details;
         if($service->category->type=="5SIM")
         $service->api_service_params = $request->country  .'/any/'. $request->product;
-        $service->special_price=$request->special_price;
+        $service->special_price=$request->special_price !=0 ? $request->special_price  : NULL;
     }
 
     public function status($id)
@@ -152,6 +153,7 @@ class ServiceController extends Controller
 
     public function search(Request $request)
     {
+
         if ($request->search){
             $search = $request->search;
             $categories = Category::active()->orderBy('name')->get();
