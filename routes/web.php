@@ -119,7 +119,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function () {
         Route::post('services/store', 'ServiceController@store')->name('services.store');
         Route::post('services/update/{id}', 'ServiceController@update')->name('services.update');
         Route::post('services/status/{id}', 'ServiceController@status')->name('services.status');
-        Route::get('services/search', 'serviceController@search')->name('services.search');
+        Route::get('services/search', 'ServiceController@search')->name('services.search');
 
         //Services
         Route::get('serials', 'SerialController@index')->name('serials.index');
