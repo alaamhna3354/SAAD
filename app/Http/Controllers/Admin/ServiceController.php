@@ -100,7 +100,7 @@ class ServiceController extends Controller
         $service->details = $request->details;
         if($service->category->type=="5SIM")
         $service->api_service_params = $request->country  .'/any/'. $request->product;
-
+        $service->special_price=$request->special_price;
     }
 
     public function status($id)

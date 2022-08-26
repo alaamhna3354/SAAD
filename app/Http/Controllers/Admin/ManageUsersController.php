@@ -161,10 +161,11 @@ class ManageUsersController extends Controller
                             'country' => $request->country,
                         ];
         $user->status = $request->status ? 1 : 0;
-        $user->ev = $request->ev ? 1 : 0;
-        $user->sv = $request->sv ? 1 : 0;
-        $user->ts = $request->ts ? 1 : 0;
-        $user->tv = $request->tv ? 1 : 0;
+        $user->ev = 1;
+        $user->sv = 1;
+        $user->ts = 1;
+        $user->tv = 1;
+        $user->is_special=$request->is_special? 1 : 0;
         $user->save();
 
         $notify[] = ['success', 'User detail has been updated'];
