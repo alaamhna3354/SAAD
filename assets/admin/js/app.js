@@ -208,14 +208,14 @@ $('.custom-data-table').closest('.card').prepend('<div class="card-header" style
 $('.custom-data-table').closest('.card').find('.card-body').attr('style','padding-top:0px');
 var tr_elements = $('.custom-data-table tbody tr');
 $(document).on('input','input[name=search_table]',function(){
-  var search = $(this).val().toUpperCase();
-  var match = tr_elements.filter(function (idx, elem) {
-    return $(elem).text().trim().toUpperCase().indexOf(search) >= 0 ? elem : null;
-  }).sort();
-  var table_content = $('.custom-data-table tbody');
-  if (match.length == 0) {
-    table_content.html('<tr><td colspan="100%" class="text-center">Data Not Found</td></tr>');
-  }else{
-    table_content.html(match);
-  }
+    var search = $(this).val().toUpperCase();
+    var match = tr_elements.filter(function (idx, elem) {
+        return $(elem).text().trim().toUpperCase().indexOf(search) >= 0 ? elem : null;
+    }).sort();
+    var table_content = $('.custom-data-table tbody');
+    if (match.length == 0) {
+        table_content.html('<tr><td colspan="100%" class="text-center">Data Not Found</td></tr>');
+    }else{
+        table_content.html(match);
+    }
 });

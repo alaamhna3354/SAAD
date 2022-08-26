@@ -6,19 +6,19 @@
                 {{--<div class="card-header">--}}
                     {{--<a href="{{ route('admin.services.apiServices') }}" class="btn btn-outline--primary float-sm-right">@lang('API Services')</a>--}}
                 {{--</div>--}}
-                <div class="col-md-4 col-xl-3">
-                    <div class="form-group">
-                        <select name="category" id="categorylist" class="form-control statusfield" onchange="categoryFilter()">
-                            <option value="-1" selected >@lang('المنتج')</option>
-                            @foreach($categories as $category)
-                                <option value="{{$category->name}}" >@lang($category->name)</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                {{--<div class="col-md-4 col-xl-3">--}}
+                    {{--<div class="form-group">--}}
+                        {{--<select name="category" id="categorylist" class="form-control statusfield" onchange="categoryFilter()">--}}
+                            {{--<option value="-1" selected >@lang('المنتج')</option>--}}
+                            {{--@foreach($categories as $category)--}}
+                                {{--<option value="{{$category->name}}" >@lang($category->name)</option>--}}
+                            {{--@endforeach--}}
+                        {{--</select>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
                 <div class="card-body p-0">
                     <div class="table-responsive--sm table-responsive">
-                        <table class="table table--light tabstyle--two" id="servicelist">
+                        <table class="table table--light tabstyle--two " id="servicelist">
                             <thead>
                             <tr>
                                 <th scope="col">@lang('Name')</th>
@@ -55,7 +55,8 @@
                                            data-url="{{ route('admin.services.update', $item->id)}}" data-name="{{ $item->name }}"
                                         data-category="{{ $item->category_id }}"
                                         data-price_per_k="{{ getAmount($item->price_per_k) }}"
-                                        data-min="{{ $item->min }}" data-max="{{ $item->max }}" data-details="{{ $item->details }}" data-api_service_id="{{ $item->api_service_id }}">
+                                        data-min="{{ $item->min }}" data-max="{{ $item->max }}" data-details="{{ $item->details }}" data-api_service_id="{{ $item->api_service_id }}"
+                                        data-special_price="{{ getAmount($item->special_price)}}">
                                             <i class="la la-edit"></i>
                                         </a>
 
@@ -144,6 +145,16 @@
                                     class="text-danger">*</span></label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="price_per_k">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">{{ $general->cur_text }}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold ">@lang('Special Price') <span></span>
+
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="special_price">
                                 <div class="input-group-append">
                                     <div class="input-group-text">{{ $general->cur_text }}</div>
                                 </div>
@@ -253,6 +264,15 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="font-weight-bold ">@lang('Special Price') <span></span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="inlineFormInputGroupUsername2" name="special_price">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">{{ $general->cur_text }}</div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <div class="form-group">
@@ -309,10 +329,29 @@
         </div>
     </div>
 @endsection
-
 @push('breadcrumb-plugins')
+    <span style="margin: 5px">
     <a class="btn btn-sm btn--primary box--shadow1 text-white text--small" data-toggle="modal" data-target="#myModal"><i
-            class="fa fa-fw fa-plus"></i>@lang('Add New')</a>
+                class="fa fa-fw fa-plus"></i>@lang('Add New')</a>
+    </span>
+@endpush
+@push('breadcrumb-plugins')
+
+    <form action="{{ route('admin.services.search') }}" method="GET" class="form-inline float-sm-right bg--white">
+        <div class="input-group has_append">
+            {{--<input type="text" name="search" class="form-control" placeholder="@lang('Username or Order ID')" value="{{ $search ?? '' }}" required>--}}
+            <select class="form-control" name="search">
+                <option value="" selected>@lang('Choose')...</option>
+                @forelse($categories as $category)
+                    <option value="{{ $category->id }}" id="{{$category->type}}">{{ $category->name }}</option>
+                @empty
+                @endforelse
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn--primary" type="submit"><i class="fa fa-search"></i></button>
+            </div>
+        </div>
+    </form>
 @endpush
 
 @push('style')
@@ -368,6 +407,7 @@
                 var max = $(this).data('max');
                 var details = $(this).data('details');
                 var api_service_id = $(this).data('api_service_id');
+                var special_price=$(this).data('special_price');
                 $('.api_service_id').empty();
                 if(api_service_id){
                     $('.api_service_id').html(`<label class="font-weight-bold">@lang('Service Id (If order process through API)')</label>
@@ -379,6 +419,7 @@
                 modal.find('input[name=name]').val(name);
                 modal.find('select[name=category]').val(category_id);
                 modal.find('input[name=price_per_k]').val(price_per_k);
+                modal.find('input[name=special_price]').val(special_price);
                 modal.find('input[name=min]').val(min);
                 modal.find('input[name=max]').val(max);
                 modal.find('textarea[name=details]').val(details);
@@ -394,22 +435,25 @@
                 modal.modal('show');
             });
         })(jQuery);
-        function categoryFilter() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("categorylist");
-            filter = input.value;
-            table = document.getElementById("servicelist");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML == filter || filter==-1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
-                    }
-                }
-            }
-        }
+
+        // function categoryFilter() {
+        //     var input, filter, table, tr, td, i;
+        //     input = document.getElementById("categorylist");
+        //     filter = input.value;
+        //     table = document.getElementById("servicelist");
+        //     tr = table.getElementsByTagName("tr");
+        //     for (i = 0; i < tr.length; i++) {
+        //         td = tr[i].getElementsByTagName("td")[1];
+        //         if (td) {
+        //             if (td.innerHTML == filter || filter==-1) {
+        //                 tr[i].style.display = "";
+        //             } else {
+        //                 tr[i].style.display = "none";
+        //             }
+        //         }
+        //     }
+        // }
+
     </script>
+
 @endpush

@@ -358,5 +358,8 @@
   "accepted": "يجب قبول الحقل :attribute",
   "accepted_if": "الحقل :attribute مقبول في حال ما إذا كان :other يساوي :value.",
   "Manage Home Section":"إدارة اقسام الصفحة الرئيسية",
-  "Waiting Code":"بإنتظار الكود"
+  "Waiting Code":"بإنتظار الكود",
+  "Normal":"عادي",
+  "Special":"مميز",
+  "Special Price":"سعر مميز"
 }

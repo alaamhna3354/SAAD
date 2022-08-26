@@ -313,6 +313,13 @@
                                        name="status"
                                        @if($user->status) checked @endif>
                             </div>
+                            <div class="form-group col-xl-4 col-md-6  col-sm-3 col-12">
+                                <label class="form-control-label font-weight-bold">@lang('Special') </label>
+                                <input type="checkbox" data-onstyle="-success" data-offstyle="-danger"
+                                       data-toggle="toggle" data-on="@lang('Special')" data-off="@lang('Normal')" data-width="100%"
+                                       name="is_special"
+                                       @if($user->is_special) checked @endif>
+                            </div>
                         </div>
                             {{--<div class="form-group  col-xl-4 col-md-6  col-sm-3 col-12">--}}
                                 {{--<label class="form-control-label font-weight-bold">@lang('SMS Verification') </label>--}}

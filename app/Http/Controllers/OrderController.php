@@ -9,22 +9,22 @@ use App\Models\Service;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Exception;
 
 class OrderController extends Controller
 {
     public function order(Request $request, $category_id, $service_id)
     {
-
         $service = Service::findOrFail($service_id);
         $request->validate([
 //            'link' => 'required|string',
-            'quantity' => 'required|integer|gte:' . $service->min . '|lte:' . $service->max,
+//            'quantity' => 'required|integer|gte:' . $service->min . '|lte:' . $service->max,
         ]);
         if ($service->category->type == 'CODE' || $service->category->type == '5SIM')
-            $price = getAmount($service->price_per_k);
+            $price =( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) );
         else
-            $price = getAmount(($service->price_per_k) * $request->quantity);
+            $price = ( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) ) * $request->quantity;
         //Subtract user balance
         $user = auth()->user();
         if ($user->balance < $price) {
@@ -122,7 +122,11 @@ class OrderController extends Controller
                 'currency' => $gnl->cur_text,
                 'post_balance' => getAmount($user->balance),
             ]);
-
+        adminnotify($user,'NEW_ORDER' ,[
+        'service_name' => $service->name,
+                'username' => $user->username,
+            'category_name'=>$service->category->name,
+            ]);
         $notify[] = ['success', 'Successfully placed your order!'];
         return back()->withNotify($notify);
     }
@@ -175,7 +179,7 @@ class OrderController extends Controller
             }
             // End validation
 
-            $price = getAmount(($service->price_per_k) * $service_array[2]);
+            $price = getAmount(( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) ) * $service_array[2]);
 
             //Subtract user balance
             $user = auth()->user();

@@ -30,14 +30,14 @@
                                         <a href="javascript:void(0)" class="orderBtn"
                                            data-original-title="@lang('Buy')" data-toggle="tooltip"
                                            data-url="{{ route('user.order', [$category->id, $item->id])}}"
-                                           data-price_per_k="{{ getAmount($item->price_per_k) }}"
+                                           data-price_per_k="{{Auth::user()->is_special ? ( $item->special_price ? getAmount($item->special_price) : getAmount($item->price_per_k)) : getAmount($item->price_per_k)}}"
                                            data-min="{{ $item->min }}" data-max="{{ $item->max }}"
                                            data-category="{{$category->id}}">
                                             <img src="{{$item->image ? getImage(imagePath()['service']['path'].'/'. $item->image,imagePath()['service']['size']) : getImage(imagePath()['category']['path'].'/'. $category->image,imagePath()['category']['size'])}}"
                                                  class="card-img-top" alt="...">
                                             <div class="card-body text-center">
                                                 <h5 class="card-title mb-0">{{__($item->name)}}</h5>
-                                                <div class="card-text text-black-50 mb-2">{{ $general->cur_sym . getAmount($item->price_per_k) }}</div>
+                                                <div class="card-text text-black-50 mb-2">{{ $general->cur_sym . (Auth::user()->is_special ? ( $item->special_price ? getAmount($item->special_price) : getAmount($item->price_per_k)) : getAmount($item->price_per_k) )}}</div>
                                                 @if($item->details)
                                                     <a href="javascript:void(0)"
                                                        class="icon-btn btn--info detailsBtn S m-2"
@@ -49,7 +49,7 @@
                                                 <a href="javascript:void(0)" class="icon-btn orderBtn"
                                                    data-original-title="@lang('Buy')" data-toggle="tooltip"
                                                    data-url="{{ route('user.order', [$category->id, $item->id])}}"
-                                                   data-price_per_k="{{ getAmount($item->price_per_k) }}"
+                                                   data-price_per_k="{{Auth::user()->is_special ? ( $item->special_price ? getAmount($item->special_price) : getAmount($item->price_per_k)) : getAmount($item->price_per_k)}}"
                                                    data-min="{{ $item->min }}" data-max="{{ $item->max }}
                                                 {{--@if(isset($category->custom_additional_field_name))--}}
 
@@ -111,49 +111,54 @@
 
                             <div class="form-row form-group">
                                 @if($category->type=="GAME")
-                                    <div class=" col-12 col-sm-6 mb-2 text-right" >
-                                    <div class="input-group">
+                                    <div class=" col-12 col-sm-6 mb-2 text-right">
+                                        <div class="input-group">
                                             <div class="input-group-prepend ">
-                                                <label class="input-group-text group-label" for="player_number">@lang('رقم اللاعب')</label>
+                                                <label class="input-group-text group-label"
+                                                       for="player_number">@lang('رقم اللاعب')</label>
                                             </div>
-                                            <input type="text" name="link" class="form-control group-input" id="player_number" required>
-                                    </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 mb-2 text-right">
-                                    <div class="input-group">
-                                            <div class="input-group-prepend ">
-                                                <label class="input-group-text group-label" for="player_name">@lang('اسم اللاعب')</label>
-                                            </div>
-                                            <input type="text" name="player_name" class="form-control group-input" id="player_name" required>
-                                        <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
-                                        <i class="fas fa-sync-alt " onclick="getName({{$category->id}})"></i>
+                                            <input type="text" name="link" class="form-control group-input"
+                                                   id="player_number" required>
                                         </div>
                                     </div>
+                                    <div class="col-12 col-sm-6 mb-2 text-right">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend ">
+                                                <label class="input-group-text group-label"
+                                                       for="player_name">@lang('اسم اللاعب')</label>
+                                            </div>
+                                            <input type="text" name="player_name" class="form-control group-input"
+                                                   id="player_name" required>
+                                            <div class="col-2 col-sm-2 d-flex align-items-center refresh mb-2">
+                                                <i class="fas fa-sync-alt " onclick="getName({{$category->id}})"></i>
+                                            </div>
+                                        </div>
                                     </div>
-                                   
+
                                 @elseif(isset($category->field_name))
-                            <div class="col-sm-8 m-1 text-right">
-                                <label for="link"
-                                       class="font-weight-bold">{{$category->field_name}}
-                                    <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control has-error bold" id="link" name="link"
-                                           required>
-                            </div>
+                                    <div class="col-sm-8 m-1 text-right">
+                                        <label for="link"
+                                               class="font-weight-bold">{{$category->field_name}}
+                                            <span
+                                                    class="text-danger">*</span></label>
+                                        <input type="text" class="form-control has-error bold" id="link" name="link"
+                                               required>
+                                    </div>
                                 @endif
                                 @if(isset($category->custom_additional_field_name) && $category->type!="GAME")
                                     {{--<form action="{{url('user/address')}}" class="mt-5 check-out-form" method="post">--}}
                                     @foreach(explode(',',$category->custom_additional_field_name) as $field)
-                                    <div class="col-sm-8 m-1 text-right">
-                                    <label for="link"
-                                           class="font-weight-bold">{{$field}} <span
-                                                class="text-danger">*</span></label>
-                                            <input type="text" class="form-control has-error bold"  name="custom[{{$field}}]"
-                                                 required>
-                                    </div>
-                                        @endforeach
+                                        <div class="col-sm-8 m-1 text-right">
+                                            <label for="link"
+                                                   class="font-weight-bold">{{$field}} <span
+                                                        class="text-danger">*</span></label>
+                                            <input type="text" class="form-control has-error bold"
+                                                   name="custom[{{$field}}]"
+                                                   required>
+                                        </div>
+                                    @endforeach
 
-                                        <!-- <div class="col-sm-2">
+                                <!-- <div class="col-sm-2">
                                             <a href="#" id="get_player_name" class="pull-right mr-2" >
                                                 <i class="fa fa-cart-plus"></i>
                                             </a>
@@ -162,20 +167,22 @@
 
                                 @endif
                             </div>
-                          
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend ">
-                                                <div class="input-group-text group-label">@lang('Quantity')</div>
-                                            </div>
-                                            <input type="number" id="quantity" name="quantity" class="form-control group-input" required @if($category->type == '5SIM' || $category->type=='CODE')
-                                               readonly
-                                               @endif
-                                               >
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend ">
+                                            <div class="input-group-text group-label">@lang('Quantity')</div>
                                         </div>
+                                        <input type="number" id="quantity" name="quantity"
+                                               class="form-control group-input" required
+                                               @if($category->type == '5SIM' || $category->type=='CODE')
+                                               readonly
+                                                @endif
+                                        >
                                     </div>
-                                    @if($category->type != '5SIM' && $category->type!='CODE')
+                                </div>
+                                @if($category->type != '5SIM' && $category->type!='CODE')
                                     <div class="form-group col-md-6">
                                         <div class="input-group">
                                             <div class="input-group-prepend ">
@@ -192,24 +199,25 @@
                                             <input type="text" name="max" class="form-control group-input" readonly>
                                         </div>
                                     </div>
-                                    @endif
-                                    <div class="form-group col-md-6">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <div class="input-group-text group-label">@lang('Price')</div>
-                                            </div>
-                                            <input type="text" id="price" class="form-control total_price text--success group-input"
-                                                   name="price"  readonly>
+                                @endif
+                                <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text group-label">@lang('Price')</div>
                                         </div>
+                                        <input type="text" id="price"
+                                               class="form-control total_price text--success group-input"
+                                               name="price" readonly>
                                     </div>
                                 </div>
+                            </div>
 
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
-                                <button type="submit" class="btn btn--primary" id="btn-save"
-                                        value="add">@lang('Submit')</button>
-                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn--dark" data-dismiss="modal">@lang('Close')</button>
+                            <button type="submit" class="btn btn--primary" id="btn-save"
+                                    value="add">@lang('Submit')</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -231,14 +239,14 @@
     <script>
         function getName(id) {
             var player_number = $('#player_number').val();
-            if(player_number == ""){
+            if (player_number == "") {
                 $('.vald-player-number').removeClass('hidden');
             }
-            else{
+            else {
                 $.ajax({
-                    url:'/user/player/'+id+'/'+player_number,
-                    type:"GET",
-                    success:function(response){
+                    url: '/user/player/' + id + '/' + player_number,
+                    type: "GET",
+                    success: function (response) {
                         console.log(response)
                         $('#player_name').val(response.username);
                     },
@@ -266,14 +274,14 @@
                 var max = $(this).data('max');
                 modal.find('input[name=quantity]').val(1);
                 modal.find('input[name=price]').val("{{ $general->cur_sym }}" + price_per_k.toFixed(3));
-                console.log( modal.find('input[name=quantity]').val(1))
+                console.log(modal.find('input[name=quantity]').val(1))
                 //Calculate total price
-               
+
                 {{--$(document).on("keyup", "#link", function () {--}}
-                    {{--var link = $('#link').val()--}}
-                    {{--var url="{{route('player',[$category->api,':link'])}}";--}}
-                    {{--url = url.replace(':link', link);--}}
-                    {{--// modal.find('input[name=custom]').val(1);--}}
+                {{--var link = $('#link').val()--}}
+                {{--var url="{{route('player',[$category->api,':link'])}}";--}}
+                {{--url = url.replace(':link', link);--}}
+                {{--// modal.find('input[name=custom]').val(1);--}}
                 {{--});--}}
 
                 //Calculate total price

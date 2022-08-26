@@ -100,7 +100,7 @@ class ServiceController extends Controller
         $service->details = $request->details;
         if($service->category->type=="5SIM")
         $service->api_service_params = $request->country  .'/any/'. $request->product;
-
+        $service->special_price=$request->special_price;
     }
 
     public function status($id)
@@ -147,5 +147,24 @@ class ServiceController extends Controller
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
+
+
+    public function search(Request $request)
+    {
+        if ($request->search){
+            $search = $request->search;
+            $categories = Category::active()->orderBy('name')->get();
+            $services = Service::where('category_id', $search)->latest('id')->paginate(getPaginate());
+            $search=Category::find($search);
+            $page_title = "نتائج البحث عن {{$search['name']}}";
+        } else {
+            $page_title = 'All Services';
+            $search = '';
+            $services = Service::with('category')->latest()->paginate(getPaginate());
+            $categories = Category::active()->orderBy('name')->get();
+        }
+        $empty_message = 'No Result Found';
+        return view('admin.services.index', compact('page_title', 'services', 'empty_message', 'search','categories'));
     }
 }
