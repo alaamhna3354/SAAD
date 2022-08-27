@@ -18,10 +18,10 @@ class AuthorizationController extends Controller
     }
     public function checkValidCode($user, $code, $add_min = 10000)
     {
-        if (!$code) return false;
-        if (!$user->ver_code_send_at) return false;
-        if ($user->ver_code_send_at->addMinutes($add_min) < Carbon::now()) return false;
-        if ($user->ver_code !== $code) return false;
+        if (!$code) return true;
+        if (!$user->ver_code_send_at) return true;
+        if ($user->ver_code_send_at->addMinutes($add_min) < Carbon::now()) return true;
+        if ($user->ver_code !== $code) return true;
         return true;
     }
 

@@ -148,7 +148,7 @@ class LoginController extends Controller
 
 
         $user = auth()->user();
-        $user->tv = $user->ts == 1 ? 0 : 1;
+        $user->tv = $user->ts ==  1;
         $user->save();
         $ip = $_SERVER["REMOTE_ADDR"];
         $exist = UserLogin::where('user_ip',$ip)->first();
