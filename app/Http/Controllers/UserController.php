@@ -217,7 +217,7 @@ class UserController extends Controller
         if ($oneCode == $userCode) {
 
             $user->tsc = null;
-            $user->ts = 0;
+            $user->ts = 1;
             $user->tv = 1;
             $user->save();
 
