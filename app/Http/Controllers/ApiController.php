@@ -65,7 +65,7 @@ class ApiController extends Controller
     public function fivesim($params)
     {
 
-        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
+        $token=env('fivesim_token', 'null');
         $ch = curl_init();
         $country = 'russia';
         $operator = 'any';
@@ -98,7 +98,7 @@ class ApiController extends Controller
     {
         $order=Order::find($orderID);
         $id=$order->order_id_api;
-        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';;
+       $token= env('fivesim_token', 'null');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://5sim.net/v1/user/check/' . $id);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -128,7 +128,7 @@ class ApiController extends Controller
 
     public function finishOrder($id,$orderid)
     {
-        $token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NzkzNDE1NTAsImlhdCI6MTY0NzgwNTU1MCwicmF5IjoiYjIzMGE5YTZhYTAyOTI1MmY5ZmE0YzQ1ZGVlMDliZjkiLCJzdWIiOjk5Njk1MH0.QLv6oqP4_tZH8-GoX1mZ-b9jOn6gvHigSnKIIX5TOK6veEd-uYOri-gNc3qdwU_ZDv4-xr69Q_nH0UDmu9L7jUOfuG6MvnEUdg0XbzXOMiMd7wGd7_tiiK5LIFSBHaQXFhwDtuvOIL2b-hHK5G-PR_JdFbgIjFpuvRYfxsNgt3neqhmLjoqqOsxpiYrmDk8mAvEAYglyJzZE1jz2mNDKbWUK4tUPrXefvVqUCOxbayjDEcD9bv0nK0vz4hamVt-9SvLd-nJbB6Qlna5I-12sFBS4kw7FgWQnhoLTV35YNDff7-2EmxfX8Mrg5-o_oBt8QURRQ7j8AGoklhiP4B-fww';
+       $token= env('fivesim_token', 'null');
         $ch = curl_init();
         $finishOrderUrl = 'https://5sim.net/v1/user/finish/' . $id;
         curl_setopt($ch, CURLOPT_URL, $finishOrderUrl);
@@ -274,7 +274,8 @@ class ApiController extends Controller
     {
         $category=Category::find($api);
 //       $url="http://sim90.com/api/getPlayerName/".$category->slug."/".$playerid;
-        $url="http://www.m7-system.com:8080/match?key=S9otzjzFd5166qdY1QvabDBQttlF71JkFcs13lwg8VY&id=".$id."&product=".$category->slug;
+        $key=env('player_key', 'null');
+        $url="http://www.m7-system.com:8080/match?key=".$key."&id=".$id."&product=".$category->slug;
 //       $token='76|HZ04dcna7KKEjEChTE9Ydhzuk1xzGTJhbo2vkLnK';
 //        $getPlayer = Http::withToken($token)->get($url);
         $getPlayer=Http::get($url);
