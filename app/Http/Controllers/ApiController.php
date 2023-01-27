@@ -64,7 +64,6 @@ class ApiController extends Controller
 
     public function fivesim($params)
     {
-
         $token=env('fivesim_token', 'null');
         $ch = curl_init();
         $country = 'russia';
@@ -75,13 +74,13 @@ class ApiController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
-
         $headers = array();
         $headers[] = 'Authorization: Bearer ' . $token;
         $headers[] = 'Accept: application/json';
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $result = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        dd($httpcode);
         if ($httpcode!=200) {
             return 0;
         }

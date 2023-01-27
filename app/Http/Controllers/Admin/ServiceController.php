@@ -26,12 +26,13 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'category' => 'required|integer',
             'name' => 'required|string|max:191',
             'price_per_k' => 'required|numeric|gt:0',
-            'min' => 'required|integer|gt:0|lt:'. $request->max,
-            'max' => 'required|integer|gt:'. $request->min,
+//            'min' => 'required|integer|gt:0|lt:'. $request->max,
+//            'max' => 'required|integer|gt:'. $request->min,
             'details' => 'required|string',
             'api_service_id' => 'nullable|integer|gt:0|unique:services,api_service_id'
         ]);
@@ -102,6 +103,7 @@ class ServiceController extends Controller
         if($service->category->type=="5SIM")
         $service->api_service_params = $request->country  .'/any/'. $request->product;
         $service->special_price=$request->special_price !=0 ? $request->special_price  : NULL;
+        $service->api_service_id=$request->api_service_id;
     }
 
     public function status($id)
