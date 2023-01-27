@@ -817,7 +817,7 @@ function paginateLinks($data, $design = 'admin.partials.paginate')
 
 function GetSettingState()
 {
-    $state = false;
+    $state = true;
     return $state;
 }
 

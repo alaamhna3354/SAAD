@@ -60,7 +60,10 @@ class OrderController extends Controller
         } elseif ($service->category->type == '5SIM') {
             $codes = (new ApiController)->fivesim($service->api_service_params);
             if ($codes == 0)
-                return back()->with('error', trans("حاول لاحقا او تواصل مع مدير الموقع"))->withInput();
+            {
+                $notify[] = ['error', 'حاول لاحقا او تواصل مع مدير الموقع.'];
+                return back()->withNotify($notify);
+            }
             else {
 //            var_dump($codes);
 //            foreach ($codes as $key => $value)
