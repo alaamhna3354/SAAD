@@ -26,10 +26,9 @@ class ServiceController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'category' => 'required|integer',
-            'name' => 'required|string|max:191',
+            'name' => 'required|string|max:255',
             'price_per_k' => 'required|numeric|gt:0',
 //            'min' => 'required|integer|gt:0|lt:'. $request->max,
 //            'max' => 'required|integer|gt:'. $request->min,

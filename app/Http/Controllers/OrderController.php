@@ -10,6 +10,7 @@ use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mockery\Exception;
 
 class OrderController extends Controller
@@ -22,9 +23,9 @@ class OrderController extends Controller
 //            'quantity' => 'required|integer|gte:' . $service->min . '|lte:' . $service->max,
         ]);
         if ($service->category->type == 'CODE' || $service->category->type == '5SIM')
-            $price =( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) );
+            $price = (Auth::user()->is_special ? ($service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k));
         else
-            $price = ( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) ) * $request->quantity;
+            $price = (Auth::user()->is_special ? ($service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k)) * $request->quantity;
         //Subtract user balance
         $user = auth()->user();
         if ($user->balance < $price) {
@@ -38,57 +39,60 @@ class OrderController extends Controller
                 return back()->withNotify($notify);
             }
         }
-        if ($service->category->type != '5SIM')
-            $user->balance -= $price;
-        $user->save();
+        DB::beginTransaction();
+        try {
+            if ($service->category->type != '5SIM')
+                $user->balance -= $price;
+            $user->save();
 
-        //Make order
-        $order = new Order();
-        $order->user_id = $user->id;
-        $order->category_id = $category_id;
-        $order->service_id = $service_id;
-        $order->link = $request->link;
-        $order->quantity = $request->quantity;
-        $order->price = $price;
-        $order->remain = $request->quantity;
-        $order->api_order = $service->api_service_id ? 1 : 0;
-        if (isset($request->custom))
-            $order->details = json_encode($request->custom, JSON_UNESCAPED_UNICODE);
-        if ($service->category->type == 'CODE') {
-            $order->code = $serviceCode->code;
-            $order->status = 2;
-        } elseif ($service->category->type == '5SIM') {
-            $codes = (new ApiController)->fivesim($service->api_service_params);
-            if ($codes == 0)
-            {
-                $notify[] = ['error', 'حاول لاحقا او تواصل مع مدير الموقع.'];
-                return back()->withNotify($notify);
+            //Make order
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->category_id = $category_id;
+            $order->service_id = $service_id;
+            $order->link = $request->link;
+            $order->quantity = $request->quantity;
+            $order->price = $price;
+            $order->remain = $request->quantity;
+            $order->api_order = $service->api_service_id ? 1 : 0;
+            if (isset($request->custom))
+                $order->details = json_encode($request->custom, JSON_UNESCAPED_UNICODE);
+            if ($service->category->type == 'CODE') {
+                $order->code = $serviceCode->code;
+                $order->status = 2;
+            } elseif ($service->category->type == '5SIM') {
+                $codes = (new ApiController)->fivesim($service->api_service_params);
+                if ($codes == 0) {
+                    $notify[] = ['error', 'حاول لاحقا او تواصل مع مدير الموقع.'];
+                    return back()->withNotify($notify);
+                } else {
+                    $order->code = $codes['phone'];
+                    $order->order_id_api = $codes['id'];
+                    $order->status = 5;
+                }
             }
-            else {
-//            var_dump($codes);
-//            foreach ($codes as $key => $value)
-//                if ($key == 'phone')
-                $order->code = $codes['phone'];
-//                if($key='id')
-                $order->order_id_api = $codes['id'];
-//                    elseif($key=='sms')
-//                        $order->code = $order->code .'  code : ' . $value[0]['code'] .'<br>';
-                $order->status = 5;
+            $order->save();
+            if ($service->category->type != '5SIM') {
+                //Create Transaction
+                $transaction = new Transaction();
+                $transaction->user_id = $user->id;
+                $transaction->amount = $price;
+                $transaction->post_balance = getAmount($user->balance);
+                $transaction->trx_type = '-';
+                $transaction->details = 'Order for ' . $service->name;
+                $transaction->trx = getTrx();
+                $transaction->save();
             }
-        }
-        $order->save();
-        if ($service->category->type != '5SIM') {
-            //Create Transaction
-            $transaction = new Transaction();
-            $transaction->user_id = $user->id;
-            $transaction->amount = $price;
-            $transaction->post_balance = getAmount($user->balance);
-            $transaction->trx_type = '-';
-            $transaction->details = 'Order for ' . $service->name;
-            $transaction->trx = getTrx();
-            $transaction->save();
-        }
+            if($service->api_service_id) {
+                $apiOrder = $this->apiOrder($service->api_service_id, $order->link, $order->quantity);
+                $order->api_order_id=$apiOrder['order'];
+                $order->save();
+            }
 
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+        }
         //Create admin notification
         $adminNotification = new AdminNotification();
         $adminNotification->user_id = $user->id;
@@ -125,11 +129,11 @@ class OrderController extends Controller
                 'currency' => $gnl->cur_text,
                 'post_balance' => getAmount($user->balance),
             ]);
-        adminnotify($user,'NEW_ORDER' ,[
-        'service_name' => $service->name,
-                'username' => $user->username,
-            'category_name'=>$service->category->name,
-            ]);
+        adminnotify($user, 'NEW_ORDER', [
+            'service_name' => $service->name,
+            'username' => $user->username,
+            'category_name' => $service->category->name,
+        ]);
         $notify[] = ['success', 'Successfully placed your order!'];
         return back()->withNotify($notify);
     }
@@ -182,7 +186,7 @@ class OrderController extends Controller
             }
             // End validation
 
-            $price = getAmount(( Auth::user()->is_special ? ( $service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k) ) * $service_array[2]);
+            $price = getAmount((Auth::user()->is_special ? ($service->special_price ? getAmount($service->special_price) : getAmount($service->price_per_k)) : getAmount($service->price_per_k)) * $service_array[2]);
 
             //Subtract user balance
             $user = auth()->user();
@@ -285,9 +289,9 @@ class OrderController extends Controller
         return view(activeTemplate() . 'user.orders.order_history', compact('page_title', 'orders', 'empty_message'));
     }
 
-    public function finish5SImOrder($id,$result)
+    public function finish5SImOrder($id, $result)
     {
-        $order=Order::find($id);
+        $order = Order::find($id);
         $user = auth()->user();
         if ($user->balance < $order->price) {
             $notify[] = ['error', 'Insufficient balance. Please deposit and try again!'];
@@ -295,8 +299,8 @@ class OrderController extends Controller
         }
         $user->balance -= $order->price;
         $user->save();
-        $order->status=2;
-        $order->verify=$result['sms'][0]['code'];
+        $order->status = 2;
+        $order->verify = $result['sms'][0]['code'];
         $order->save();
 
         //Create Transaction
@@ -312,6 +316,29 @@ class OrderController extends Controller
 //        $notify[] = ['success', 'Successfully placed your order!'];
 //        return back()->withNotify($notify);
 
+    }
+
+    public function apiOrder($service,$link,$qty)
+    {
+
+        $general = GeneralSetting::first();
+        $url = $general->api_url;
+        $arr = [
+            'key' => $general->api_key,
+            'action' => "add",
+            'service' => $service,
+            'link' => $link,
+            'quantity' =>$qty
+        ];
+
+        $response = json_decode(curlPostContent($general->api_url,$arr));
+
+        if (@$response->error){
+            $notify[] = ['info', 'Please enter your api credentials from API Setting Option'];
+            $notify[] = ['error', $response->error];
+            throw new \Exception($notify);
+        }
+        return $response = collect($response);
     }
 
 }

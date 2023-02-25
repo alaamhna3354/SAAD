@@ -80,7 +80,6 @@ class ApiController extends Controller
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         $result = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        dd($httpcode);
         if ($httpcode!=200) {
             return 0;
         }
